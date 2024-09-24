@@ -3,7 +3,7 @@ guid: 81eef5d3bd8c6433c8deca53a52aa273
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -25,7 +25,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -65,6 +65,7 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -76,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -88,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -100,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1508,71 +1512,71 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Tilemap Grounds_9: -1609307998
-      Tilemap Grounds_5: 161802346
-      Tilemap Grounds_47: 1001807056
-      Tilemap Grounds_37: -1793540809
-      Tilemap Grounds_10: 1734814307
-      Tilemap Grounds_45: -1945071827
-      Tilemap Grounds_17: 199716071
-      Tilemap Grounds_38: -132573806
-      Tilemap Grounds_35: -1547280283
-      Tilemap Grounds_14: 1524853612
-      Tilemap Grounds_19: -1633936630
-      Tilemap Grounds_7: 1074273675
-      Tilemap Grounds_15: 1654713291
-      Tilemap Grounds_62: -783689113
-      Tilemap Grounds_16: -1966194500
+      Tilemap Grounds_0: 1985206177
       Tilemap Grounds_1: -569737591
-      Tilemap Grounds_2: -651894394
-      Tilemap Grounds_33: 307507097
-      Tilemap Grounds_57: 1608805182
-      Tilemap Grounds_56: -1997255390
-      Tilemap Grounds_40: -2143691521
-      Tilemap Grounds_4: 1721405639
-      Tilemap Grounds_46: 1072187944
+      Tilemap Grounds_10: 1734814307
       Tilemap Grounds_11: -1835233632
-      Tilemap Grounds_28: -905833157
-      Tilemap Grounds_41: -792384375
-      Tilemap Grounds_30: -747649380
-      Tilemap Grounds_8: -263996782
-      Tilemap Grounds_51: 830293205
+      Tilemap Grounds_12: 506835286
       Tilemap Grounds_13: -489503268
+      Tilemap Grounds_14: 1524853612
+      Tilemap Grounds_15: 1654713291
+      Tilemap Grounds_16: -1966194500
+      Tilemap Grounds_17: 199716071
+      Tilemap Grounds_18: 677843954
+      Tilemap Grounds_19: -1633936630
+      Tilemap Grounds_2: -651894394
+      Tilemap Grounds_20: 1311768991
+      Tilemap Grounds_21: -849040952
       Tilemap Grounds_22: 414438609
       Tilemap Grounds_23: 186491203
-      Tilemap Grounds_29: -797156573
-      Tilemap Grounds_21: -849040952
       Tilemap Grounds_24: 1937060842
-      Tilemap Grounds_27: 1351606196
-      Tilemap Grounds_63: -2080536938
-      Tilemap Grounds_31: -497590941
-      Tilemap Grounds_61: -329318330
-      Tilemap Grounds_12: 506835286
-      Tilemap Grounds_32: 1361159165
-      Tilemap Grounds_53: 994813720
-      Tilemap Grounds_20: 1311768991
-      Tilemap Grounds_43: -1403214705
-      Tilemap Grounds_36: 1611013161
-      Tilemap Grounds_54: 1507906127
-      Tilemap Grounds_3: 895797496
-      Tilemap Grounds_48: -2086349298
-      Tilemap Grounds_42: -1332676832
-      Tilemap Grounds_49: 896817919
-      Tilemap Grounds_52: 1227915861
-      Tilemap Grounds_55: -555976887
-      Tilemap Grounds_34: -1148597869
-      Tilemap Grounds_26: -438398331
-      Tilemap Grounds_59: 857570302
-      Tilemap Grounds_50: 876192636
-      Tilemap Grounds_6: 352794751
-      Tilemap Grounds_0: 1985206177
       Tilemap Grounds_25: -756427975
+      Tilemap Grounds_26: -438398331
+      Tilemap Grounds_27: 1351606196
+      Tilemap Grounds_28: -905833157
+      Tilemap Grounds_29: -797156573
+      Tilemap Grounds_3: 895797496
+      Tilemap Grounds_30: -747649380
+      Tilemap Grounds_31: -497590941
+      Tilemap Grounds_32: 1361159165
+      Tilemap Grounds_33: 307507097
+      Tilemap Grounds_34: -1148597869
+      Tilemap Grounds_35: -1547280283
+      Tilemap Grounds_36: 1611013161
+      Tilemap Grounds_37: -1793540809
+      Tilemap Grounds_38: -132573806
       Tilemap Grounds_39: 2046032993
+      Tilemap Grounds_4: 1721405639
+      Tilemap Grounds_40: -2143691521
+      Tilemap Grounds_41: -792384375
+      Tilemap Grounds_42: -1332676832
+      Tilemap Grounds_43: -1403214705
       Tilemap Grounds_44: -1298584458
-      Tilemap Grounds_60: 145286494
-      Tilemap Grounds_18: 677843954
+      Tilemap Grounds_45: -1945071827
+      Tilemap Grounds_46: 1072187944
+      Tilemap Grounds_47: 1001807056
+      Tilemap Grounds_48: -2086349298
+      Tilemap Grounds_49: 896817919
+      Tilemap Grounds_5: 161802346
+      Tilemap Grounds_50: 876192636
+      Tilemap Grounds_51: 830293205
+      Tilemap Grounds_52: 1227915861
+      Tilemap Grounds_53: 994813720
+      Tilemap Grounds_54: 1507906127
+      Tilemap Grounds_55: -555976887
+      Tilemap Grounds_56: -1997255390
+      Tilemap Grounds_57: 1608805182
       Tilemap Grounds_58: -510737435
-  spritePackingTag: 
+      Tilemap Grounds_59: 857570302
+      Tilemap Grounds_6: 352794751
+      Tilemap Grounds_60: 145286494
+      Tilemap Grounds_61: -329318330
+      Tilemap Grounds_62: -783689113
+      Tilemap Grounds_63: -2080536938
+      Tilemap Grounds_7: 1074273675
+      Tilemap Grounds_8: -263996782
+      Tilemap Grounds_9: -1609307998
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
