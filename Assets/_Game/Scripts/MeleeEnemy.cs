@@ -9,7 +9,7 @@ public class MeleeEnemy : Enemy
 
 	private float attackTime;
 
-	public float attackSpeed;
+	public float meleeAttackSpeed;
 
 
 	private void Update()
@@ -23,10 +23,10 @@ public class MeleeEnemy : Enemy
 			}
 			else
 			{
-				if (Time.time >= attackTime)
+				if (Time.time > attackTime)
 				{
-					StartCoroutine(Attack());
 					attackTime = Time.time + timeBetweenAttacks;
+					StartCoroutine(Attack());
 				}
 			}
 		}
@@ -40,7 +40,7 @@ public class MeleeEnemy : Enemy
 			float percent = 0;
 			while (percent <= 1)
 			{
-				percent += Time.deltaTime * attackSpeed;
+				percent += Time.deltaTime * meleeAttackSpeed;
 				float formula = (-Mathf.Pow(percent, 2) + percent) * 4;
 				transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
 				yield return null;

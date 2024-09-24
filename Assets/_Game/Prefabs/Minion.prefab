@@ -127,7 +127,7 @@ MonoBehaviour:
   damage: 1
   timeBetweenAttacks: 3
   stopDistance: 0.5
-  attackSpeed: 2
+  meleeAttackSpeed: 3
 --- !u!50 &929123017504411017
 Rigidbody2D:
   serializedVersion: 4
