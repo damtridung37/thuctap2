@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     public float timeBetweenAttacks;
 
+    public int healthPickUpChance;
+    public GameObject healthPickUp;
+
 	public virtual void Start()
 	{
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -24,6 +27,11 @@ public class Enemy : MonoBehaviour
         health -= damageAmount;
         if (health <= 0)
         {
+            int randomHealth = Random.Range(0, 101);
+            if (randomHealth < healthPickUpChance) 
+            {
+                Instantiate(healthPickUp, transform.position, transform.rotation);
+            }
             Destroy(gameObject);
 
         }

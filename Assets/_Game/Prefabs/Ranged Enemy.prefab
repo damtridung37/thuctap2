@@ -146,7 +146,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8039216, y: 0.60784316}
+    oldSize: {x: 1, y: 0.75609756}
     newSize: {x: 0.41, y: 0.31}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -199,6 +199,8 @@ MonoBehaviour:
   speed: 1.5
   damage: 1
   timeBetweenAttacks: 3
+  healthPickUpChance: 30
+  healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
   stopDistance: 0.5
   shotPoint: {fileID: 4917685178654460947}
   enemyBullet: {fileID: 854119858033461004, guid: f4c24da2ca1b9d94c99a0fe25184f90a, type: 3}

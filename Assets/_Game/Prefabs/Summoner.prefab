@@ -126,6 +126,8 @@ MonoBehaviour:
   speed: 2
   damage: 1
   timeBetweenAttacks: 5
+  healthPickUpChance: 30
+  healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
   minX: -9.66
   maxX: 8.42
   minY: -4.55
