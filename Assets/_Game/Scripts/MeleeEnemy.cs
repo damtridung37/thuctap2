@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +16,17 @@ public class MeleeEnemy : Enemy
 	{
 		if (player != null)
 		{
+
+			if (player.position.x < transform.position.x)
+			{
+				// Người chơi bên trái -> Quái vật quay trái (lật trục X)
+				transform.localScale = new Vector3(-1, 1, 1);
+			}
+			else
+			{
+				// Người chơi bên phải -> Quái vật quay phải (bình thường)
+				transform.localScale = new Vector3(1, 1, 1);
+			}
 
 			if (Vector2.Distance(transform.position, player.transform.position) > stopDistance)
 			{

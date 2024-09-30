@@ -9,7 +9,7 @@ public class EnemyBullet : MonoBehaviour
 
 	public float speed;
 	public int damage;
-	public float range;
+	
 
 	private void Start()
 	{
@@ -19,7 +19,7 @@ public class EnemyBullet : MonoBehaviour
 	}
 	private void Update()
 	{
-		if (Vector2.Distance(transform.position, targetPosition) > range )
+		if (Vector2.Distance(transform.position, targetPosition) > .1f )
 		{
 			transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 		}
