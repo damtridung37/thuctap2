@@ -9,6 +9,8 @@ public class projectile : MonoBehaviour
 
 	public GameObject explosion;
 
+	private Vector2 dir = Vector2.up;
+
 	public int damage;
 	// Start is called before the first frame update
 	void Start()
@@ -19,7 +21,7 @@ public class projectile : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		transform.Translate(Vector2.up * speed * Time.deltaTime);
+		transform.Translate(dir  * speed * Time.deltaTime);
 	}
 	void DestroyProjectile()
 	{
@@ -34,5 +36,12 @@ public class projectile : MonoBehaviour
 			collision.GetComponent<Enemy>().TakeDamage(damage);
 			DestroyProjectile();
 		}
+	}
+	public void Init(float angle  )
+	{
+		Quaternion rotation = Quaternion.Euler(0, 0, angle);
+		dir = rotation * Vector2.up;
+		dir = dir.normalized;
+
 	}
 }

@@ -77,6 +77,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -89,6 +90,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -1008,352 +1010,396 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: Girl_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: adbf2f54546e0b94caab728caef7b71f
-    - name: Girl_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 21
       spriteId: 1d4d5678237acf3468c2f67367d33237
-    - name: Girl_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 21
       spriteId: 93b299ffa725a8b4c81a102f3a4464e9
-    - name: Girl_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: d909b66e5ef51e440bd4e2f698b632bb
-    - name: Girl_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 15
         height: 22
       spriteId: fdc1ea72e8f7efd4986a2b759870bf16
-    - name: Girl_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 17
         height: 21
       spriteId: 58e201211b6ffb6459649e4334e3f4b2
-    - name: Girl_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 17
         height: 21
       spriteId: 05233dc433241aa4b8526c2283291f2b
-    - name: Girl_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 15
         height: 22
       spriteId: 0c53c364277aadc4ebd8f7c6e854989b
-    - name: Girl_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 15
         height: 22
       spriteId: 7116314ac72e7d14581d77222ed483de
-    - name: Girl_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 1
         y: 0
         width: 17
         height: 21
       spriteId: f39a94ac18fab43419e8145324b442b1
-    - name: Girl_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 1
         y: 0
         width: 17
         height: 21
       spriteId: d81d3baffaabad148a48b58018db4f40
-    - name: Girl_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 15
         height: 22
       spriteId: 329836d27e4658c469faa579e777cb4e
-    - name: Girl_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 24
         height: 24
       spriteId: 7c103295bc4421c4c9270c0f6b731c1a
-    - name: Girl_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 23
       spriteId: 5d598e736d5c9ab4f8b5b3ecef80cb62
-    - name: Girl_Frame_14
+    - name: Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 23
       spriteId: a720bc4f7fd162d439728ce649acb516
-    - name: Girl_Frame_15
+    - name: Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 24
       spriteId: 8f9784a2311c759418077d0219feab0d
-    - name: Girl_Frame_16
+    - name: Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: cfc696b655f677b4bbeb202642e3ca17
-    - name: Girl_Frame_17
+    - name: Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: 415c9a2014ebcda4ab87f6468cb56815
-    - name: Girl_Frame_18
+    - name: Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 20
       spriteId: 702ad667cf9650648b001da26c1f5915
-    - name: Girl_Frame_19
+    - name: Frame_19
       frameIndex: 19
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: 7e4295372fff9734cbd6261e93ff351e
-    - name: Girl_Frame_20
+    - name: Frame_20
       frameIndex: 20
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: d368eb01d84db4c4eae428851556bbe7
-    - name: Girl_Frame_21
+    - name: Frame_21
       frameIndex: 21
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 20
       spriteId: 169501f520d2de94e97edaadcd30415e
-    - name: Girl_Frame_22
+    - name: Frame_22
       frameIndex: 22
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 15
         height: 21
       spriteId: 1c43278104ae76d4fb9688cbefd116e2
-    - name: Girl_Frame_23
+    - name: Frame_23
       frameIndex: 23
+      additiveSortOrder: 0
       cellRect:
         x: 5
         y: 0
         width: 17
         height: 22
       spriteId: 0e0e5a37bde2092468f0c66d665ff110
-    - name: Girl_Frame_24
+    - name: Frame_24
       frameIndex: 24
+      additiveSortOrder: 0
       cellRect:
         x: 5
         y: 0
         width: 16
         height: 21
       spriteId: 0eb68a7c9b2b898428b6e81eab245cb2
-    - name: Girl_Frame_25
+    - name: Frame_25
       frameIndex: 25
+      additiveSortOrder: 0
       cellRect:
         x: 6
         y: 0
         width: 15
         height: 21
       spriteId: a57ef6c0ffa5760429648309b4599f47
-    - name: Girl_Frame_26
+    - name: Frame_26
       frameIndex: 26
+      additiveSortOrder: 0
       cellRect:
         x: 5
         y: 0
         width: 17
         height: 22
       spriteId: 5b9351ec4e5ec8b4fae013b0a41e882a
-    - name: Girl_Frame_27
+    - name: Frame_27
       frameIndex: 27
+      additiveSortOrder: 0
       cellRect:
         x: 5
         y: 0
         width: 16
         height: 21
       spriteId: 13af006121149d84bb52221375e8c951
-    - name: Girl_Frame_28
+    - name: Frame_28
       frameIndex: 28
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 15
         height: 21
       spriteId: 44551bf1d3362af45890230e74980a9b
-    - name: Girl_Frame_29
+    - name: Frame_29
       frameIndex: 29
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 17
         height: 22
       spriteId: 4901c6cfdcf7f14428ed3a399b9cc3b9
-    - name: Girl_Frame_30
+    - name: Frame_30
       frameIndex: 30
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 16
         height: 21
       spriteId: 7d8bc28fd3f686341b259eb38031915e
-    - name: Girl_Frame_31
+    - name: Frame_31
       frameIndex: 31
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 15
         height: 21
       spriteId: 00b33a09b6c64c84081a77c4c2a17771
-    - name: Girl_Frame_32
+    - name: Frame_32
       frameIndex: 32
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 17
         height: 22
       spriteId: 4aaef0e86e3f21542a20f31aa2d933ad
-    - name: Girl_Frame_33
+    - name: Frame_33
       frameIndex: 33
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 16
         height: 21
       spriteId: e07ef66498719c64482f7ee10171187c
-    - name: Girl_Frame_34
+    - name: Frame_34
       frameIndex: 34
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 24
       spriteId: ef19a56c5ed95cc4a9a7d89317886e97
-    - name: Girl_Frame_35
+    - name: Frame_35
       frameIndex: 35
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 24
       spriteId: c2b57c536501db843a61e07c168cd884
-    - name: Girl_Frame_36
+    - name: Frame_36
       frameIndex: 36
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: 40b01cdab34b68944a472944420e0f52
-    - name: Girl_Frame_37
+    - name: Frame_37
       frameIndex: 37
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 24
       spriteId: 550e0e29844c1704381def43ca46311c
-    - name: Girl_Frame_38
+    - name: Frame_38
       frameIndex: 38
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 24
       spriteId: eec37417fda3ef24688a0a052d3de9c2
-    - name: Girl_Frame_39
+    - name: Frame_39
       frameIndex: 39
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 22
       spriteId: 47b8c06a85e25f24494f75d3636ff895
-    - name: Girl_Frame_40
+    - name: Frame_40
       frameIndex: 40
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 0
         width: 15
         height: 22
       spriteId: 74ad8ff5c2f21be4cbeeb4230218a109
-    - name: Girl_Frame_41
+    - name: Frame_41
       frameIndex: 41
+      additiveSortOrder: 0
       cellRect:
         x: 4
         y: 0
         width: 16
         height: 18
       spriteId: 752e2409256ea1f4a8cabce73f5922a2
-    - name: Girl_Frame_42
+    - name: Frame_42
       frameIndex: 42
+      additiveSortOrder: 0
       cellRect:
         x: 1
         y: 0
         width: 22
         height: 19
       spriteId: 271a44c8e0e81fa41bc25650056d18f2
-    - name: Girl_Frame_43
+    - name: Frame_43
       frameIndex: 43
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
@@ -1399,6 +1445,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 24, y: 24}

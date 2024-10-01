@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class weapons : MonoBehaviour
 {
-	public GameObject projectile;
+	public projectile projectile;
 	public Transform shotPoint;
 	public float timeBetweenShots;
+	public List<float> angles = new List<float>();
 
 	private float shotTime;
  
@@ -17,10 +18,16 @@ public class weapons : MonoBehaviour
 		{
 			if (Time.time >= shotTime)
 			{
-				Instantiate(projectile, shotPoint.position, transform.rotation);
+				for (int i = 0; i < angles.Count; i++)
+				{
+					projectile temp = Instantiate(projectile, shotPoint.position, transform.rotation);
+					temp.Init(angles[i]);
+				}
+
 				shotTime = Time.time + timeBetweenShots;
 			}
 		}
+
     }
 
 	private void FixedUpdate()
