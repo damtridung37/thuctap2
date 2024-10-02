@@ -21,7 +21,7 @@ public class projectile : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		transform.Translate(dir  * speed * Time.deltaTime);
+		transform.Translate(dir * speed * Time.deltaTime);
 	}
 	void DestroyProjectile()
 	{
