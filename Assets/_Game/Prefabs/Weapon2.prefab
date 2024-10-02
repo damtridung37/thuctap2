@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3218743799904274813}
   m_Layer: 0
   m_Name: Weapon2
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,9 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25f3fa8df3132304babf4f5bf4ad5907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 3230802635854235461, guid: 35c3a9528aa6a1145b62616c5ec0dae7, type: 3}
+  projectile: {fileID: 5157022486785863400, guid: 35c3a9528aa6a1145b62616c5ec0dae7, type: 3}
   shotPoint: {fileID: 4869758473105977449}
   timeBetweenShots: 0.2
+  angles:
+  - 0
 --- !u!1 &7155282393521877872
 GameObject:
   m_ObjectHideFlags: 0

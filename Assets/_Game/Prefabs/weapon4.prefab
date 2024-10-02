@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1531075070082091262}
   - component: {fileID: 7089981351282234192}
-  - component: {fileID: 7874141222143954966}
   - component: {fileID: 4532569762395320432}
   m_Layer: 6
   m_Name: weapon4
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,51 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &7874141222143954966
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116518055712996561}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.47272727, y: 0.92727274}
-    newSize: {x: 0.26, y: 0.51}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.47272727, y: 0.92727274}
-  m_EdgeRadius: 0
 --- !u!114 &4532569762395320432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +101,8 @@ MonoBehaviour:
   projectile: {fileID: 0}
   shotPoint: {fileID: 3623395894732536087}
   timeBetweenShots: 0.5
+  angles:
+  - 0
 --- !u!1 &8551613857553377181
 GameObject:
   m_ObjectHideFlags: 0

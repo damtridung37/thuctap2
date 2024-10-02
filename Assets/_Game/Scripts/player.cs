@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class player : MonoBehaviour
 {
 	[SerializeField] private float speed;
+	[SerializeField] private GameObject weaponHolder;
 
 	private Rigidbody2D rb;
 
@@ -17,6 +18,7 @@ public class player : MonoBehaviour
 	public Image[] hearts;
 	public Sprite fullHearts;
 	public Sprite emptyHearts;
+	
 
 	// Start is called before the first frame update
 	void Awake()
@@ -47,9 +49,14 @@ public class player : MonoBehaviour
 		UpdateHealthUI(health);
 		if (health <= 0)
 		{
-			Destroy(gameObject);
-
+			Destroy(this.gameObject);
 		}
+	}
+
+	public void ChangWeapon(weapons weaponToEquip)
+	{
+		Destroy(GameObject.FindGameObjectWithTag("Weapon"));
+		Instantiate(weaponToEquip, weaponHolder.transform.position, Quaternion.identity, weaponHolder.transform);
 	}
 	void UpdateHealthUI(int currentHealth)
 	{
