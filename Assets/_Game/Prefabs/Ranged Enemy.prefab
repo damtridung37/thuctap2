@@ -198,9 +198,12 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 1.5
   damage: 1
+  pickUpChance: 0
+  pickups: []
   timeBetweenAttacks: 3
   healthPickUpChance: 30
   healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
+  deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
   stopDistance: 0.5
   shotPoint: {fileID: 4917685178654460947}
   enemyBullet: {fileID: 854119858033461004, guid: f4c24da2ca1b9d94c99a0fe25184f90a, type: 3}

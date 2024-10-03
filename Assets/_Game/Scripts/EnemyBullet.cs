@@ -9,6 +9,8 @@ public class EnemyBullet : MonoBehaviour
 
 	public float speed;
 	public int damage;
+
+	public GameObject effect;
 	
 
 	private void Start()
@@ -19,13 +21,14 @@ public class EnemyBullet : MonoBehaviour
 	}
 	private void Update()
 	{
-		if (Vector2.Distance(transform.position, targetPosition) > .1f )
+		if ((Vector2)transform.position == targetPosition)
 		{
-			transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+			Instantiate(effect, transform.position, Quaternion.identity);
+			Destroy(gameObject);
 		}
 		else
 		{
-			Destroy(gameObject);
+			transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 		}
 	}
 

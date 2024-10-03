@@ -21,6 +21,9 @@ public class WaveSpawner : MonoBehaviour
     private Transform player;
 
     private bool finishedSpawning;
+
+    public GameObject boss;
+    public Transform bossSpawnPoint;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -70,7 +73,7 @@ public class WaveSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("GAME FINISHED!!!!");
+                Instantiate(boss, bossSpawnPoint.position, bossSpawnPoint.rotation);
             }
         }
 	}

@@ -197,7 +197,7 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 2
   damage: 0
-  pickUpChance: 30
+  pickUpChance: 10
   pickups:
   - {fileID: 8043004606164792877, guid: dbddd7e348506df488b8166060ca2ca7, type: 3}
   - {fileID: 3819274869457495099, guid: 98f4cc00560fc944ebae1a8cb9d247d8, type: 3}
@@ -207,5 +207,6 @@ MonoBehaviour:
   timeBetweenAttacks: 3
   healthPickUpChance: 10
   healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
+  deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
   stopDistance: 0.5
   meleeAttackSpeed: 2

@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmount: 1
+  effect: {fileID: 499474180843925582, guid: 12d18dd6722e519439d9962bd909ed6b, type: 3}

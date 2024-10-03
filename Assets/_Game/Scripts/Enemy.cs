@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     public int healthPickUpChance;
     public GameObject healthPickUp;
 
+    public GameObject deathEffect;
+
 
 	public virtual void Start()
 	{
@@ -36,18 +38,17 @@ public class Enemy : MonoBehaviour
             {
                 GameObject randomPickup = pickups[Random.Range(0, pickups.Length)];
                
-                Destroy(Instantiate(randomPickup, transform.position, transform.rotation),3f);
+                Destroy(Instantiate(randomPickup, transform.position, transform.rotation),10f);
                 
             }
 
             int randomHealth = Random.Range(0, 101);
             if (randomHealth < healthPickUpChance) 
             {
-                Instantiate(healthPickUp, transform.position, transform.rotation);
-                
-                
-                
+                Instantiate(healthPickUp, transform.position, transform.rotation);                 
             }
+
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
         }

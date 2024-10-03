@@ -7,6 +7,8 @@ public class HealthPickUp : MonoBehaviour
 	player playerScript;
 	public int healAmount;
 
+	public GameObject effect;	
+
 	private void Start()
 	{
 		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<player>();
@@ -16,6 +18,7 @@ public class HealthPickUp : MonoBehaviour
 	{
 		if (collision.tag == "Player")
 		{
+			Instantiate(effect, transform.position, Quaternion.identity);
 			playerScript.Heal(healAmount);
 			Destroy(gameObject);
 		}

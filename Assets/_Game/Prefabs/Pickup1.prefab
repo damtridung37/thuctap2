@@ -144,3 +144,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponToEquip: {fileID: 8858556407787357783, guid: 1b83a08b3b729a5478769ea6225b944e, type: 3}
+  effect: {fileID: 499474180843925582, guid: 12d18dd6722e519439d9962bd909ed6b, type: 3}
