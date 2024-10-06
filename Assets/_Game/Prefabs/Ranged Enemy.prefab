@@ -198,8 +198,13 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 1.5
   damage: 1
-  pickUpChance: 0
-  pickups: []
+  pickUpChance: 5
+  pickups:
+  - {fileID: 8043004606164792877, guid: dbddd7e348506df488b8166060ca2ca7, type: 3}
+  - {fileID: 3819274869457495099, guid: 98f4cc00560fc944ebae1a8cb9d247d8, type: 3}
+  - {fileID: 6437498617403658470, guid: 0e09d020afcd88c40bf42bdd3c84d51f, type: 3}
+  - {fileID: 6178562435283158529, guid: c84399e00bbc8b4439efd1cb5aeb7411, type: 3}
+  - {fileID: 8854671570613229957, guid: 462457753b68e254fa9eee1bf9176b68, type: 3}
   timeBetweenAttacks: 3
   healthPickUpChance: 30
   healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
