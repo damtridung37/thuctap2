@@ -18,13 +18,16 @@ public class player : MonoBehaviour
 	public Image[] hearts;
 	public Sprite fullHearts;
 	public Sprite emptyHearts;
-	
+
+	private SceneTransitions sceneTransitions;
+
 
 	// Start is called before the first frame update
-	void Awake()
+	private void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		sceneTransitions = FindObjectOfType<SceneTransitions>();
 	}
 
 	// Update is called once per frame
@@ -50,6 +53,7 @@ public class player : MonoBehaviour
 		if (health <= 0)
 		{
 			Destroy(this.gameObject);
+			sceneTransitions.LoadScene("Lose");
 		}
 	}
 

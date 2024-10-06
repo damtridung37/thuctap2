@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class Boss : MonoBehaviour
 
 	public int damage;
 
+	private Slider healthBar;
+
+	private SceneTransitions sceneTransitions;
+
 	private Vector3 previousPosition;
 
 	private void Start()
@@ -21,6 +26,10 @@ public class Boss : MonoBehaviour
 		halfHealth = health / 2;
 		anim = GetComponent<Animator>();
 		previousPosition = transform.position;
+		healthBar = FindObjectOfType<Slider>();
+		healthBar.maxValue = health;
+		healthBar.value = health;
+		sceneTransitions = FindObjectOfType<SceneTransitions>();
 	}
 
 	private void Update()
@@ -44,9 +53,12 @@ public class Boss : MonoBehaviour
 	public void TakeDamage(int damageAmount)
 	{
 		health -= damageAmount;
+		healthBar.value = health;
 		if (health <= 0)
 		{
 			Destroy(this.gameObject);
+			healthBar.gameObject.SetActive(false);
+			sceneTransitions.LoadScene("Win");
 		}
 
 		if (health <= halfHealth) 

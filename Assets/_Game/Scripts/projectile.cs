@@ -9,6 +9,8 @@ public class projectile : MonoBehaviour
 
 	public GameObject explosion;
 
+	public GameObject soundObject;
+
 	private Vector2 dir = Vector2.up;
 
 	public int damage;
@@ -16,6 +18,7 @@ public class projectile : MonoBehaviour
 	void Start()
 	{
 		Invoke("DestroyProjectile", lifeTime);
+		Instantiate(soundObject, transform.position, transform.rotation);
 	}
 
 	// Update is called once per frame
