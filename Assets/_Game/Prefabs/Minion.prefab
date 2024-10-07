@@ -128,7 +128,7 @@ MonoBehaviour:
   pickUpChance: 0
   pickups: []
   timeBetweenAttacks: 3
-  healthPickUpChance: 10
+  healthPickUpChance: 20
   healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
   deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
   stopDistance: 0.5

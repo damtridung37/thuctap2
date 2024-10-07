@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health;
+	public int health;
 
     [HideInInspector]
     public Transform player;

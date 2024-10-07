@@ -21,6 +21,8 @@ public class player : MonoBehaviour
 
 	private SceneTransitions sceneTransitions;
 
+	public FixedJoystick joystick;
+
 
 	// Start is called before the first frame update
 	private void Start()
@@ -33,8 +35,9 @@ public class player : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		movement.x = Input.GetAxisRaw("Horizontal");
-		movement.y = Input.GetAxisRaw("Vertical");
+		movement = joystick.Direction;
+		/*movement.x = Input.GetAxisRaw("Horizontal");
+		movement.y = Input.GetAxisRaw("Vertical");*/
 		
 		anim.SetFloat("Horizontal",movement.x);
 		anim.SetFloat("Vertical", movement.y);
