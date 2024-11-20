@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -21,6 +21,12 @@ public class Boss : MonoBehaviour
 
 	private Vector3 previousPosition;
 
+	public float shotTime;
+	public float timeBetweenShots;
+	public BossProjectile projectile;
+	public Transform shotPoint;
+	public int numberOfProjectiles = 12; 
+
 	private void Start()
 	{
 		halfHealth = health / 2;
@@ -36,6 +42,25 @@ public class Boss : MonoBehaviour
 	{
 		FlipDirection();
 		previousPosition = transform.position;
+
+		if (Time.time >= shotTime)
+		{
+			ShootInCircle();
+			shotTime = Time.time + timeBetweenShots;
+		}
+	}
+
+	private void ShootInCircle()
+	{
+		float angleStep = 360f / numberOfProjectiles; // Góc chia đều cho mỗi viên đạn
+		float startAngle = 0f; // Góc bắt đầu
+
+		for (int i = 0; i < numberOfProjectiles; i++)
+		{
+			float currentAngle = startAngle + i * angleStep; // Tính góc hiện tại
+			BossProjectile temp = Instantiate(projectile, shotPoint.position, Quaternion.identity); // Tạo đạn
+			temp.Init(currentAngle); // Truyền góc để đạn di chuyển đúng hướng
+		}
 	}
 
 	private void FlipDirection()

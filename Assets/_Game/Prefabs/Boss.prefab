@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &900776418416595948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5836393854804236437}
+  m_Layer: 9
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5836393854804236437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900776418416595948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7682119683949852973}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4577942507149500464
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +66,8 @@ Transform:
   m_LocalPosition: {x: -1.81, y: 0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5836393854804236437}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6690423372552068119
@@ -123,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a478bbea99a4f4b8881383e0bb1076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 50
   enemies:
   - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
   - {fileID: 4035781114764252124, guid: 0353337751c6a45449e8bf09136ec383, type: 3}
@@ -131,6 +163,11 @@ MonoBehaviour:
   - {fileID: 970229693828970796, guid: 7d935e26ac7fd4c4593fd09b7d43919c, type: 3}
   spawnOffset: 20
   damage: 1
+  shotTime: 2
+  timeBetweenShots: 1
+  projectile: {fileID: 4157866876225652084, guid: 02e3f99f962bebc41b3c3adbd8261510, type: 3}
+  shotPoint: {fileID: 5836393854804236437}
+  numberOfProjectiles: 12
 --- !u!61 &2708700980461316257
 BoxCollider2D:
   m_ObjectHideFlags: 0
