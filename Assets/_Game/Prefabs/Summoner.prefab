@@ -136,10 +136,10 @@ MonoBehaviour:
   healthPickUpChance: 30
   healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
   deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
-  minX: -9.66
-  maxX: 8.42
-  minY: -4.55
-  maxY: 4.55
+  minX: -7.66
+  maxX: 7.42
+  minY: -3.55
+  maxY: 3.55
   timeBetweenSummons: 3
   enemyToSummon: {fileID: 4035781114764252124, guid: 0353337751c6a45449e8bf09136ec383, type: 3}
   meleeAttackSpeed: 5
@@ -180,7 +180,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.475, y: 0.75}
+    oldSize: {x: 0.31666666, y: 0.5}
     newSize: {x: 0.17, y: 0.29}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

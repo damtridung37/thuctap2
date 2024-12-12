@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53228cc10ddcfd541a82e31a315591fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 6
   damage: 1
   effect: {fileID: 4187862673183885589, guid: 1e6af20d015dee649a8d9f8554a12a3c, type: 3}

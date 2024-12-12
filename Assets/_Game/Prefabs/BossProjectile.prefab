@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 465812879385778773}
   - component: {fileID: 2726664448327992979}
   - component: {fileID: 4157866876225652084}
+  - component: {fileID: 8470769567794451110}
   m_Layer: 0
   m_Name: BossProjectile
   m_TagString: Untagged
@@ -100,5 +101,50 @@ MonoBehaviour:
   speed: 1.5
   lifeTime: 2
   explosion: {fileID: 4187862673183885589, guid: 1e6af20d015dee649a8d9f8554a12a3c, type: 3}
-  soundObject: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
-  damage: 0
+  soundObject: {fileID: 5580069314256030062, guid: fb54bc8ffc5b75c4ba95767b2b14f752, type: 3}
+  damage: 1
+--- !u!61 &8470769567794451110
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2634850285565565079}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.083333336, y: 0.104166664}
+    newSize: {x: 0.083333336, y: 0.104166664}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.083333336, y: 0.104166664}
+  m_EdgeRadius: 0

@@ -40,6 +40,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     private Vector2 input = Vector2.zero;
 
+    public Animator animator;
+    public Transform Hand;
+	public bool useTutorial;
     protected virtual void Start()
     {
         HandleRange = handleRange;
@@ -55,12 +58,20 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchorMax = center;
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
+        if (useTutorial)
+        {
+            animator.enabled = true;
+			Hand.gameObject.SetActive(true);
+		}
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
-    }
+        animator.enabled = false;
+		Hand.gameObject.SetActive(false);
+
+	}
 
     public void OnDrag(PointerEventData eventData)
     {
