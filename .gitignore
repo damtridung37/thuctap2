@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # Ignore build_info file in StreamingAssets
 /[Aa]ssets/StreamingAssets/build_info
+
+.codegpt

@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 
     public float timeBetweenAttacks;
 
+    [Header("Health Drop")]
     public int healthPickUpChance;
     public GameObject healthPickUp;
 
@@ -26,8 +27,9 @@ public class Enemy : MonoBehaviour
 
 	public virtual void Start()
 	{
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = CacheDataManager.instance.player.transform;
 	}
+    
 	public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
@@ -42,10 +44,45 @@ public class Enemy : MonoBehaviour
                 
             }
 
-            int randomHealth = Random.Range(0, 101);
-            if (randomHealth < healthPickUpChance) 
+            randomNumber = Random.Range(0, 101);
+            if (randomNumber < healthPickUpChance) 
             {
                 Instantiate(healthPickUp, transform.position, transform.rotation);                 
+            }
+            
+            ExpPickUp temp = Instantiate(CacheDataManager.instance.ExpPickUpPrefab,transform.position,Quaternion.identity);
+            randomNumber = Random.Range(0, 101);
+            if (randomNumber < 70)
+            {
+                temp.SetExpLevel(1);
+            }
+            else
+            {
+                randomNumber = Random.Range(0, 101);
+                if (randomNumber < 70)
+                {
+                    temp.SetExpLevel(2);
+                }
+                else
+                {
+                    randomNumber = Random.Range(0, 101);
+                    if (randomNumber < 70)
+                    {
+                        temp.SetExpLevel(3);
+                    }
+                    else
+                    {
+                        randomNumber = Random.Range(0, 101);
+                        if (randomNumber < 70)
+                        {
+                            temp.SetExpLevel(4);
+                        }
+                        else
+                        {
+                            temp.SetExpLevel(5);
+                        }
+                    }
+                }
             }
 
             Instantiate(deathEffect, transform.position, Quaternion.identity);

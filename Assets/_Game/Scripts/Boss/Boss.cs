@@ -99,7 +99,7 @@ public class Boss : MonoBehaviour
 	{
 		if (collision.tag == "Player")
 		{
-			collision.GetComponent<player>().TakeDamage(damage);
+			collision.GetComponent<Player>().TakeDamage(damage);
 		}
 	}
 }

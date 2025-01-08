@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-	private player playerScript;
+	private Player playerScript;
 	private Vector2 targetPosition;
 
 	public float speed;
@@ -15,7 +15,7 @@ public class EnemyBullet : MonoBehaviour
 
 	private void Start()
 	{
-		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<player>();
+		playerScript = CacheDataManager.instance.player;
 		targetPosition = playerScript.transform.position;
 
 	}

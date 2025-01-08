@@ -1,27 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class player : MonoBehaviour
+using LitMotion;
+using TMPro;
+using System;
+public class Player : MonoBehaviour
 {
+	[Header("Stats")]
 	[SerializeField] private float speed;
-	[SerializeField] private GameObject weaponHolder;
+	[SerializeField] private float maxHealth;
+	[SerializeField] private float armor;
+	
+	[Header("Container")]
+	[SerializeField] private Transform weaponHolder;
 
 	private Rigidbody2D rb;
-
 	private Animator anim;
+	private Vector2 movementDir;
 
-	Vector2 movement;
+	[Header("Health UI")]
+	[SerializeField] private TMP_Text healthText;
+	[SerializeField] private Image healthBar;
+	[SerializeField] private Image subHealthBar;
 
-	public int health;
 
-	public Image[] hearts;
-	public Sprite fullHearts;
-	public Sprite emptyHearts;
+	[Header("Exp UI")]
+	[SerializeField] private Image expBar;
+	private float currentHealth;
+	private MotionHandle healthBarMotionHandle;
 
 	private SceneTransitions sceneTransitions;
+	
+	[Header("Joystick")]
+	[SerializeField] private FixedJoystick joystick;
 
-	public FixedJoystick joystick;
+	private int currentExp = 0;
+	private int currentRequiredExp = 50;
+	private int level = 1;
 
 
 	// Start is called before the first frame update
@@ -30,30 +44,44 @@ public class player : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		sceneTransitions = FindObjectOfType<SceneTransitions>();
+
+		healthBarMotionHandle = LMotion.Create(0, 0, 0).RunWithoutBinding();
+
+		currentHealth = maxHealth;
+		UpdateHealthUI(currentHealth,true);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		movement = joystick.Direction;
-		/*movement.x = Input.GetAxisRaw("Horizontal");
-		movement.y = Input.GetAxisRaw("Vertical");*/
+		UpdateDir();
 		
-		anim.SetFloat("Horizontal",movement.x);
-		anim.SetFloat("Vertical", movement.y);
-		anim.SetFloat("Speed", movement.sqrMagnitude);
+		UpdateAnim();
+	}
+
+	private void UpdateDir()
+	{
+		movementDir = joystick.Direction;
+	}
+
+	private void UpdateAnim()
+	{
+		anim.SetFloat("Horizontal",movementDir.x);
+		anim.SetFloat("Vertical", movementDir.y);
+		anim.SetFloat("Speed", movementDir.sqrMagnitude);
 	}
 
 	private void FixedUpdate()
 	{
-		rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
+		rb.MovePosition(rb.position + movementDir * (speed * Time.deltaTime));
 	}
 
-	public void TakeDamage(int damageAmount)
+	public void TakeDamage(float damageAmount)
 	{
-		health -= damageAmount;
-		UpdateHealthUI(health);
-		if (health <= 0)
+		float postMitigationDamage = damageAmount * ( 100f / (100 + armor));
+		currentHealth -= damageAmount;
+		UpdateHealthUI(currentHealth);
+		if (currentHealth <= 0)
 		{
 			Destroy(this.gameObject);
 			sceneTransitions.LoadScene("Lose");
@@ -63,35 +91,76 @@ public class player : MonoBehaviour
 	public void ChangWeapon(weapons weaponToEquip)
 	{
 		Destroy(GameObject.FindGameObjectWithTag("Weapon"));
-		Instantiate(weaponToEquip, weaponHolder.transform.position, Quaternion.identity, weaponHolder.transform);
+		Instantiate(weaponToEquip, weaponHolder.position, Quaternion.identity, weaponHolder);
 	}
-	void UpdateHealthUI(int currentHealth)
+	
+	private void UpdateHealthUI(float currentHealth,bool isHealing = false)
 	{
-		for (int i = 0; i < hearts.Length; i++)
-		{
-			if (i < currentHealth)
-			{
-				hearts[i].sprite = fullHearts;
-			}
-			else
-			{
-				hearts[i].sprite= emptyHearts;
-			}
+		float healthBarFillAmount = currentHealth / maxHealth;
+		
+		if(!isHealing)
+        {
+            if(healthBarMotionHandle.IsActive()) healthBarMotionHandle.Cancel();
 
-		}
+            healthBarMotionHandle = LMotion.Create(subHealthBar.fillAmount, healthBarFillAmount, 0.25f)
+                .WithEase(Ease.InOutCubic)
+                .Bind(this, 
+                    (x, player) 
+                        => player.subHealthBar.fillAmount = x);
+        }
+	
+	
+		// for (var i = 0; i < hearts.Length; i++)
+		// {
+		// 	hearts[i].sprite = i<currentHealth ? fullHearts : emptyHearts;
+		// }
+
+		healthBar.fillAmount = healthBarFillAmount;
+		healthText.text = Mathf.FloorToInt(currentHealth) + "/" + maxHealth;
 	}
 
-	public void Heal(int healAmount)
+	public void Heal(float healAmount)
 	{
-		if( health + healAmount > 5)
+		if( currentHealth + healAmount > maxHealth)
 		{
-			health = 5;
+			currentHealth = maxHealth;
 		}
 		else
 		{
-			health += healAmount;
+			currentHealth += healAmount;
 		}
-		UpdateHealthUI(health);
+		UpdateHealthUI(currentHealth,true);
 	}
+	
+	public void AddExp(int expAmount)
+    {
+        currentExp += expAmount;
 
+        while (currentExp >= currentRequiredExp)
+        {
+            currentExp -= currentRequiredExp;
+            currentRequiredExp *= 2;
+            level++;
+            // Pick specialization
+        }
+		expBar.fillAmount = (float)currentExp / currentRequiredExp;
+    }
+	
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.transform.gameObject.layer == 10)
+		{ 
+			ExpPickUp exp = other.GetComponent<ExpPickUp>();
+			other.enabled = false;
+			LMotion.Create(0f, .75f, 0.5f)
+				.WithOnComplete(() =>
+				{
+					AddExp(exp.GetExpAmount());
+					Destroy(exp.gameObject);
+				})
+				.Bind(other,
+					(x, other) =>
+						other.transform.position = Vector3.Lerp(other.transform.position, transform.position, x));
+		}
+	}
 }
