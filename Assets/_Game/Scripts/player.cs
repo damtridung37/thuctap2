@@ -17,16 +17,9 @@ public class Player : MonoBehaviour
 	private Animator anim;
 	private Vector2 movementDir;
 
-	[Header("Health UI")]
-	[SerializeField] private TMP_Text healthText;
-	[SerializeField] private Image healthBar;
-	[SerializeField] private Image subHealthBar;
-
-
 	[Header("Exp UI")]
 	[SerializeField] private Image expBar;
 	private float currentHealth;
-	private MotionHandle healthBarMotionHandle;
 
 	private SceneTransitions sceneTransitions;
 	
@@ -44,12 +37,10 @@ public class Player : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		sceneTransitions = FindObjectOfType<SceneTransitions>();
-
-		healthBarMotionHandle = LMotion.Create(0, 0, 0).RunWithoutBinding();
-
 		currentHealth = maxHealth;
-		UpdateHealthUI(currentHealth,true);
-	}
+
+		GlobalEvent<HealthData>.Trigger("PlayerHealthChange", new HealthData{currentHealth = currentHealth, maxHealth = maxHealth, isHealing = false});
+	}	
 
 	// Update is called once per frame
 	void Update()
@@ -80,7 +71,7 @@ public class Player : MonoBehaviour
 	{
 		float postMitigationDamage = damageAmount * ( 100f / (100 + armor));
 		currentHealth -= damageAmount;
-		UpdateHealthUI(currentHealth);
+		GlobalEvent<HealthData>.Trigger("PlayerHealthChange", new HealthData{currentHealth = currentHealth, maxHealth = maxHealth, isHealing = false});
 		if (currentHealth <= 0)
 		{
 			Destroy(this.gameObject);
@@ -94,30 +85,6 @@ public class Player : MonoBehaviour
 		Instantiate(weaponToEquip, weaponHolder.position, Quaternion.identity, weaponHolder);
 	}
 	
-	private void UpdateHealthUI(float currentHealth,bool isHealing = false)
-	{
-		float healthBarFillAmount = currentHealth / maxHealth;
-		
-		if(!isHealing)
-        {
-            if(healthBarMotionHandle.IsActive()) healthBarMotionHandle.Cancel();
-
-            healthBarMotionHandle = LMotion.Create(subHealthBar.fillAmount, healthBarFillAmount, 0.25f)
-                .WithEase(Ease.InOutCubic)
-                .Bind(this, 
-                    (x, player) 
-                        => player.subHealthBar.fillAmount = x);
-        }
-	
-	
-		// for (var i = 0; i < hearts.Length; i++)
-		// {
-		// 	hearts[i].sprite = i<currentHealth ? fullHearts : emptyHearts;
-		// }
-
-		healthBar.fillAmount = healthBarFillAmount;
-		healthText.text = Mathf.FloorToInt(currentHealth) + "/" + maxHealth;
-	}
 
 	public void Heal(float healAmount)
 	{
@@ -130,7 +97,8 @@ public class Player : MonoBehaviour
 		{
 			currentHealth += healAmount;
 		}
-		UpdateHealthUI(currentHealth,true);
+		GlobalEvent<HealthData>.Trigger("PlayerHealthChange", new HealthData{currentHealth = currentHealth, maxHealth = maxHealth, isHealing = true});
+
 	}
 	
 	public void AddExp(int expAmount)
@@ -144,7 +112,7 @@ public class Player : MonoBehaviour
             level++;
             // Pick specialization
         }
-		expBar.fillAmount = (float)currentExp / currentRequiredExp;
+		GlobalEvent<ExpData>.Trigger("PlayerExpChanged", new ExpData{currentExp = currentExp, currentRequiredExp = currentRequiredExp});
     }
 	
 	private void OnTriggerEnter2D(Collider2D other)
