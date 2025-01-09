@@ -1,0 +1,132 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class WaveSpawner : Singleton<WaveSpawner>
+{
+    [System.Serializable]
+    public class Wave
+    {
+        public EnemyType[] enemies;
+        public int count;
+        public float timeBetweenSpawns;
+    }
+
+    public Wave[] waves;
+    public Transform[] spawnPoints;
+    public float timeBetweenWaves;
+    
+    [Header("EnemyPrefabDictionary")]
+    [SerializeField] private EnemyPrefabDictionary enemyPrefabDictionary;
+    private Dictionary<EnemyType,Transform> enemyContainerDictionary = new Dictionary<EnemyType, Transform>();
+    private int currentActiveEnemies;
+
+    private Wave currentWave;
+    private int currentWaveIndex;
+    private Transform player;
+
+    private bool finishedSpawning;
+
+    public GameObject boss;
+    public Transform bossSpawnPoint;
+
+    public GameObject healthBar;
+    
+    private Dictionary<EnemyType,ObjectPool<Enemy>> enemyPools = new Dictionary<EnemyType, ObjectPool<Enemy>>();
+    
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(StartNextWave(currentWaveIndex));
+    }
+
+    IEnumerator StartNextWave(int index)
+    {
+        yield return new WaitForSeconds(timeBetweenWaves);
+        StartCoroutine(SpawnWave(index));
+    }
+    IEnumerator SpawnWave(int index)
+    {
+        currentWave = waves[index];
+
+        for (int i = 0; i < currentWave.count; i++)
+        {
+            if (player == null)
+            {
+                yield break;
+            }
+            
+            EnemyType randomEnemy = currentWave.enemies[Random.Range(0, currentWave.enemies.Length)];
+            Transform randomSpot = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            
+            Enemy enemy = GetEnemy(randomEnemy,randomSpot.position);
+
+            yield return new WaitForSeconds(currentWave.timeBetweenSpawns);
+        }
+        
+        finishedSpawning = true;
+    }
+    
+	private void Update()
+	{
+        if (finishedSpawning && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        { 
+            finishedSpawning = false ;
+            if (currentWaveIndex + 1 < waves.Length) 
+            {
+                currentWaveIndex++;
+                StartCoroutine(StartNextWave(currentWaveIndex));
+            }
+            else
+            {
+                Instantiate(boss, bossSpawnPoint.position, bossSpawnPoint.rotation);
+                healthBar.SetActive(true);  
+            }
+        }
+	}
+
+    public Enemy GetEnemy(EnemyType enemyType, Vector3 position)
+    {
+        if (enemyPools.ContainsKey(enemyType))
+        {
+            return enemyPools[enemyType].Pull(position, enemyContainerDictionary[enemyType]);
+        }
+        else
+        {
+            GameObject container = new GameObject(enemyType.ToString());
+            enemyContainerDictionary.Add(enemyType, container.transform);
+            Enemy prototype = enemyPrefabDictionary[enemyType];
+            
+            if(prototype == null)
+            {
+                Debug.LogError("No prototype found for " + enemyType);
+                return null;
+            }
+            
+            ObjectPool<Enemy> newPool = new ObjectPool<Enemy>(prototype,
+                (Enemy) =>
+                {
+                    currentActiveEnemies++;
+                    Debug.Log("Active Enemies: " + currentActiveEnemies);
+                },
+                (Enemy) =>
+                {
+                    currentActiveEnemies--;
+                    Debug.Log("Active Enemies: " + currentActiveEnemies);
+                },
+                container.transform,
+                1
+                );
+            
+            enemyPools.Add(enemyType, newPool);
+            return newPool.Pull(position, container.transform);
+        }
+    }
+}
+[Serializable]
+public class EnemyPrefabDictionary : SerializableDictionary<EnemyType, Enemy>
+{
+}
+

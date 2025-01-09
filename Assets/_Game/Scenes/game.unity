@@ -1049,6 +1049,7 @@ GameObject:
   - component: {fileID: 513446268}
   - component: {fileID: 513446269}
   - component: {fileID: 513446270}
+  - component: {fileID: 513446271}
   m_Layer: 5
   m_Name: Exp
   m_TagString: Untagged
@@ -1113,6 +1114,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &513446271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513446267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff8d299125520f4884f791ac36752f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expBar: {fileID: 513446270}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -6669,20 +6683,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56c45ba28417024a86f369f605b1702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isDestroyOnLoad: 1
   waves:
-  - enemies:
-    - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
+  - enemies: 00000000
     count: 5
     timeBetweenSpawns: 2
-  - enemies:
-    - {fileID: 970229693828970796, guid: 7d935e26ac7fd4c4593fd09b7d43919c, type: 3}
-    - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
+  - enemies: 0000000001000000
     count: 10
     timeBetweenSpawns: 2
-  - enemies:
-    - {fileID: -2075827569761131376, guid: 7b851d62037c5284a8b52097d5d4d777, type: 3}
-    - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
-    - {fileID: 970229693828970796, guid: 7d935e26ac7fd4c4593fd09b7d43919c, type: 3}
+  - enemies: 000000000100000002000000
     count: 15
     timeBetweenSpawns: 2
   spawnPoints:
@@ -6698,6 +6707,13 @@ MonoBehaviour:
   - {fileID: 324894492}
   - {fileID: 16072830}
   timeBetweenWaves: 1
+  enemyPrefabDictionary:
+    m_keys: 00000000010000000200000003000000
+    m_values:
+    - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
+    - {fileID: 970229693828970796, guid: 7d935e26ac7fd4c4593fd09b7d43919c, type: 3}
+    - {fileID: -2075827569761131376, guid: 7b851d62037c5284a8b52097d5d4d777, type: 3}
+    - {fileID: 4035781114764252124, guid: 0353337751c6a45449e8bf09136ec383, type: 3}
   boss: {fileID: 4577942507149500464, guid: f53baf00eafcc834d9ca6830e7100b35, type: 3}
   bossSpawnPoint: {fileID: 1243230178}
   healthBar: {fileID: 1211192531}
@@ -7071,6 +7087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1310623640}
+  - component: {fileID: 1310623641}
   m_Layer: 5
   m_Name: HealthBarContainer
   m_TagString: Untagged
@@ -7100,6 +7117,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1310623641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310623639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44334e617d4f904aa10b6d39887fb37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthText: {fileID: 1561433642}
+  healthBar: {fileID: 396559785}
+  subHealthBar: {fileID: 222395367}
 --- !u!1 &1316266806
 GameObject:
   m_ObjectHideFlags: 0
@@ -18036,9 +18068,6 @@ MonoBehaviour:
   maxHealth: 5
   armor: 0
   weaponHolder: {fileID: 1663761279}
-  healthText: {fileID: 1561433642}
-  healthBar: {fileID: 396559785}
-  subHealthBar: {fileID: 222395367}
   expBar: {fileID: 513446270}
   joystick: {fileID: 1944515039}
 --- !u!212 &1616088037871963009

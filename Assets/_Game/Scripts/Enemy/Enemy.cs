@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPoolable<Enemy>
 {
+    [SerializeField] EnemyType enemyType;
+    public EnemyType EnemyType => enemyType;
 	public int health;
 
     [HideInInspector]
@@ -24,8 +28,19 @@ public class Enemy : MonoBehaviour
 
     public GameObject deathEffect;
 
+    private Action<Enemy> returnAction;
 
-	public virtual void Start()
+    public void Initialize(System.Action<Enemy> returnAction)
+    {
+        this.returnAction = returnAction;
+    }
+
+    public void ReturnToPool()
+    {
+         this.returnAction?.Invoke(this);
+    }
+
+    public virtual void Start()
 	{
         player = CacheDataManager.instance.player.transform;
 	}
@@ -86,8 +101,17 @@ public class Enemy : MonoBehaviour
             }
 
             Instantiate(deathEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            ReturnToPool();
 
         }
     }
+}
+
+public enum EnemyType
+{
+    Slime,
+    Summoner,
+    Ranger,
+    SkeletonMinion,
+    Boss
 }

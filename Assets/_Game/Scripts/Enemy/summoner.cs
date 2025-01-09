@@ -66,7 +66,7 @@ public class summoner : Enemy
 	{
 		if (player != null)
 		{
-			Instantiate(enemyToSummon, transform.position, transform.rotation);
+			WaveSpawner.Instance.GetEnemy(EnemyType.SkeletonMinion, transform.position);
 		}
 	}
 	IEnumerator Attack()
