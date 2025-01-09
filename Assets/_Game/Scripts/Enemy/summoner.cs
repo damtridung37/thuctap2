@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class summoner : Enemy
+public class Summoner : Enemy
 {
 	public float minX;
 	public float maxX;
@@ -32,6 +32,7 @@ public class summoner : Enemy
 
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
 		if (player != null) 
 		{
 			if (Vector2.Distance(transform.position, targetPosition) > .5f)

@@ -146,7 +146,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.75609756}
+    oldSize: {x: 0.66129035, y: 0.5}
     newSize: {x: 0.41, y: 0.31}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -194,10 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8feae252e47719a43ab019fd1658859d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  enemyType: 0
+  maxHealth: 100
   player: {fileID: 0}
   speed: 1.5
-  damage: 1
+  damage: 100
   pickUpChance: 5
   pickups:
   - {fileID: 8043004606164792877, guid: dbddd7e348506df488b8166060ca2ca7, type: 3}

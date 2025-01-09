@@ -40,6 +40,7 @@ public class Boss : MonoBehaviour
 
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
 		FlipDirection();
 		previousPosition = transform.position;
 
@@ -91,8 +92,7 @@ public class Boss : MonoBehaviour
 			anim.SetTrigger("stage2");
 		}
 
-		Enemy randomEnemy = enemies[Random.Range(0, enemies.Length)];
-		Instantiate(randomEnemy, transform.position + new Vector3(spawnOffset, spawnOffset, 0) , transform.rotation);
+		WaveSpawner.Instance.GetRandomEnemy();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

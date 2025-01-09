@@ -16,7 +16,7 @@ public class HealthPickUp : MonoBehaviour
 		if (collision.tag == "Player")
 		{
 			Instantiate(effect, transform.position, Quaternion.identity);
-			CacheDataManager.instance.player.Heal(healAmount);
+			CacheDataManager.Instance.player.Heal(healAmount);
 			Destroy(gameObject);
 		}
 	}

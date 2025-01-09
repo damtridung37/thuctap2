@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +6,10 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
 {
     [SerializeField] EnemyType enemyType;
     public EnemyType EnemyType => enemyType;
-	public int health;
+    
+	public int maxHealth;
+
+    private int health;
 
     [HideInInspector]
     public Transform player;
@@ -30,22 +31,27 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
 
     private Action<Enemy> returnAction;
 
-    public void Initialize(System.Action<Enemy> returnAction)
+    private void OnEnable() 
+    {
+        health = maxHealth;
+    }
+
+	public virtual void Start()
+	{
+        player = CacheDataManager.Instance.player.transform;
+	}
+
+    public void Initialize(Action<Enemy> returnAction)
     {
         this.returnAction = returnAction;
     }
-
+    
     public void ReturnToPool()
     {
-         this.returnAction?.Invoke(this);
+        this.returnAction?.Invoke(this);
     }
 
-    public virtual void Start()
-	{
-        player = CacheDataManager.instance.player.transform;
-	}
-    
-	public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
         if (health <= 0)
@@ -65,7 +71,7 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
                 Instantiate(healthPickUp, transform.position, transform.rotation);                 
             }
             
-            ExpPickUp temp = Instantiate(CacheDataManager.instance.ExpPickUpPrefab,transform.position,Quaternion.identity);
+            ExpPickUp temp = Instantiate(CacheDataManager.Instance.ExpPickUpPrefab,transform.position,Quaternion.identity);
             randomNumber = Random.Range(0, 101);
             if (randomNumber < 70)
             {
@@ -102,7 +108,6 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
 
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             ReturnToPool();
-
         }
     }
 }

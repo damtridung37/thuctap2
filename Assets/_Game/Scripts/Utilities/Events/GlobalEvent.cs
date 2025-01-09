@@ -34,10 +34,6 @@ public static class GlobalEvent<T>
         {
             eventDictionary[eventName]?.Invoke(parameter);
         }
-        else
-        {
-            throw new Exception("Event not found: " + eventName);
-        }
     }
     
     public static void ClearEvent(string eventName)

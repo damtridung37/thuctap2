@@ -109,12 +109,10 @@ public class WaveSpawner : Singleton<WaveSpawner>
                 (Enemy) =>
                 {
                     currentActiveEnemies++;
-                    Debug.Log("Active Enemies: " + currentActiveEnemies);
                 },
                 (Enemy) =>
                 {
                     currentActiveEnemies--;
-                    Debug.Log("Active Enemies: " + currentActiveEnemies);
                 },
                 container.transform,
                 1
@@ -123,6 +121,14 @@ public class WaveSpawner : Singleton<WaveSpawner>
             enemyPools.Add(enemyType, newPool);
             return newPool.Pull(position, container.transform);
         }
+    }
+    public Enemy GetRandomEnemy()
+    {
+        List<EnemyType> keys = new List<EnemyType>(enemyPrefabDictionary.Keys);
+        EnemyType randomEnemy = keys[Random.Range(0, keys.Count)];
+        Transform randomSpot = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+        return GetEnemy(randomEnemy,randomSpot.position);
     }
 }
 [Serializable]

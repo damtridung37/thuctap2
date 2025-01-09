@@ -22,6 +22,7 @@ public class Ranged : Enemy
 
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
 		if (player != null)
 		{
 			if (Vector2.Distance(transform.position,player.position) > stopDistance)

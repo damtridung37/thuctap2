@@ -121,10 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5eb41677b1902b4b83d3612e28d419e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  enemyType: 1
+  maxHealth: 75
   player: {fileID: 0}
   speed: 2
-  damage: 1
+  damage: 110
   pickUpChance: 10
   pickups:
   - {fileID: 8043004606164792877, guid: dbddd7e348506df488b8166060ca2ca7, type: 3}

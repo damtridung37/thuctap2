@@ -155,14 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a478bbea99a4f4b8881383e0bb1076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 1000
   enemies:
   - {fileID: -2454037980770718902, guid: 5fb009f246ff90440b43f73c8bf9c669, type: 3}
   - {fileID: 4035781114764252124, guid: 0353337751c6a45449e8bf09136ec383, type: 3}
   - {fileID: -2075827569761131376, guid: 7b851d62037c5284a8b52097d5d4d777, type: 3}
   - {fileID: 970229693828970796, guid: 7d935e26ac7fd4c4593fd09b7d43919c, type: 3}
   spawnOffset: 20
-  damage: 1
+  damage: 100
   shotTime: 2
   timeBetweenShots: 1
   projectile: {fileID: 4157866876225652084, guid: 02e3f99f962bebc41b3c3adbd8261510, type: 3}

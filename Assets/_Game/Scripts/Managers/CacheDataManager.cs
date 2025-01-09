@@ -1,23 +1,9 @@
 using UnityEngine;
 
-public class CacheDataManager : MonoBehaviour
+public class CacheDataManager : Singleton<CacheDataManager>
 {
-    public static CacheDataManager instance;
-    
     public Player player;
     public ExpPickUp ExpPickUpPrefab;
-    
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {

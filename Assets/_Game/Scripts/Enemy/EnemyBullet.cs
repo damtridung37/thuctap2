@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-	private Player playerScript;
 	private Vector2 targetPosition;
 
 	public float speed;
@@ -15,12 +14,12 @@ public class EnemyBullet : MonoBehaviour
 
 	private void Start()
 	{
-		playerScript = CacheDataManager.instance.player;
-		targetPosition = playerScript.transform.position;
+		targetPosition = CacheDataManager.Instance.player.transform.position;
 
 	}
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
 		if ((Vector2)transform.position == targetPosition)
 		{
 			Instantiate(effect, transform.position, Quaternion.identity);
@@ -36,7 +35,7 @@ public class EnemyBullet : MonoBehaviour
 	{
 		if (collision.tag == "Player")
 		{
-			playerScript.TakeDamage(damage);
+			CacheDataManager.Instance.player.TakeDamage(damage);
 			Destroy(gameObject);
 		}
 	}

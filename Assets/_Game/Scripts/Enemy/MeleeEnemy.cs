@@ -14,6 +14,7 @@ public class MeleeEnemy : Enemy
 
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
 		if (player != null)
 		{
 
@@ -41,6 +42,8 @@ public class MeleeEnemy : Enemy
 				}
 			}
 		}
+			
+	}
 		IEnumerator Attack()
 		{
 			player.GetComponent<Player>().TakeDamage(damage);
@@ -57,6 +60,4 @@ public class MeleeEnemy : Enemy
 				yield return null;
 			}
 		}
-			
-	}
 }

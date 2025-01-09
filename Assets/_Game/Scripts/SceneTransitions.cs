@@ -1,14 +1,13 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 public class SceneTransitions : MonoBehaviour
 {
     private Animator transitionAnim;
 
-	private void Start()
+    private void Start()
 	{
 		transitionAnim = GetComponent<Animator> ();
 	}
