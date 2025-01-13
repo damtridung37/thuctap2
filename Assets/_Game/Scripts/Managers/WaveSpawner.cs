@@ -23,6 +23,16 @@ public class WaveSpawner : Singleton<WaveSpawner>
     private Dictionary<EnemyType,Transform> enemyContainerDictionary = new Dictionary<EnemyType, Transform>();
     private int currentActiveEnemies;
 
+    public int CurrentActiveEnemies
+    {
+        get => currentActiveEnemies;
+        set
+        {
+            currentActiveEnemies = value;
+            SpawnWave();
+        }
+    }
+
     private Wave currentWave;
     private int currentWaveIndex;
     private Transform player;
@@ -53,6 +63,7 @@ public class WaveSpawner : Singleton<WaveSpawner>
 
         for (int i = 0; i < currentWave.count; i++)
         {
+            yield return new WaitForSeconds(currentWave.timeBetweenSpawns);
             if (player == null)
             {
                 yield break;
@@ -63,16 +74,17 @@ public class WaveSpawner : Singleton<WaveSpawner>
             
             Enemy enemy = GetEnemy(randomEnemy,randomSpot.position);
 
-            yield return new WaitForSeconds(currentWave.timeBetweenSpawns);
         }
         
         finishedSpawning = true;
     }
-    
-	private void Update()
-	{
-        if (finishedSpawning && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+
+    private void SpawnWave()
+    {
+        Debug.Log("Current Active Enemies: " + currentActiveEnemies);
+        if (finishedSpawning && currentActiveEnemies <= 0)
         { 
+            Debug.Log("Wave Finished");
             finishedSpawning = false ;
             if (currentWaveIndex + 1 < waves.Length) 
             {
@@ -85,7 +97,7 @@ public class WaveSpawner : Singleton<WaveSpawner>
                 healthBar.SetActive(true);  
             }
         }
-	}
+    }
 
     public Enemy GetEnemy(EnemyType enemyType, Vector3 position)
     {
@@ -112,7 +124,7 @@ public class WaveSpawner : Singleton<WaveSpawner>
                 },
                 (Enemy) =>
                 {
-                    currentActiveEnemies--;
+                    CurrentActiveEnemies = currentActiveEnemies - 1;
                 },
                 container.transform,
                 1
@@ -122,12 +134,13 @@ public class WaveSpawner : Singleton<WaveSpawner>
             return newPool.Pull(position, container.transform);
         }
     }
+
     public Enemy GetRandomEnemy()
     {
         List<EnemyType> keys = new List<EnemyType>(enemyPrefabDictionary.Keys);
         EnemyType randomEnemy = keys[Random.Range(0, keys.Count)];
         Transform randomSpot = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
+            
         return GetEnemy(randomEnemy,randomSpot.position);
     }
 }
@@ -136,3 +149,7 @@ public class EnemyPrefabDictionary : SerializableDictionary<EnemyType, Enemy>
 {
 }
 
+[Serializable]
+public class StatDictionary : SerializableDictionary<StatType, float>
+{
+}

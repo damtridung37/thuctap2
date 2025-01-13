@@ -40,6 +40,10 @@ public class HealthUI : MonoBehaviour
                     (x, player) 
                         => player.subHealthBar.fillAmount = x);
         }
+        else
+        {
+            subHealthBar.fillAmount = healthBarFillAmount;
+        }
 		
         healthBar.fillAmount = healthBarFillAmount;
         healthText.text = Mathf.FloorToInt(data.currentHealth) + " / " + data.maxHealth;

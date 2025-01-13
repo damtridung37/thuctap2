@@ -1,15 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 using LitMotion;
-using TMPro;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
 	[Header("Stats")]
 	
-	[SerializeField] private float speed;
-	[SerializeField] private float maxHealth;
-	[SerializeField] private int armor;
+	[SerializeField] private StatDictionary statDictionary;
 	
 	[Header("Container")]
 	[SerializeField] private Transform weaponHolder;
@@ -31,7 +28,29 @@ public class Player : MonoBehaviour
 
 	[Header("Popup UI")] 
 	[SerializeField] private GameObject skillSelectionPopup;
-
+	
+	private Dictionary<StatType,StatBuffData> statBuffs = new Dictionary<StatType, StatBuffData>();
+	
+	private void OnReceiveStatBuff((StatType,float,bool) data)
+	{
+		if(!statBuffs.ContainsKey(data.Item1))
+		{
+			statBuffs.Add(data.Item1,new StatBuffData(statDictionary[data.Item1]));
+		}
+			
+		if(data.Item3)
+		{
+			statBuffs[data.Item1].AddRawValue(data.Item2);
+		}
+		else
+		{
+			statBuffs[data.Item1].AddPercentageValue(data.Item2);
+		}
+		
+		if(data.Item1 == StatType.Health)
+			Heal(0f);
+	}
+	
 
 	// Start is called before the first frame update
 	private void Start()
@@ -40,14 +59,26 @@ public class Player : MonoBehaviour
 		anim = GetComponent<Animator>();
 		sceneTransitions = FindObjectOfType<SceneTransitions>();
 		
-		currentHealth = maxHealth;
+		currentHealth = statDictionary[StatType.Health];
+
+		foreach (var stat in statDictionary)
+		{
+			statBuffs.Add(stat.Key,new StatBuffData(stat.Value));
+		}
 		
+		InitEvent();
+	}
+
+	private void InitEvent()
+	{
 		GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
 		{
 			currentHealth = currentHealth,
-			maxHealth = maxHealth,
+			maxHealth = statBuffs[StatType.Health].GetValue(),
 			isHealing = false
 		});
+		
+		GlobalEvent<(StatType,float,bool)>.Subscribe("PlayerStatBuff",OnReceiveStatBuff);
 	}
 
 	// Update is called once per frame
@@ -72,19 +103,19 @@ public class Player : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		rb.MovePosition(rb.position + movementDir * (speed * Time.deltaTime));
+		rb.MovePosition(rb.position + movementDir * (statBuffs[StatType.Speed].GetValue() * Time.deltaTime));
 		GlobalEvent<bool>.Trigger("PlayerMoveStatusChange",movementDir != Vector2.zero);
 	}
 
 	public void TakeDamage(float damageAmount)
 	{
-		float postMitigationDamage = damageAmount * ( 100f / (100 + armor));
+		float postMitigationDamage = damageAmount * ( 100f / (100 + statBuffs[StatType.Armor].GetValue()));
 		currentHealth -= postMitigationDamage;
 		
 		GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
 		{
 			currentHealth = currentHealth,
-			maxHealth = maxHealth,
+			maxHealth = statBuffs[StatType.Health].GetValue(),
 			isHealing = false
 		});
 		
@@ -103,9 +134,9 @@ public class Player : MonoBehaviour
 
 	public void Heal(float healAmount)
 	{
-		if( currentHealth + healAmount > maxHealth)
+		if( currentHealth + healAmount > statBuffs[StatType.Health].GetValue())
 		{
-			currentHealth = maxHealth;
+			currentHealth = statBuffs[StatType.Health].GetValue();
 		}
 		else
 		{
@@ -115,14 +146,14 @@ public class Player : MonoBehaviour
 		GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
 		{
 			currentHealth = currentHealth,
-			maxHealth = maxHealth,
+			maxHealth = statBuffs[StatType.Health].GetValue(),
 			isHealing = true
 		});
 	}
 	
 	public void HealPercentage(float percentage)
 	{
-		float healAmount = maxHealth * (percentage / 100);
+		float healAmount = statBuffs[StatType.Health].GetValue() * (percentage / 100);
 		Heal(healAmount);
 	}
 
