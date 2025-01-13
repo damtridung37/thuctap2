@@ -20097,6 +20097,9 @@ MonoBehaviour:
   - {fileID: 7770155469939160741, guid: e343cdde760ea4849bc3ed00968e35ee, type: 3}
   - {fileID: 7770155469939160741, guid: e343cdde760ea4849bc3ed00968e35ee, type: 3}
   - {fileID: 7770155469939160741, guid: e343cdde760ea4849bc3ed00968e35ee, type: 3}
+  - {fileID: 1683879423720071251, guid: 688ee486b0731e941804dbc1f7fb0091, type: 3}
+  - {fileID: 1683879423720071251, guid: 688ee486b0731e941804dbc1f7fb0091, type: 3}
+  - {fileID: 1683879423720071251, guid: 688ee486b0731e941804dbc1f7fb0091, type: 3}
 --- !u!4 &1861208656
 Transform:
   m_ObjectHideFlags: 0
@@ -20886,9 +20889,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d5695c6e4a285489d688e8f4cc9716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  maxHealth: 1000
-  armor: 100
+  statDictionary:
+    m_keys: 010000000200000003000000
+    m_values:
+    - 2
+    - 1000
+    - 100
   weaponHolder: {fileID: 1663761279}
   joystick: {fileID: 1944515039}
   skillSelectionPopup: {fileID: 536072478}
