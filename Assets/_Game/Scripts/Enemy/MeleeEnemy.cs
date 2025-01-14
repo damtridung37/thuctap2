@@ -46,8 +46,8 @@ public class MeleeEnemy : Enemy
 	}
 		IEnumerator Attack()
 		{
-			player.GetComponent<Player>().TakeDamage(damage);
-			
+			CacheDataManager.Instance.player.TakeDamage(damage);
+			HitTextManager.Instance.ShowDamageText(damage, transform.position);
 			Vector2 originalPosition = transform.position;
 			Vector2 targetPosition = player.position;
 

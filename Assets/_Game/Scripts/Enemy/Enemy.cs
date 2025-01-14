@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
     public EnemyType EnemyType => enemyType;
     
 	public int maxHealth;
-
-    private int health;
+    
+    private float health;
 
     [HideInInspector]
     public Transform player;
@@ -31,12 +31,12 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
 
     private Action<Enemy> returnAction;
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         health = maxHealth;
     }
 
-	public virtual void Start()
+    public virtual void Start()
 	{
         player = CacheDataManager.Instance.player.transform;
 	}
@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
         this.returnAction?.Invoke(this);
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
         if (health <= 0)
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour, IPoolable<Enemy>
                 Instantiate(healthPickUp, transform.position, transform.rotation);                 
             }
             
-            ExpPickUp temp = Instantiate(CacheDataManager.Instance.ExpPickUpPrefab,transform.position,Quaternion.identity);
+            ExpPickUp temp = CacheDataManager.Instance.expPickUpPool.Pull(transform.position);
             randomNumber = Random.Range(0, 101);
             if (randomNumber < 70)
             {

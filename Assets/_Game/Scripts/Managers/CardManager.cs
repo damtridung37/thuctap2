@@ -16,10 +16,9 @@ public class CardManager : Singleton<CardManager>
     
     public List<BaseCard> Get3Card()
     {
-        if (cards.Count == 0)
-        {
-            SuffuleCards();
-        }
+
+        SuffuleCards();
+        
         var result = new List<BaseCard>();
         
         for (int i = 0; i < 3; i++)
@@ -57,13 +56,12 @@ public static class ListExtensions
     public static void Shuffle<T>(this IList<T> list)
     {
         int n = list.Count;
-        while (n > 1)
+        for(int i = 0; i < n; i++)
         {
-            n--;
-            int k = rng.Next(n + 1);
-            T value = list[k];
-            list[k] = list[n];
-            list[n] = value;
+            int r = i + rng.Next(n - i);
+            T t = list[r];
+            list[r] = list[i];
+            list[i] = t;
         }
     }
 }

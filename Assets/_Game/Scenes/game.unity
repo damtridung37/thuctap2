@@ -1503,6 +1503,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394465732}
   m_CullTransparentMesh: 1
+--- !u!1 &479408983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479408985}
+  - component: {fileID: 479408984}
+  m_Layer: 0
+  m_Name: HitTextManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &479408984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479408983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e996b6260941e7a4db963ef78ec0229d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDestroyOnLoad: 1
+  damageTextPrefab: {fileID: 6606022353284753428, guid: 250edda1f055f6f4bbf240abb41846b6, type: 3}
+--- !u!4 &479408985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479408983}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 522.9517, y: 589.0008, z: 0.5546676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &482028895
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,6 +2474,37 @@ RectTransform:
   m_AnchoredPosition: {x: -224.30005, y: -3.600006}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &698258358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698258359}
+  m_Layer: 0
+  m_Name: Exp_Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &698258359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698258358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 522.9517, y: 589.0008, z: 0.5546676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &699088017
 GameObject:
   m_ObjectHideFlags: 0
@@ -8163,6 +8240,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 500773876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1068573273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068573274}
+  m_Layer: 0
+  m_Name: Enemy Bullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1068573274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068573273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 522.9517, y: 589.0008, z: 0.5546676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1081241775
 GameObject:
   m_ObjectHideFlags: 0
@@ -8927,6 +9035,9 @@ MonoBehaviour:
   m_isDestroyOnLoad: 1
   player: {fileID: 7603343123302830845}
   ExpPickUpPrefab: {fileID: 7121649804746375849, guid: 7b58f6fdb186e364aad78cae73a69a3d, type: 3}
+  expPickUpParent: {fileID: 698258359}
+  enemyBulletPrefab: {fileID: -706709105432456771, guid: f4c24da2ca1b9d94c99a0fe25184f90a, type: 3}
+  enemyBulletParent: {fileID: 1068573274}
 --- !u!4 &1363137321
 Transform:
   m_ObjectHideFlags: 0
@@ -20890,11 +21001,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statDictionary:
-    m_keys: 010000000200000003000000
+    m_keys: 010000000200000003000000040000000700000006000000
     m_values:
     - 2
     - 1000
     - 100
+    - 50
+    - 50
+    - 25
   weaponHolder: {fileID: 1663761279}
   joystick: {fileID: 1944515039}
   skillSelectionPopup: {fileID: 536072478}
@@ -20976,3 +21090,6 @@ SceneRoots:
   - {fileID: 1363137321}
   - {fileID: 5470347063948842068}
   - {fileID: 1861208656}
+  - {fileID: 479408985}
+  - {fileID: 698258359}
+  - {fileID: 1068573274}

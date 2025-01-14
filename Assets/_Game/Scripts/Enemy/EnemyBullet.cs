@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour, IPoolable<EnemyBullet>
 {
 	private Vector2 targetPosition;
 
@@ -10,6 +11,18 @@ public class EnemyBullet : MonoBehaviour
 	public int damage;
 
 	public GameObject effect;
+	
+	private Action<EnemyBullet> returnAction;
+	
+	public void Initialize(Action<EnemyBullet> returnAction)
+	{
+		this.returnAction = returnAction;
+	}
+	
+	public void ReturnToPool()
+	{
+		this.returnAction?.Invoke(this);
+	}
 	
 
 	private void Start()
@@ -23,7 +36,7 @@ public class EnemyBullet : MonoBehaviour
 		if ((Vector2)transform.position == targetPosition)
 		{
 			Instantiate(effect, transform.position, Quaternion.identity);
-			Destroy(gameObject);
+			ReturnToPool();
 		}
 		else
 		{
@@ -36,7 +49,8 @@ public class EnemyBullet : MonoBehaviour
 		if (collision.tag == "Player")
 		{
 			CacheDataManager.Instance.player.TakeDamage(damage);
-			Destroy(gameObject);
+			HitTextManager.Instance.ShowDamageText(damage, transform.position);
+			ReturnToPool();
 		}
 	}
 }

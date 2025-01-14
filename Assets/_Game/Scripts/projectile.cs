@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class projectile : MonoBehaviour
@@ -12,8 +10,8 @@ public class projectile : MonoBehaviour
 	public GameObject soundObject;
 
 	private Vector2 dir = Vector2.up;
-
-	public int damage;
+	
+	public float scaleDamage;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -37,13 +35,17 @@ public class projectile : MonoBehaviour
 	{
 		if (collision.tag == "Enemy")
 		{
-			collision.GetComponent<Enemy>().TakeDamage(damage);
+			(float finalDamage, bool isCrit) = CalculateDamage();
+			CacheDataManager.Instance.GetEnemy(collision).TakeDamage(finalDamage);
+			HitTextManager.Instance.ShowDamageText(finalDamage, transform.position,isCrit);
 			DestroyProjectile();
 		}
 
 		if (collision.tag == "Boss")
 		{
-			collision.GetComponent<Boss>().TakeDamage(damage);
+			(float finalDamage, bool isCrit) = CalculateDamage();
+			collision.GetComponent<Boss>().TakeDamage(finalDamage);
+			HitTextManager.Instance.ShowDamageText(finalDamage, transform.position,isCrit);
 			DestroyProjectile();
 		}
 	}
@@ -52,6 +54,22 @@ public class projectile : MonoBehaviour
 		Quaternion rotation = Quaternion.Euler(0, 0, angle);
 		dir = rotation * Vector2.up;
 		dir = dir.normalized;
-
+	}
+	
+	private (float,bool) CalculateDamage()
+	{
+		Player player = CacheDataManager.Instance.player;
+		float playerDamage = player.GetStat(StatType.Damage);
+		float playerCritChance = player.GetStat(StatType.CritChance);
+		float playerCritDamage = player.GetStat(StatType.CritDamage);
+		
+		bool isCrit = Random.Range(0, 101) <= playerCritChance;
+		float finalDamage = playerDamage * scaleDamage;
+		if (isCrit)
+		{
+			finalDamage += finalDamage * (playerCritDamage / 100);
+		}
+		
+		return (finalDamage,isCrit);
 	}
 }

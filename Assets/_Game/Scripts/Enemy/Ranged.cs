@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ranged : Enemy
 {
@@ -11,8 +9,6 @@ public class Ranged : Enemy
 	private Animator anim;
 
 	public Transform shotPoint;
-
-	public GameObject enemyBullet;
 
 	public override void Start()
 	{
@@ -56,6 +52,6 @@ public class Ranged : Enemy
 
 		shotPoint.rotation = rotation;
 
-		Instantiate(enemyBullet, shotPoint.position, shotPoint.rotation);
+		EnemyBullet temp = CacheDataManager.Instance.enemyBulletPool.Pull(shotPoint.position,shotPoint.rotation);
 	}
 }

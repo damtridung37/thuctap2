@@ -68,6 +68,16 @@ public class Player : MonoBehaviour
 		
 		InitEvent();
 	}
+	
+	public float GetStat(StatType statType)
+	{
+		if (statBuffs.TryGetValue(statType,out StatBuffData data))
+		{
+			return data.GetValue();
+		}
+
+		return 0;
+	}
 
 	private void InitEvent()
 	{
@@ -193,7 +203,7 @@ public class Player : MonoBehaviour
 				.WithOnComplete(() =>
 				{
 					AddExp(exp.GetExpAmount());
-					Destroy(exp.gameObject);
+					exp.ReturnToPool();
 				})
 				.Bind(other,
 					(x, other) =>

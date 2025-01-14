@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
-    public int health;
+    public float health;
 	public Enemy[] enemies;
 	public float spawnOffset;
 
-	private int halfHealth;
+	private float halfHealth;
 	private Animator anim;
 
 	public int damage;
@@ -76,7 +76,7 @@ public class Boss : MonoBehaviour
 			transform.localScale = new Vector3(-1, 1, 1);
 		}
 	}
-	public void TakeDamage(int damageAmount)
+	public void TakeDamage(float damageAmount)
 	{
 		health -= damageAmount;
 		healthBar.value = health;
