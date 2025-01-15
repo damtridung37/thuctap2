@@ -24,10 +24,6 @@ public class HealthUI : MonoBehaviour
 
     private void OnPlayerHealthChanged(HealthData data)
     {
-        // for (var i = 0; i < hearts.Length; i++)
-        // {
-        // 	hearts[i].sprite = i<currentHealth ? fullHearts : emptyHearts;
-        // }
         float healthBarFillAmount = data.currentHealth / data.maxHealth;
 		
         if(!data.isHealing)

@@ -8,6 +8,7 @@ public class HealthIsWealth : Effect
     public override void ActivateEffect()
     {
         GlobalEvent<(StatType,float,bool)>.Trigger("PlayerStatBuff", (StatType.Health, 1000f, true));
+        Destroy(this.gameObject,1f);
     }
 
     public override void DeactivateEffect()

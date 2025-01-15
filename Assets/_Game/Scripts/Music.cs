@@ -8,6 +8,7 @@ public class Music : MonoBehaviour
 
 	private void Awake()
 	{
+		
 		if(instance == null)
 		{
 			instance = this;

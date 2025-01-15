@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +16,8 @@ public class weapons : MonoBehaviour
 
 	void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
+
 		GameObject nearestTarget = FindNearestTarget();
 		if (nearestTarget != null && Time.time >= shotTime)
 		{
@@ -25,23 +27,7 @@ public class weapons : MonoBehaviour
 			Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 			transform.rotation = rotation;
 		}
-
-
-			/*if (Input.GetMouseButtonDown(0))
-			{
-				if (Time.time >= shotTime)
-				{
-					for (int i = 0; i < angles.Count; i++)
-					{
-						projectile temp = Instantiate(projectile, shotPoint.position, transform.rotation);
-						temp.Init(angles[i]);
-					}
-
-					shotTime = Time.time + timeBetweenShots;
-				}
-			}*/
-
-			if (Time.time >= shotTime)
+		if (Time.time >= shotTime)
 		{
 			for (int i = 0; i < angles.Count; i++)
 			{

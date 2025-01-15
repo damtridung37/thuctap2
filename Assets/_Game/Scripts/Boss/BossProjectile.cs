@@ -25,6 +25,8 @@ public class BossProjectile : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
+
 		transform.Translate(dir * speed * Time.deltaTime);
 	}
 	void DestroyProjectile()

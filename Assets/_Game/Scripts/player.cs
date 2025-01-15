@@ -101,6 +101,8 @@ public class Player : MonoBehaviour
 
 	private void UpdateDir()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
+
 		movementDir = joystick.Direction;
 	}
 
@@ -113,6 +115,8 @@ public class Player : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
+
 		rb.MovePosition(rb.position + movementDir * (statBuffs[StatType.Speed].GetValue() * Time.deltaTime));
 		GlobalEvent<bool>.Trigger("PlayerMoveStatusChange",movementDir != Vector2.zero);
 	}

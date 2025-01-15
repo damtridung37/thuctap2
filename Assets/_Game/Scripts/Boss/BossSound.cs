@@ -17,6 +17,8 @@ public class BossSound : MonoBehaviour
 	}
 	private void Update()
 	{
+		if (GameManager.Instance.GameState == GameState.Paused) return;
+
 		if (Time.time >= nextSoundEffectTime)
 		{
 		int randomNumber = Random.Range(0, clips.Length);
