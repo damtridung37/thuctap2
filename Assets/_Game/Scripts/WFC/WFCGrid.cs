@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Collections;
 
 namespace WFC
 {
@@ -8,13 +11,13 @@ namespace WFC
         public RoomLibrary roomLibrary; // Reference to all rooms
         private GridCell[,] grid;
 
-        void Start()
+        IEnumerator Start()
         {
-            InitializeGrid();
-            RunWaveFunctionCollapse();
+            yield return StartCoroutine(nameof(InitializeGrid));
+            yield return StartCoroutine(nameof(RunWaveFunctionCollapse));
         }
 
-        void InitializeGrid()
+        IEnumerator InitializeGrid()
         {
             grid = new GridCell[gridSize.x, gridSize.y];
             for (int x = 0; x < gridSize.x; x++)
@@ -22,12 +25,15 @@ namespace WFC
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     grid[x, y] = new GridCell(new Vector2Int(x, y), roomLibrary.rooms);
+                    yield return new WaitForEndOfFrame();
+                    Debug.Log($"Initialized cell at {x}, {y}");
                 }
             }
         }
         
         void CollapseCell(GridCell cell)
         {
+            Debug.Log($"Collapsing cell at {cell.position}");
             if (cell.IsCollapsed) return;
 
             // Choose a room randomly based on probability
@@ -54,6 +60,7 @@ namespace WFC
 
         void PropagateWave(GridCell cell)
         {
+            Debug.Log($"Propagating wave from cell at {cell.position}");
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
             foreach (var dir in directions)
@@ -69,25 +76,30 @@ namespace WFC
             }
         }
 
-        void RunWaveFunctionCollapse()
+        IEnumerator RunWaveFunctionCollapse()
         {
+            Debug.Log("Running Wave Function Collapse...");
             while (HasUncollapsedCells())
             {
                 GridCell cell = GetLowestEntropyCell();
                 CollapseCell(cell);
                 PropagateWave(cell);
+                yield return new WaitForEndOfFrame();
             }
 
+            yield return new WaitForSeconds(1f);
             SpawnRooms();
         }
         
         void SpawnRooms()
         {
+            Debug.Log("Spawning rooms...");
             foreach (var cell in grid)
             {
                 if (cell.collapsedRoom != null)
                 {
-                    Instantiate(cell.collapsedRoom.prefab, new Vector3(cell.position.x, 0, cell.position.y), Quaternion.identity);
+                    Debug.Log($"Spawning room {cell.collapsedRoom.roomName} at {cell.position}");
+                    Instantiate(cell.collapsedRoom.prefab, new Vector3(cell.position.x, cell.position.y, 0f), Quaternion.identity);
                 }
             }
         }
@@ -132,6 +144,7 @@ namespace WFC
         
         GridCell GetLowestEntropyCell()
         {
+            Debug.Log("Getting lowest entropy cell...");
             GridCell bestCell = null;
             int minOptions = int.MaxValue;
 
