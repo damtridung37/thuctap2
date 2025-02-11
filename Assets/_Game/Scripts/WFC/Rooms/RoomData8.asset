@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30708206895bb374983c4547c0bab079, type: 3}
-  m_Name: RoomData1
+  m_Name: RoomData8
   m_EditorClassIdentifier: 
-  roomName: 1
-  prefab: {fileID: 4254004712130718191, guid: 0ace26c3ebdc4fe4a96abc4ebb909574, type: 3}
+  roomName: 8
+  prefab: {fileID: 8716993890885530732, guid: a34c0ade63ce86d42b0a89e2698a7ad5, type: 3}
   size: {x: 1, y: 1}
-  layout: 01
+  layout: 00
   topEdge: 1
   bottomEdge: 0
-  leftEdge: 1
+  leftEdge: 0
   rightEdge: 0
-  probability: 2
+  probability: 1

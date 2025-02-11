@@ -15,9 +15,9 @@ MonoBehaviour:
   roomName: 7
   prefab: {fileID: 8716993890885530732, guid: a7446977d9fce914ebb9fbebf9cedb37, type: 3}
   size: {x: 1, y: 1}
-  layout: 00
+  layout: 01
   topEdge: 1
   bottomEdge: 1
   leftEdge: 1
   rightEdge: 1
-  probability: 1
+  probability: 2

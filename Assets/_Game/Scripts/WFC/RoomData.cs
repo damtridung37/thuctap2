@@ -18,13 +18,38 @@ namespace WFC
         public Vector2Int size = Vector2Int.one;
         public bool[] layout;
         
-        public EdgeType topEdge;
-        public EdgeType bottomEdge;
-        public EdgeType leftEdge;
-        public EdgeType rightEdge;
+        [SerializeField] private EdgeType topEdge;
+        [SerializeField] private EdgeType bottomEdge;
+        [SerializeField] private EdgeType leftEdge;
+        [SerializeField] private EdgeType rightEdge;
+        
+        public EdgeType GetEdgeType(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Top:
+                    return topEdge;
+                case Direction.Bottom:
+                    return bottomEdge;
+                case Direction.Left:
+                    return leftEdge;
+                case Direction.Right:
+                    return rightEdge;
+                default:
+                    return EdgeType.Empty;
+            }
+        }
         
         [Header("Room Probability")]
         [Tooltip("Probability of this room being selected")]
         public float probability = 1.0f;
     }
+    public enum Direction
+    {
+        Top,
+        Bottom,
+        Left,
+        Right
+    }
 }
+

@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e764682a545b540969160343ae9d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 3, y: 3}
+  gridSize: {x: 5, y: 5}
   roomLibrary: {fileID: 11400000, guid: c9855670f035c6a43a7a9734f58200d4, type: 2}
 --- !u!4 &742872932
 Transform:

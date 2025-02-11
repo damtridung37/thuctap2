@@ -7,5 +7,6 @@ namespace WFC
     public class RoomLibrary : ScriptableObject
     {
         public List<RoomData> rooms;
+        public RoomData emptyRoom;
     }
 }
