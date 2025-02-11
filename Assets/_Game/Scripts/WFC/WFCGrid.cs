@@ -1,15 +1,16 @@
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace WFC
 {
     public class WFCGrid : MonoBehaviour
     {
         public Vector2Int gridSize = new Vector2Int(3, 3);
-        public RoomLibrary roomLibrary; // Reference to all rooms
+        public RoomLibrary roomLibrary;
+        public float delay = 0.1f;
         private GridCell[,] grid;
+        private Queue<GridCell> expansionQueue = new Queue<GridCell>(); // Queue for BFS expansion
 
         IEnumerator Start()
         {
@@ -20,135 +21,77 @@ namespace WFC
         IEnumerator InitializeGrid()
         {
             grid = new GridCell[gridSize.x, gridSize.y];
-
             for (int x = 0; x < gridSize.x; x++)
             {
                 for (int y = 0; y < gridSize.y; y++)
                 {
                     grid[x, y] = new GridCell(new Vector2Int(x, y), roomLibrary.rooms);
-                    yield return new WaitForEndOfFrame();
+                    yield return null;
+                    
+                    // Remove invalid rooms based on edges
+                    Vector2Int pos = grid[x, y].position;
+                    grid[x, y].possibleRooms.RemoveAll(r =>
+                        (pos.x == 0 && r.GetEdgeType(Direction.Left) == EdgeType.Door) ||
+                        (pos.y == 0 && r.GetEdgeType(Direction.Bottom) == EdgeType.Door) ||
+                        (pos.x == gridSize.x - 1 && r.GetEdgeType(Direction.Right) == EdgeType.Door) ||
+                        (pos.y == gridSize.y - 1 && r.GetEdgeType(Direction.Top) == EdgeType.Door)
+                    );
                 }
-            }
-        }
-
-        
-        bool IsOnBorder(Vector2Int pos)
-        {
-            return pos.x == 0 || pos.x == grid.GetLength(0) - 1 ||
-                   pos.y == 0 || pos.y == grid.GetLength(1) - 1;
-        }
-
-        
-        void CollapseCell(GridCell cell)
-        {
-            if (cell.IsCollapsed) return;
-            if (cell.possibleRooms.Count == 0)
-            {
-                Debug.LogError($"No possible rooms for cell at {cell.position}!");
-                return;
-            }
-            
-            Vector2Int pos = cell.position;
-    
-            // Remove rooms with doors on edges if on border
-            cell.possibleRooms.RemoveAll(r =>
-                    (pos.x == 0 && r.GetEdgeType(Direction.Left) == EdgeType.Door) ||  // Left border
-                    (pos.y == 0 && r.GetEdgeType(Direction.Bottom) == EdgeType.Door) || // Bottom border
-                    (pos.x == gridSize.x - 1 && r.GetEdgeType(Direction.Right) == EdgeType.Door) || // Right border
-                    (pos.y == gridSize.y - 1 && r.GetEdgeType(Direction.Top) == EdgeType.Door)  // Top border
-            );
-            
-            // Choose a room randomly based on probability
-            float totalWeight = 0;
-            foreach (var room in cell.possibleRooms)
-            {
-                totalWeight += room.probability;
-            }
-
-            float randomWeight = Random.Range(0, totalWeight);
-            float currentWeight = 0;
-            foreach (var room in cell.possibleRooms)
-            {
-                currentWeight += room.probability;
-                if (randomWeight <= currentWeight)
-                {
-                    cell.collapsedRoom = room;
-                    // 🛠 Immediately spawn the room prefab
-                    SpawnRoom(room, cell.position);
-                    Debug.Log($"Collapsing cell at {cell.position} with room {cell.collapsedRoom.roomName}");
-
-                    cell.possibleRooms.Clear();
-                    cell.possibleRooms.Add(room);
-                    break;
-                }
-            }
-        }
-
-        void PropagateWave(GridCell cell)
-        {
-            Debug.Log($"Propagating wave from cell at {cell.position}");
-            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-            foreach (var dir in directions)
-            {
-                Vector2Int neighborPos = cell.position + dir;
-                if (!IsValidPosition(neighborPos)) continue;
-
-                GridCell neighbor = grid[neighborPos.x, neighborPos.y];
-                if (neighbor.IsCollapsed) continue;
-
-                // Filter neighbor's options based on this cell's room
-                neighbor.possibleRooms.RemoveAll(r => !IsCompatible(cell.collapsedRoom, r, dir));
             }
         }
 
         IEnumerator RunWaveFunctionCollapse()
         {
             Debug.Log("Running Wave Function Collapse...");
-    
-            while (HasUncollapsedCells())
+            
+            // 1️⃣ First time: Choose a random cell and collapse it (ensure it's not empty)
+            Vector2Int startPos = new Vector2Int(Random.Range(0, gridSize.x), Random.Range(0, gridSize.y));
+            GridCell startCell = grid[startPos.x, startPos.y];
+            CollapseCell(startCell);
+            StoreConnectedNeighbors(startCell);
+
+            yield return new WaitForSeconds(delay);
+            
+            // 2️⃣ Process cells from the queue
+            while (expansionQueue.Count > 0)
             {
-                GridCell cell = GetLowestEntropyCell();
-                CollapseCell(cell);
-                PropagateWave(cell);
-                yield return new WaitForEndOfFrame();
+                GridCell currentCell = expansionQueue.Dequeue();
+                if (!currentCell.IsCollapsed)
+                {
+                    CollapseCell(currentCell);
+                    StoreConnectedNeighbors(currentCell);
+                }
+                yield return new WaitForSeconds(delay);
             }
-
-            // Validate connectivity and fix if needed
-            //EnsureConnectivity();
-
-            // yield return new WaitForSeconds(2f);
-            // SpawnRooms();
-        }
-        
-        // void SpawnRooms()
-        // {
-        //     Debug.Log("Spawning rooms...");
-        //     foreach (var cell in grid)
-        //     {
-        //         if (cell.collapsedRoom != null)
-        //         {
-        //             Debug.Log($"Spawning room {cell.collapsedRoom.roomName} at {cell.position}");
-        //             Instantiate(cell.collapsedRoom.prefab, new Vector3(cell.position.x, cell.position.y, 0f), Quaternion.identity,transform);
-        //         }
-        //     }
-        // }
-        
-        void SpawnRoom(RoomData room, Vector2Int position)
-        {
-            if (room == null || room.prefab == null)
+            
+            // 3️⃣ Collapse all remaining uncollapsed cells to empty
+            foreach (var cell in grid)
             {
-                Debug.LogError($"RoomData or prefab is NULL for cell at {position}!");
-                return;
+                if (!cell.IsCollapsed)
+                {
+                    CollapseAsEmpty(cell);
+                }
             }
-
-            Vector3 worldPos = new Vector3(position.x * 1, position.y * 1, 0);
-            Instantiate(room.prefab, worldPos, Quaternion.identity);
         }
-        
-        bool IsValidPosition(Vector2Int pos)
+
+        void StoreConnectedNeighbors(GridCell cell)
         {
-            return pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y;
+            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            foreach (var dir in directions)
+            {
+                Vector2Int neighborPos = cell.position + dir;
+                if (!IsValidPosition(neighborPos)) continue;
+
+                GridCell neighbor = grid[neighborPos.x, neighborPos.y];
+                if(neighbor.IsCollapsed) continue;
+                // Filter neighbor's options based on this cell's room
+                neighbor.possibleRooms.RemoveAll(r => !IsCompatible(cell.collapsedRoom, r, dir));
+                
+                if (AreRoomsConnectedByDoor(cell, neighbor, dir))
+                {
+                    expansionQueue.Enqueue(neighbor);
+                }
+            }
         }
         
         bool IsCompatible(RoomData roomA, RoomData roomB, Vector2Int direction)
@@ -179,33 +122,76 @@ namespace WFC
     
             return false;
         }
-        
-        bool HasUncollapsedCells()
+
+        bool AreRoomsConnectedByDoor(GridCell cell, GridCell neighbor, Vector2Int direction)
         {
-            foreach (var cell in grid)
-            {
-                if (!cell.IsCollapsed)
-                    return true;
-            }
+            if (direction == Vector2Int.up)
+                return cell.collapsedRoom.GetEdgeType(Direction.Top) == EdgeType.Door;
+            if (direction == Vector2Int.down)
+                return cell.collapsedRoom.GetEdgeType(Direction.Bottom) == EdgeType.Door;
+            if (direction == Vector2Int.left)
+                return cell.collapsedRoom.GetEdgeType(Direction.Left) == EdgeType.Door;
+            if (direction == Vector2Int.right)
+                return cell.collapsedRoom.GetEdgeType(Direction.Right) == EdgeType.Door;
+
             return false;
         }
-        
-        GridCell GetLowestEntropyCell()
-        {
-            Debug.Log("Getting lowest entropy cell...");
-            GridCell bestCell = null;
-            int minOptions = int.MaxValue;
 
-            foreach (var cell in grid)
+        void CollapseCell(GridCell cell)
+        {
+            if (cell.IsCollapsed) return;
+            
+            // Remove invalid rooms based on edges
+            // Vector2Int pos = cell.position;
+            // cell.possibleRooms.RemoveAll(r =>
+            //     (pos.x == 0 && r.GetEdgeType(Direction.Left) == EdgeType.Door) ||
+            //     (pos.y == 0 && r.GetEdgeType(Direction.Bottom) == EdgeType.Door) ||
+            //     (pos.x == gridSize.x - 1 && r.GetEdgeType(Direction.Right) == EdgeType.Door) ||
+            //     (pos.y == gridSize.y - 1 && r.GetEdgeType(Direction.Top) == EdgeType.Door)
+            // );
+            
+            // Choose a random room based on probability
+            float totalWeight = 0;
+            foreach (var room in cell.possibleRooms)
+                totalWeight += room.probability;
+            
+            float randomWeight = Random.Range(0, totalWeight);
+            float currentWeight = 0;
+            foreach (var room in cell.possibleRooms)
             {
-                if (!cell.IsCollapsed && cell.possibleRooms.Count < minOptions)
+                currentWeight += room.probability;
+                if (randomWeight <= currentWeight)
                 {
-                    minOptions = cell.possibleRooms.Count;
-                    bestCell = cell;
+                    cell.collapsedRoom = room;
+                    SpawnRoom(room, cell.position);
+                    cell.possibleRooms.Clear();
+                    cell.possibleRooms.Add(room);
+                    break;
                 }
             }
+        }
 
-            return bestCell;
+        void CollapseAsEmpty(GridCell cell)
+        {
+            cell.collapsedRoom = roomLibrary.emptyRoom;
+            SpawnRoom(cell.collapsedRoom, cell.position);
+        }
+
+        void SpawnRoom(RoomData room, Vector2Int position)
+        {
+            if (room == null || room.prefab == null)
+            {
+                Debug.LogError($"RoomData or prefab is NULL for cell at {position}!");
+                return;
+            }
+
+            Vector3 worldPos = new Vector3(position.x, position.y, 0);
+            Instantiate(room.prefab, worldPos, Quaternion.identity);
+        }
+
+        bool IsValidPosition(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y;
         }
     }
 }
