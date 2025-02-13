@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30708206895bb374983c4547c0bab079, type: 3}
+  m_Name: room_4_s_cross
+  m_EditorClassIdentifier: 
+  roomName: 2_s_up_right
+  prefab: {fileID: 7937877676851405953, guid: 497218b1e628da449b524f0502358bb7, type: 3}
+  size: {x: 1, y: 1}
+  layout: 01
+  topEdge: 1
+  bottomEdge: 1
+  leftEdge: 1
+  rightEdge: 1
+  probability: 1
