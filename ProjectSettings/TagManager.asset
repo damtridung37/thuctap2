@@ -45,3 +45,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 291291993
+    locked: 0
+  - name: Wall
+    uniqueID: 2515909721
+    locked: 0
+  - name: Border
+    uniqueID: 1002413351
+    locked: 0

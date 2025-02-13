@@ -9,6 +9,7 @@ namespace WFC
         public Vector2Int gridSize = new Vector2Int(3, 3);
         public RoomLibrary roomLibrary;
         public float delay = 0.1f;
+        public int roomSize = 1;
         private GridCell[,] grid;
         private Queue<GridCell> expansionQueue = new Queue<GridCell>(); // Queue for BFS expansion
 
@@ -185,8 +186,8 @@ namespace WFC
                 return;
             }
 
-            Vector3 worldPos = new Vector3(position.x, position.y, 0);
-            Instantiate(room.prefab, worldPos, Quaternion.identity);
+            Vector3 worldPos = new Vector3(position.x, position.y, 0) * roomSize;
+            Instantiate(room.prefab, worldPos, Quaternion.identity).gameObject.SetActive(true);
         }
 
         bool IsValidPosition(Vector2Int pos)
