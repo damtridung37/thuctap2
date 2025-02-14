@@ -1,3 +1,4 @@
+using D;
 using UnityEngine;
 
 namespace WFC
@@ -7,7 +8,7 @@ namespace WFC
     {
         [Header("Room Info")]
         public string roomName;
-        public GameObject prefab;
+        public Room prefab;
         
         /// <summary>
         /// Example of a 2x2 room with L shape layout:

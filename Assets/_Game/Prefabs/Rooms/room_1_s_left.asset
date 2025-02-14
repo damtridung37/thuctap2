@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: room_1_s_left
   m_EditorClassIdentifier: 
   roomName: 1_s_left
-  prefab: {fileID: 8868732171237467761, guid: 8e75c5e63ebf4bf44abd5415ae47f1f4, type: 3}
+  prefab: {fileID: 3743939224687563845, guid: 8e75c5e63ebf4bf44abd5415ae47f1f4, type: 3}
   size: {x: 1, y: 1}
   layout: 01
   topEdge: 0

@@ -2,7 +2,12 @@ fileFormatVersion: 2
 guid: 9e4e43ad3aaa50441ae565f26baab9fb
 ScriptedImporter:
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: Bow_Clip
+    second: {fileID: 7400000, guid: 20d34838832d38043a2def3742731eeb, type: 2}
   serializedVersion: 2
   userData: 
   assetBundleName: 
@@ -75,7 +80,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -88,7 +93,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -97,7 +102,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 638751338822455208
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -123,7 +128,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Bow_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.11111112}
+    pivot: {x: 0.5, y: 1.2222223}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -143,7 +148,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 31}
   - name: Bow_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.22222224}
+    pivot: {x: 0.5, y: 1.1111112}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -163,7 +168,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 57}
   - name: Bow_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: -0.2777778}
+    pivot: {x: 0.5, y: 1.0555556}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -183,7 +188,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 83}
   - name: Bow_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.5, y: 1}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -203,7 +208,7 @@ ScriptedImporter:
     uvTransform: {x: 36, y: 4}
   - name: Bow_Frame_4
     originalName: 
-    pivot: {x: 0.5, y: -0.10526316}
+    pivot: {x: 0.5, y: 1.1578947}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -223,7 +228,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Bow_Frame_5
     originalName: 
-    pivot: {x: 0.5, y: -1.1111112}
+    pivot: {x: 0.5, y: 1.5555557}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -306,7 +311,43 @@ ScriptedImporter:
       spriteId: b4cc39bbc5a029148ba39d598fc0737c
     linkedCells: []
     parentIndex: -1
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 

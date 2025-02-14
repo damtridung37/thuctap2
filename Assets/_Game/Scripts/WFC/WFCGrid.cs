@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using D;
 using UnityEngine;
 
 namespace WFC
@@ -12,6 +13,10 @@ namespace WFC
         public int roomSize = 1;
         private GridCell[,] grid;
         private Queue<GridCell> expansionQueue = new Queue<GridCell>(); // Queue for BFS expansion
+        
+        private Room firstRoom;
+        private Room lastRoom;
+        private List<Room> rooms = new List<Room>();
 
         IEnumerator Start()
         {
@@ -66,13 +71,20 @@ namespace WFC
             }
             
             // 3️⃣ Collapse all remaining uncollapsed cells to empty
-            foreach (var cell in grid)
-            {
-                if (!cell.IsCollapsed)
-                {
-                    CollapseAsEmpty(cell);
-                }
-            }
+            // foreach (var cell in grid)
+            // {
+            //     if (!cell.IsCollapsed)
+            //     {
+            //         CollapseAsEmpty(cell);
+            //     }
+            // }
+
+            yield return null;
+            
+            firstRoom = rooms[0];
+            lastRoom = rooms[^1];
+            
+            D.Player.Instance.transform.position = new Vector3(firstRoom.transform.position.x, firstRoom.transform.position.y, -10);
         }
 
         void StoreConnectedNeighbors(GridCell cell)
@@ -142,15 +154,6 @@ namespace WFC
         {
             if (cell.IsCollapsed) return;
             
-            // Remove invalid rooms based on edges
-            // Vector2Int pos = cell.position;
-            // cell.possibleRooms.RemoveAll(r =>
-            //     (pos.x == 0 && r.GetEdgeType(Direction.Left) == EdgeType.Door) ||
-            //     (pos.y == 0 && r.GetEdgeType(Direction.Bottom) == EdgeType.Door) ||
-            //     (pos.x == gridSize.x - 1 && r.GetEdgeType(Direction.Right) == EdgeType.Door) ||
-            //     (pos.y == gridSize.y - 1 && r.GetEdgeType(Direction.Top) == EdgeType.Door)
-            // );
-            
             // Choose a random room based on probability
             float totalWeight = 0;
             foreach (var room in cell.possibleRooms)
@@ -175,10 +178,10 @@ namespace WFC
         void CollapseAsEmpty(GridCell cell)
         {
             cell.collapsedRoom = roomLibrary.emptyRoom;
-            SpawnRoom(cell.collapsedRoom, cell.position);
+            SpawnRoom(cell.collapsedRoom, cell.position,true);
         }
 
-        void SpawnRoom(RoomData room, Vector2Int position)
+        void SpawnRoom(RoomData room, Vector2Int position, bool isEmptyRoom = false)
         {
             if (room == null || room.prefab == null)
             {
@@ -186,8 +189,14 @@ namespace WFC
                 return;
             }
 
-            Vector3 worldPos = new Vector3(position.x, position.y, 0) * roomSize;
-            Instantiate(room.prefab, worldPos, Quaternion.identity).gameObject.SetActive(true);
+            if (!isEmptyRoom)
+            {
+                Vector3 worldPos = new Vector3(position.x, position.y, 0) * roomSize;
+                Room temp = Instantiate(room.prefab, worldPos, Quaternion.identity);
+                temp.gameObject.SetActive(true);
+            
+                rooms.Add(temp);
+            }
         }
 
         bool IsValidPosition(Vector2Int pos)

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: room_4_s_cross
   m_EditorClassIdentifier: 
   roomName: 2_s_up_right
-  prefab: {fileID: 7937877676851405953, guid: 497218b1e628da449b524f0502358bb7, type: 3}
+  prefab: {fileID: 6438456377952314457, guid: 497218b1e628da449b524f0502358bb7, type: 3}
   size: {x: 1, y: 1}
   layout: 01
   topEdge: 1
   bottomEdge: 1
   leftEdge: 1
   rightEdge: 1
-  probability: 1
+  probability: 5
