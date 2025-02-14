@@ -46,6 +46,7 @@ namespace D
                     PrefabManager.Instance.SpawnDeathEffect(transform.position);
                     
                     //ReturnToPool();
+                    Destroy(this.gameObject);
                 }
             }
 

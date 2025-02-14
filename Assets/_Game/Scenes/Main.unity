@@ -301,7 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 397223472}
   arrowPrefab: {fileID: 1471703334}
-  ammoSpeed: 3
+  ammoSpeed: 7
   bowAnim: {fileID: 245745935}
 --- !u!1 &397223471
 GameObject:
@@ -701,7 +701,14 @@ MonoBehaviour:
   expPickUp: {fileID: 7121649804746375849, guid: 7b58f6fdb186e364aad78cae73a69a3d, type: 3}
   deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
   damageTextPrefab: {fileID: 6606022353284753428, guid: 250edda1f055f6f4bbf240abb41846b6, type: 3}
-  enemyToSummon: {fileID: 0}
+  enemyToSummon: {fileID: 5043741937138233170, guid: 2dded1ccc08ae884dbe79db1e9a03050, type: 3}
+  enemyData:
+  - enemyType: 1
+    prefab: {fileID: 2712489784210073365, guid: 14d250fdef669014abdf27af6a895897, type: 3}
+    rate: 1
+  - enemyType: 0
+    prefab: {fileID: 5058117154907301008, guid: 6630ee8ebe5b1fb499d30a2334f93aa7, type: 3}
+    rate: 1
 --- !u!4 &1143234270
 Transform:
   m_ObjectHideFlags: 0

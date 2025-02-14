@@ -87,6 +87,11 @@ namespace WFC
             firstRoom.Init(Room.RoomType.Entrance);
             lastRoom.Init(Room.RoomType.Portal);
             
+            for(int i = 1; i < rooms.Count - 1; i++)
+            {
+                rooms[i].Init(Room.RoomType.Arena);
+            }
+            
             D.Player.Instance.transform.position = new Vector3(firstRoom.transform.position.x, firstRoom.transform.position.y, -10);
         }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace D
@@ -7,9 +8,9 @@ namespace D
     public class Room : MonoBehaviour
     {
         private BoxCollider2D roomBorder;
-        
         [Header("Portal")]
-        [SerializeField] private GameObject portal;
+        [SerializeField]
+        private Portal portal;
         
         [Header("Chest")]
         [SerializeField] private GameObject Chest;
@@ -20,7 +21,7 @@ namespace D
         [Header("SpawnPoints")]
         [SerializeField] private int waveCount;
         [SerializeField] private float delayBetweenWaves;
-        [SerializeField] private Transform[] spawnPoints;
+        [SerializeField] private Transform spawnPoints;
         private List<Enemy> activeEnemy;
         
         public enum RoomType
@@ -44,6 +45,15 @@ namespace D
             if (other.CompareTag("Player"))
             {
                 Debug.Log($"Player Entered Room: {name}");
+                if(roomType != RoomType.Arena) return;
+                activeEnemy = new List<Enemy>();
+                foreach (var transform in spawnPoints.transform)
+                {
+                    Debug.Log("Spawning Enemy");
+                    var enemy = PrefabManager.Instance.GetRandomEnemy();
+                    enemy.transform.position = ((Transform) transform).position;
+                    activeEnemy.Add(enemy);
+                }
             }
         }
         
@@ -55,22 +65,22 @@ namespace D
             }
         }
         
+        private RoomType roomType;
+        
         public void Init(RoomType roomType)
         {
+            this.roomType = roomType;
             switch (roomType)
             {
                 case RoomType.Entrance:
-                    portal.SetActive(true);
+                    portal.gameObject.SetActive(true);
+                    portal.Init();
                     break;
                 case RoomType.Shop:
                     ShopArea.SetActive(true);
                     break;
                 case RoomType.Arena:
-                    activeEnemy = new List<Enemy>();
-                    foreach (var transform in spawnPoints)
-                    {
-                        // Spawn enemies
-                    }
+
                     break;
                 case RoomType.Boss:
                     break;
@@ -78,7 +88,8 @@ namespace D
                     Chest.SetActive(true);
                     break;
                 case RoomType.Portal:
-                    portal.SetActive(true);
+                    portal.gameObject.SetActive(true);
+                    portal.Init();
                     break;
             }
         }
