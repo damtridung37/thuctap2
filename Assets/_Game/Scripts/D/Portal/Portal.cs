@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,18 @@ namespace D
 {
     public class Portal : MonoBehaviour
     {
+        private bool isEntrance;
         public void Init(bool isEntrance = true)
         {
-            Debug.Log("Portal Init");
+            this.isEntrance = isEntrance;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if(isEntrance && other.TryGetComponent(out Character character))
+            {
+                GameManager.Instance.GetNextMap();
+            }
         }
     }
 }

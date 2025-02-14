@@ -38,6 +38,11 @@ namespace D
             StartCoroutine(LoadFloor(floor,isGameover));
         }
         
+        public void GetNextMap()
+        {
+            GetMap(currentFloor + 1);
+        }
+        
         IEnumerator LoadFloor(int floor, bool isGameover = false)
         {
             currentFloor = floor;
