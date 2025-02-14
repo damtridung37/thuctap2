@@ -62,6 +62,19 @@ public class PrefabManager : Singleton<PrefabManager>
         damageText.transform.position = position;
         damageText.SetDamageText(damage,isCritical);
     }
+    
+    [Header("Summon enemy")]
+    [SerializeField] private D.Enemy enemyToSummon;
+    public void SummonEnemy(Vector3 position, int quantityPerSummon = 1)
+    {
+        for (int i = 0; i < quantityPerSummon; i++)
+        {
+            float randomX = UnityEngine.Random.Range(-1f, 1f);
+            float randomY = UnityEngine.Random.Range(-1f, 1f);
+            Vector2 randomPosition = position + new Vector3(randomX, randomY);
+            Instantiate(enemyToSummon, randomPosition, Quaternion.identity).gameObject.SetActive(true);
+        }
+    }
 
     private void Awake()
     {

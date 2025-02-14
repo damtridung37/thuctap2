@@ -84,6 +84,9 @@ namespace WFC
             firstRoom = rooms[0];
             lastRoom = rooms[^1];
             
+            firstRoom.Init(Room.RoomType.Entrance);
+            lastRoom.Init(Room.RoomType.Portal);
+            
             D.Player.Instance.transform.position = new Vector3(firstRoom.transform.position.x, firstRoom.transform.position.y, -10);
         }
 

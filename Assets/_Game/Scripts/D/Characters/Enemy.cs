@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 namespace D
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Enemy : Character
     {
         [Header("Enemy Type")]
@@ -13,18 +11,22 @@ namespace D
         
         [Header("Health Drop")]
         [SerializeField]
-        private int healthPickUpChance;
+        protected int healthPickUpChance;
         
         [Header("Movement")]
+        [SerializeField]
         protected float stopDistance;
         
-        private Player player;
+        protected SpriteRenderer spriteRenderer;
         
-        private float attackTime;
+        protected Player player;
+        
+        protected float distanceToPlayer;
         
         protected override void Awake()
         {
             base.Awake();
+            spriteRenderer = GetComponent<SpriteRenderer>();
             player = D.Player.Instance;
         }
         
@@ -47,72 +49,75 @@ namespace D
                 }
             }
 
-        protected void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            if(player.IsDead) return;
+            
             attackTime -= Time.fixedDeltaTime;
             if (attackTime < 0) attackTime = 0;
+
+            distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
             
-            if(player.IsDead) return;
             Move();
+            Flip();
+            Render();
+            Attack();
         }
 
-        protected virtual void Move()
+        protected void Render()
         {
-            
-                if (player.transform.position.x < transform.position.x)
-                {
-                    // Người chơi bên trái -> Quái vật quay trái (lật trục X)
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-                else
-                {
-                    // Người chơi bên phải -> Quái vật quay phải (bình thường)
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
+            if(player.transform.position.y > transform.position.y)
+            {
+                spriteRenderer.sortingOrder = 1;
+            }
+            else
+            {
+                spriteRenderer.sortingOrder = -1;
+            }
+        }
+        
+        protected void Flip()
+        {
+            if (player.transform.position.x < transform.position.x)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
 
-                if (Vector2.Distance(transform.position, player.transform.position) > stopDistance)
+        protected override void Move()
+        {
+                if (distanceToPlayer > stopDistance)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, player.transform.position, statBuffs[StatType.Speed].GetValue() * Time.deltaTime);
                 }
-                else
+        }
+
+        protected override void Attack()
+        {
+            if (distanceToPlayer > stopDistance) return;
+            
+            if (attackTime <= 0)
+            {
+                attackTime += (1 / statBuffs[StatType.AttackSpeed].GetValue());
+                
+                float damage = statBuffs[StatType.Damage].GetValue();
+                float critChance = statBuffs[StatType.CritChance].GetValue();
+                float critDamage = statBuffs[StatType.CritDamage].GetValue();
+                bool isCrit = false;
+                float randomNumber = Random.Range(0, 101);
+                if (randomNumber <= critChance)
                 {
-                    if (attackTime <= 0)
-                    {
-                        attackTime += (1 / statBuffs[StatType.AttackSpeed].GetValue());
-                        StartCoroutine(Attack());
-                    }
+                    damage *= 1 + critDamage/100f;
+                    isCrit = true;
                 }
             
-        }
-        
-        IEnumerator Attack()
-        {
-            float damage = statBuffs[StatType.Damage].GetValue();
-            float critChance = statBuffs[StatType.CritChance].GetValue();
-            float critDamage = statBuffs[StatType.CritDamage].GetValue();
-            bool isCrit = false;
-            float randomNumber = Random.Range(0, 101);
-            if (randomNumber <= critChance)
-            {
-                damage *= 1 + critDamage/100f;
-                isCrit = true;
+                player.TakeDamage(damage);
+                PrefabManager.Instance.ShowDamageText(damage, player.transform.position, isCrit);
             }
-            
-            player.TakeDamage(damage);
-            PrefabManager.Instance.ShowDamageText(damage, player.transform.position, isCrit);
-
-            yield return null;
-            // Vector2 originalPosition = transform.position;
-            // Vector2 targetPosition = player.transform.position;
-            //
-            // float percent = 0;
-            // while (percent <= 1)
-            // {
-            //     percent += Time.deltaTime * (1 / statBuffs[StatType.AttackSpeed].GetValue());
-            //     float formula = (-Mathf.Pow(percent, 2) + percent) * 4;
-            //     transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
-            //     yield return null;
-            // }
         }
     }
 }

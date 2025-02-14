@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +11,14 @@ namespace D
         [SerializeField] private StatDictionary statDictionary;
         
         protected Rigidbody2D rb;
-        protected float currentHealth;
         protected Animator anim;
+        
+        protected float currentHealth;
+        protected float attackTime;
+        
         protected Dictionary<StatType, StatBuffData> statBuffs;
+        
+        public Dictionary<StatType, StatBuffData> StatBuffs => statBuffs;
 
         protected virtual void Awake()
         {
@@ -34,6 +40,8 @@ namespace D
             {
                 statBuffs.Add(stat.Key,new StatBuffData(stat.Value));
             }
+            
+            attackTime = statDictionary.TryGetValue(StatType.AttackSpeed, out var attackSpeed) ? 1 / attackSpeed : 1;
         }
         
         protected virtual void InitEvent()
@@ -42,6 +50,21 @@ namespace D
         }
 
         public virtual void TakeDamage(float damageAmount)
+        {
+            
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            
+        }
+
+        protected virtual void Attack()
+        {
+            
+        }
+
+        protected virtual void Move()
         {
             
         }

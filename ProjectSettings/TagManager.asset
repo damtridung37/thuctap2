@@ -54,10 +54,7 @@ TagManager:
   - name: Drop
     uniqueID: 3374340965
     locked: 0
-  - name: Player
-    uniqueID: 2636883819
-    locked: 0
-  - name: Enemy
+  - name: Character
     uniqueID: 1041690351
     locked: 0
   - name: Border

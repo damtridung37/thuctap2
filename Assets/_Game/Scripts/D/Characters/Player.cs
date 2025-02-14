@@ -33,7 +33,7 @@ namespace D
 
         protected override void Awake()
         {
-            weapon = GetComponentInChildren<Weapon>();
+            weapon = GetComponentInChildren<Bow>();
             if(Instance == null)
                 Instance = this;
             base.Awake();
@@ -109,7 +109,8 @@ namespace D
             weapon.transform.rotation = rotation;
             
             // Move around the player
-            weapon.transform.localPosition = new Vector3(direction.x, direction.y, 0).normalized * 0.2f;
+            weapon.transform.localPosition = new Vector3(direction.x, direction.y, 0).normalized * 0.1f;
+            weapon.transform.localPosition += new Vector3(0, 0.5f / transform.localScale.y, 0);
         }
         
         private void Update()
@@ -121,12 +122,31 @@ namespace D
                     
                 }
         
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
             //if (GameManager.Instance.GameState == GameState.Paused) return;
-
-            rb.MovePosition(rb.position + currentDirection * (statBuffs[StatType.Speed].GetValue() * Time.fixedDeltaTime));
+            if(isDead) return;
+            
+            attackTime -= Time.fixedDeltaTime;
+            if (attackTime < 0) attackTime = 0;
+            
+            Move();
             Weapon_LookAtMouse();
+            Attack();
+        }
+
+        protected override void Attack()
+        {
+            if(attackTime <= 0)
+            {
+                weapon.Attack(this);
+                attackTime += 1/statBuffs[StatType.AttackSpeed].GetValue();
+            }
+        }
+
+        protected override void Move()
+        {
+            rb.MovePosition(rb.position + currentDirection * (statBuffs[StatType.Speed].GetValue() * Time.fixedDeltaTime));
         }
         
         public override void TakeDamage(float damageAmount)
