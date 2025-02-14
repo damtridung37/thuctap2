@@ -7,7 +7,7 @@ namespace D
     [RequireComponent(typeof(BoxCollider2D))]
     public class Room : MonoBehaviour
     {
-        private BoxCollider2D roomBorder;
+        private List<BoxCollider2D> roomBorder;
         [Header("Portal")]
         [SerializeField]
         private Portal portal;
@@ -22,7 +22,6 @@ namespace D
         [SerializeField] private int waveCount;
         [SerializeField] private float delayBetweenWaves;
         [SerializeField] private Transform spawnPoints;
-        private List<Enemy> activeEnemy;
         
         public enum RoomType
         {
@@ -36,24 +35,44 @@ namespace D
         
         private void Awake()
         {
-            roomBorder = GetComponent<BoxCollider2D>();
-            roomBorder.isTrigger = true;
+            var temp = GetComponentsInChildren<BoxCollider2D>();
+            var thisCollider = GetComponent<BoxCollider2D>();
+            roomBorder = new List<BoxCollider2D>();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (temp[i] != thisCollider)
+                {
+                    roomBorder.Add(temp[i]);
+                }
+            }
         }
         
         private void OnTriggerEnter2D(Collider2D other)
         {
+            GameManager.Instance.currentRoom = this;
             if (other.CompareTag("Player"))
             {
                 Debug.Log($"Player Entered Room: {name}");
                 if(roomType != RoomType.Arena) return;
-                activeEnemy = new List<Enemy>();
+
                 foreach (var transform in spawnPoints.transform)
                 {
                     Debug.Log("Spawning Enemy");
                     var enemy = PrefabManager.Instance.GetRandomEnemy();
                     enemy.transform.position = ((Transform) transform).position;
-                    activeEnemy.Add(enemy);
+                    enemy.InitStats();
                 }
+                
+                UnlockRoom();
+                GlobalEvent<bool>.Subscribe("Clear_Enemy", UnlockRoom);
+            }
+        }
+        
+        private void UnlockRoom(bool a = false)
+        {
+            foreach (var collider in roomBorder)
+            {
+                collider.isTrigger = a;
             }
         }
         
@@ -61,6 +80,7 @@ namespace D
         {
             if (other.CompareTag("Player"))
             {
+                GlobalEvent<bool>.Unsubscribe("Clear_Enemy",UnlockRoom);
                 Debug.Log($"Player Exited Room: {name}");
             }
         }

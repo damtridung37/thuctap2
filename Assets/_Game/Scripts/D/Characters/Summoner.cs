@@ -66,7 +66,7 @@ namespace D
         
         private void Summon()
         {
-            PrefabManager.Instance.SummonEnemy(transform.position, quantityPerSummon);
+            PrefabManager.Instance.SpawnEnemy(EnemyType.SkeletonMinion,transform.position, quantityPerSummon);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace D
         private bool isDown;
         private bool isDead;
         
-        public bool IsDead => isDead;
+        public bool IsDead {get => isDead; set => isDead = value;}
         
         //Constants
         private const string IDLE = "Idle";
@@ -43,6 +43,13 @@ namespace D
         {
             Debug.Log("Player Init Event");
             base.InitEvent();
+        }
+
+        public override void InitStats()
+        {
+            Debug.LogWarning("Player Init Stats");
+            base.InitStats();
+            isDead = false;
         }
         
         private void PC_Input()
@@ -99,10 +106,10 @@ namespace D
             }
         }
         
-        private void Weapon_LookAtMouse()
+        private void Weapon_LookAtMouse(Vector3? target)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
+            Vector3 mousePos = target.HasValue?target.Value : Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = new Vector2(mousePos.x - weapon.transform.position.x, mousePos.y - weapon.transform.position.y);
             
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
@@ -131,8 +138,18 @@ namespace D
             if (attackTime < 0) attackTime = 0;
             
             Move();
-            Weapon_LookAtMouse();
-            Attack();
+            
+            Enemy enemy = PrefabManager.Instance?.GetClosestEnemy(transform.position);
+            if (enemy != null)
+            {
+                weapon.gameObject.SetActive(true);
+                Weapon_LookAtMouse(enemy.transform.position);
+                Attack();
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+            }
         }
 
         protected override void Attack()
@@ -159,7 +176,13 @@ namespace D
             if (currentHealth <= 0)
             {
                 isDead = true;
+                Invoke(nameof(OnCharacterDead), 1f);
             }
+        }
+
+        private void OnCharacterDead()
+        {
+            GlobalEvent<bool>.Trigger("OnPlayerDead", true);
         }
     }
 }

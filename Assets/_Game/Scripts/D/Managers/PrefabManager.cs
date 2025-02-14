@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace D
@@ -66,22 +67,71 @@ namespace D
             damageText.SetDamageText(damage,isCritical);
         }
         
-        [Header("Summon enemy")]
-        [SerializeField] private D.Enemy enemyToSummon;
-        public void SummonEnemy(Vector3 position, int quantityPerSummon = 1)
-        {
-            for (int i = 0; i < quantityPerSummon; i++)
-            {
-                float randomX = UnityEngine.Random.Range(-1f, 1f);
-                float randomY = UnityEngine.Random.Range(-1f, 1f);
-                Vector2 randomPosition = position + new Vector3(randomX, randomY);
-                Instantiate(enemyToSummon, randomPosition, Quaternion.identity).gameObject.SetActive(true);
-            }
-        }
-        
         [Header("Enemy Data")]
         [SerializeField] private EnemyData[] enemyData;
         private int enemyDataTotalRate;
+        private List<Enemy> activeEnemy = new List<Enemy>();
+        Dictionary<EnemyType, ObjectPool<Enemy>> enemyPools = new Dictionary<EnemyType, ObjectPool<Enemy>>();
+        
+        private Enemy GetEnemyFromPool(EnemyType enemyType)
+        {
+            if (!enemyPools.ContainsKey(enemyType))
+            {
+                enemyPools.Add(enemyType, 
+                    new ObjectPool<Enemy>(
+                        enemyData[(int)enemyType].prefab,
+                        null,
+                        (e) =>
+                        {
+                            activeEnemy.Remove(e);
+                            if(activeEnemy.Count == 0)
+                            GlobalEvent<bool>.Trigger("Clear_Enemy", true);
+                        }, 
+                        new GameObject($"Enemy_{enemyType}_Holder").transform, 
+                        10));
+            }
+            Enemy enemy = enemyPools[enemyType].Pull();
+            activeEnemy.Add(enemy);
+            return enemy;
+        }
+        
+        public Enemy GetClosestEnemy(Vector3 position)
+        {
+            if (activeEnemy == null) return null;
+            Enemy closestEnemy = null;
+            float closestDistance = Mathf.Infinity;
+            foreach (var enemy in activeEnemy)
+            {
+                if (enemy == null) continue;
+                float distance = Vector3.Distance(position, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+            return closestEnemy;
+        }
+        
+        public void ClearEnemy()
+        {
+            if (activeEnemy == null) return;
+            foreach (var enemy in activeEnemy)
+            {
+                enemy.gameObject.SetActive(false);
+            }
+            activeEnemy.Clear();
+        }
+        
+        public void SpawnEnemy(EnemyType enemyType, Vector3 position, int quantity = 1)
+        {
+            for(int i = 0; i < quantity; i++)
+            {
+                var enemy = GetEnemyFromPool(enemyType);
+                enemy.transform.position = position;
+                enemy.gameObject.SetActive(true);
+            }
+        }
         
         public Enemy GetRandomEnemy()
         {
@@ -92,7 +142,8 @@ namespace D
                 rate += enemy.rate;
                 if (randomNumber < rate)
                 {
-                    return Instantiate(enemy.prefab);
+                    EnemyType enemyType = enemy.enemyType;
+                    return GetEnemyFromPool(enemyType);
                 }
             }
             return null;

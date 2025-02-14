@@ -18,10 +18,22 @@ namespace WFC
         private Room lastRoom;
         private List<Room> rooms = new List<Room>();
 
-        IEnumerator Start()
+        public IEnumerator Init(int size = 3)
         {
+            ClearGrid();
+            gridSize = new Vector2Int(size, size);
             yield return StartCoroutine(nameof(InitializeGrid));
             yield return StartCoroutine(nameof(RunWaveFunctionCollapse));
+        }
+        
+        private void ClearGrid()
+        {
+            PrefabManager.Instance.ClearEnemy();
+            foreach (var room in rooms)
+            {
+                Destroy(room.gameObject);
+            }
+            rooms.Clear();
         }
 
         IEnumerator InitializeGrid()

@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace D
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class Enemy : Character
+    public class Enemy : Character, IPoolable<Enemy>
     {
         [Header("Enemy Type")]
         [SerializeField] EnemyType enemyType;
@@ -45,8 +46,7 @@ namespace D
         
                     PrefabManager.Instance.SpawnDeathEffect(transform.position);
                     
-                    //ReturnToPool();
-                    Destroy(this.gameObject);
+                    ReturnToPool();
                 }
             }
 
@@ -119,6 +119,16 @@ namespace D
                 player.TakeDamage(damage);
                 PrefabManager.Instance.ShowDamageText(damage, player.transform.position, isCrit);
             }
+        }
+        private Action<Enemy> returnAction;
+        public void Initialize(Action<Enemy> returnAction)
+        {
+            this.returnAction = returnAction;
+        }
+
+        public void ReturnToPool()
+        {
+            this.returnAction?.Invoke(this);
         }
     }
 }
