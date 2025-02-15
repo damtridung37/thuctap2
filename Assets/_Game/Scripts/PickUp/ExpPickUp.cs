@@ -17,6 +17,7 @@ public class ExpPickUp : MonoBehaviour, IPoolable<ExpPickUp>
     public void ReturnToPool()
     {
         this.returnAction?.Invoke(this);
+        gameObject.SetActive(false);
     }
     
     public void SetExpLevel(int expLevel)

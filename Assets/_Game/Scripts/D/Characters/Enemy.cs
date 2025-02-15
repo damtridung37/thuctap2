@@ -43,7 +43,7 @@ namespace D
                     }
 
                     ExpPickUp temp = PrefabManager.Instance.SpawnExpPickUp(transform.position);
-        
+                    temp.boxCollider.enabled = true;
                     PrefabManager.Instance.SpawnDeathEffect(transform.position);
                     
                     ReturnToPool();

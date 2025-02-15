@@ -109,7 +109,7 @@ namespace D
                     break;
                 case RoomType.Portal:
                     portal.gameObject.SetActive(true);
-                    portal.Init();
+                    portal.Init(false);
                     break;
             }
         }

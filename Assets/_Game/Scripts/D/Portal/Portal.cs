@@ -15,7 +15,7 @@ namespace D
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(isEntrance && other.TryGetComponent(out Character character))
+            if(!isEntrance && other.TryGetComponent(out Character character))
             {
                 GameManager.Instance.GetNextMap();
             }

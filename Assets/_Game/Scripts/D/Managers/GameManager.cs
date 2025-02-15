@@ -8,14 +8,14 @@ namespace D
     {
         [SerializeField] private WFCGrid wfcGrid;
         public Room currentRoom;
-        private int currentFloor = 1;
+        public PlayerData playerData;
         
+        void Awake()
+        {
+            playerData = SaveManager<PlayerData>.Load();
+        }
         void Start()
         {
-            if(PlayerPrefs.HasKey("CurrentFloor"))
-                currentFloor = PlayerPrefs.GetInt("CurrentFloor");
-            else
-                PlayerPrefs.SetInt("CurrentFloor", currentFloor);
             InitEvent();
             GetMap();
         }
@@ -25,28 +25,25 @@ namespace D
             GlobalEvent<bool>.Subscribe("OnPlayerDead", (a)
                 =>
             {
-                GetMap(-1,a);
+                GetMap(1,a);
                 Player.Instance.InitStats();
                 Player.Instance.IsDead = false;
             } );
         }
 
-        public void GetMap(int floor = -1,bool isGameover = false)
+        public void GetMap(int floor = 1,bool isGameover = false)
         {
-            if(floor == -1)
-                floor = currentFloor;
             StartCoroutine(LoadFloor(floor,isGameover));
         }
         
         public void GetNextMap()
         {
-            GetMap(currentFloor + 1);
+            GetMap(playerData.CurrentFloor + 1);
         }
         
         IEnumerator LoadFloor(int floor, bool isGameover = false)
         {
-            currentFloor = floor;
-            PlayerPrefs.SetInt("CurrentFloor", currentFloor);
+            playerData.CurrentFloor = floor;
             UIManager.Instance.LoadingScreen.Open(isGameover);
             float time = Time.time;
             
@@ -54,6 +51,8 @@ namespace D
             if(Time.time - time < 2)
                 yield return new WaitForSeconds(2 - (Time.time - time));
             
+            GlobalEvent<int>.Trigger("On_PlayerFloorChanged", floor);
+            SaveManager<PlayerData>.Save(playerData);
             UIManager.Instance.LoadingScreen.Close();
         }
     }

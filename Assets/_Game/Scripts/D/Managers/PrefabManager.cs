@@ -12,6 +12,7 @@ namespace D
         private GameObject healthPickUp;
         public void SpawnHealthPickUp(Vector3 position)
         {
+            return;
             Instantiate(healthPickUp, position, Quaternion.identity);
         }
         
@@ -45,7 +46,7 @@ namespace D
             {
                 expPickUp.SetExpLevel(1);
             }
-            return expPickUpPool.Pull(position);
+            return expPickUp;
         }
         
         [Header("Death Effect")]

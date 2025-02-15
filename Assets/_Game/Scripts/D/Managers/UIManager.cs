@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using LitMotion;
+using LitMotion.Extensions;
+using TMPro;
 using UnityEngine;
 
 namespace D
@@ -8,5 +10,27 @@ namespace D
     {
         [SerializeField] private LoadingScreen loadingScreen;
         public LoadingScreen LoadingScreen => loadingScreen;
+        
+        [SerializeField] private TMP_Text floorText;
+        
+        void Awake()
+        {
+            GlobalEvent<int>.Subscribe("On_PlayerFloorChanged", UpdateFloorText);
+        }
+        
+        public void UpdateFloorText(int floor)
+        {
+            floorText.text = String.Empty;
+            floorText.gameObject.SetActive(true);
+            LMotion.String.Create128Bytes("", $"Floor {floor}", 1f)
+                .WithScrambleChars(ScrambleMode.Lowercase)
+                .WithOnComplete(()=> Invoke(nameof(DisableFloorText), 1f))
+                .BindToText(floorText);
+        }
+        
+        private void DisableFloorText()
+        {
+            floorText.gameObject.SetActive(false);
+        }
     }
 }

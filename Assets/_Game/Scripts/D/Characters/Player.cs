@@ -1,4 +1,5 @@
 using System;
+using LitMotion;
 using UnityEngine;
 
 namespace D
@@ -26,8 +27,13 @@ namespace D
         private const string WALK_RIGHT = "WalkRight";
         private const string WALK_TOP = "WalkUP";
         private const string DIE = "Die";
+        
         private Vector2 lastDirection;
         private Vector2 currentDirection;
+
+        private int currentLevel = 1;
+        private int currentExp;
+        private int requiredExp;
         
         public static Player Instance { get; private set; }
 
@@ -48,8 +54,12 @@ namespace D
         public override void InitStats()
         {
             Debug.LogWarning("Player Init Stats");
+            
             base.InitStats();
             isDead = false;
+            currentLevel = 1;
+            currentExp = 0;
+            Heal(currentHealth);
         }
         
         private void PC_Input()
@@ -113,8 +123,8 @@ namespace D
             
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-            weapon.transform.rotation = rotation;
-            
+            //weapon.transform.rotation = rotation;
+            weapon.transform.rotation = Quaternion.Lerp( weapon.transform.rotation, rotation, .5f);
             // Move around the player
             weapon.transform.localPosition = new Vector3(direction.x, direction.y, 0).normalized * 0.1f;
             weapon.transform.localPosition += new Vector3(0, 0.5f / transform.localScale.y, 0);
@@ -169,7 +179,20 @@ namespace D
         public override void TakeDamage(float damageAmount)
         {
             if(isDead) return;
-            currentHealth -= damageAmount;
+            float postMitigationDamage = damageAmount * ( 100f / (100 + statBuffs[StatType.Armor].GetValue()));
+            currentHealth -= postMitigationDamage;
+
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+            }
+		
+            GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
+            {
+                currentHealth = currentHealth,
+                maxHealth = statBuffs[StatType.Health].GetValue(),
+                isHealing = false
+            });
             
             Debug.Log("Player Health: " + currentHealth);
             
@@ -183,6 +206,73 @@ namespace D
         private void OnCharacterDead()
         {
             GlobalEvent<bool>.Trigger("OnPlayerDead", true);
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.transform.gameObject.layer == 10)
+            { 
+                ExpPickUp exp = other.GetComponent<ExpPickUp>();
+                if(exp == null) return; 
+                exp.boxCollider.enabled = false;
+                LMotion.Create(0f, .75f, 0.5f)
+                    .WithOnComplete(() =>
+                    {
+                        AddExp(exp.GetExpAmount());
+                        exp.ReturnToPool();
+                    })
+                    .Bind(other,
+                        (x, other) =>
+                            other.transform.position = Vector3.Lerp(other.transform.position, transform.position, x));
+            }
+        }
+        
+        public void AddExp(int expAmount)
+        {
+            currentExp += expAmount;
+		
+            while (currentExp >= requiredExp)
+            {
+                currentExp -= requiredExp;
+                CalculateRequiredExp();
+                currentLevel++;
+            }
+		
+            GlobalEvent<ExpData>.Trigger("PlayerExpChanged",new ExpData
+            {
+                currentExp = currentExp,
+                currentRequiredExp = requiredExp
+            });
+        }
+        
+        public void CalculateRequiredExp()
+        {
+            requiredExp = Mathf.FloorToInt(20 * Mathf.Pow(currentLevel, 2f) * Mathf.Log10(currentLevel + 5));
+        }
+        
+        public void Heal(float healAmount)
+        {
+            if( currentHealth + healAmount > statBuffs[StatType.Health].GetValue())
+            {
+                currentHealth = statBuffs[StatType.Health].GetValue();
+            }
+            else
+            {
+                currentHealth += healAmount;
+            }
+		
+            GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
+            {
+                currentHealth = currentHealth,
+                maxHealth = statBuffs[StatType.Health].GetValue(),
+                isHealing = true
+            });
+        }
+	
+        public void HealPercentage(float percentage)
+        {
+            float healAmount = statBuffs[StatType.Health].GetValue() * (percentage / 100);
+            Heal(healAmount);
         }
     }
 }
