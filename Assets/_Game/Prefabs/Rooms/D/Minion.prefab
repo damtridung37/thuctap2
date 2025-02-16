@@ -205,3 +205,4 @@ MonoBehaviour:
   enemyType: 3
   healthPickUpChance: 0
   stopDistance: 0.5
+  CanEarnGold: 0

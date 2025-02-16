@@ -9,56 +9,58 @@ namespace D
     {
         [Header("Enemy Type")]
         [SerializeField] EnemyType enemyType;
-        
+
         [Header("Health Drop")]
         [SerializeField]
         protected int healthPickUpChance;
-        
+
         [Header("Movement")]
         [SerializeField]
         protected float stopDistance;
-        
+
         protected SpriteRenderer spriteRenderer;
-        
+
         protected Player player;
-        
+
         protected float distanceToPlayer;
-        
+
+        public bool CanEarnGold = true;
+
         protected override void Awake()
         {
             base.Awake();
             spriteRenderer = GetComponent<SpriteRenderer>();
             player = D.Player.Instance;
         }
-        
-        public override void TakeDamage(float damageAmount)
-            {
-                currentHealth -= damageAmount;
-                if (currentHealth <= 0)
-                {
-                    int randomNumber = Random.Range(0, 101);
-                    if (randomNumber < healthPickUpChance) 
-                    {
-                        PrefabManager.Instance.SpawnHealthPickUp(transform.position);             
-                    }
 
-                    ExpPickUp temp = PrefabManager.Instance.SpawnExpPickUp(transform.position);
-                    temp.boxCollider.enabled = true;
-                    PrefabManager.Instance.SpawnDeathEffect(transform.position);
-                    
-                    ReturnToPool();
+        public override void TakeDamage(float damageAmount)
+        {
+            currentHealth -= damageAmount;
+            if (currentHealth <= 0)
+            {
+                int randomNumber = Random.Range(0, 101);
+                if (randomNumber < healthPickUpChance)
+                {
+                    PrefabManager.Instance.SpawnHealthPickUp(transform.position);
                 }
+
+                ExpPickUp temp = PrefabManager.Instance.SpawnExpPickUp(transform.position);
+                temp.boxCollider.enabled = true;
+                PrefabManager.Instance.SpawnDeathEffect(transform.position);
+
+                ReturnToPool();
             }
+        }
 
         protected override void FixedUpdate()
         {
-            if(player.IsDead) return;
-            
+            if (player.IsDead) return;
+
             attackTime -= Time.fixedDeltaTime;
             if (attackTime < 0) attackTime = 0;
 
             distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-            
+
             Move();
             Flip();
             Render();
@@ -67,7 +69,7 @@ namespace D
 
         protected void Render()
         {
-            if(player.transform.position.y > transform.position.y)
+            if (player.transform.position.y > transform.position.y)
             {
                 spriteRenderer.sortingOrder = 1;
             }
@@ -76,7 +78,7 @@ namespace D
                 spriteRenderer.sortingOrder = -1;
             }
         }
-        
+
         protected void Flip()
         {
             if (player.transform.position.x < transform.position.x)
@@ -91,20 +93,20 @@ namespace D
 
         protected override void Move()
         {
-                if (distanceToPlayer > stopDistance)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, statBuffs[StatType.Speed].GetValue() * Time.deltaTime);
-                }
+            if (distanceToPlayer > stopDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, statBuffs[StatType.Speed].GetValue() * Time.deltaTime);
+            }
         }
 
         protected override void Attack()
         {
             if (distanceToPlayer > stopDistance) return;
-            
+
             if (attackTime <= 0)
             {
                 attackTime += (1 / statBuffs[StatType.AttackSpeed].GetValue());
-                
+
                 float damage = statBuffs[StatType.Damage].GetValue();
                 float critChance = statBuffs[StatType.CritChance].GetValue();
                 float critDamage = statBuffs[StatType.CritDamage].GetValue();
@@ -112,10 +114,10 @@ namespace D
                 float randomNumber = Random.Range(0, 101);
                 if (randomNumber <= critChance)
                 {
-                    damage *= 1 + critDamage/100f;
+                    damage *= 1 + critDamage / 100f;
                     isCrit = true;
                 }
-            
+
                 player.TakeDamage(damage);
                 PrefabManager.Instance.ShowDamageText(damage, player.transform.position, isCrit);
             }

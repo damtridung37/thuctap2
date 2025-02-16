@@ -17,11 +17,20 @@ namespace D
 
         public void DisplayAllKeys()
         {
-            Debug.Log("Current Keys:");
             var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
             foreach (var item in remoteConfig.AllValues)
             {
                 Debug.Log($"key: {item.Key}, value: {item.Value.StringValue}");
+                switch (item.Key)
+                {
+                    case "StaticConfig":
+                        string json = item.Value.StringValue;
+                        GameManager.Instance.staticConfig = JsonUtility.FromJson<StaticConfig>(json);
+                        break;
+                    default:
+                        Debug.Log($"key: {item.Key}, value: {item.Value.StringValue}");
+                        break;
+                }
             }
         }
 

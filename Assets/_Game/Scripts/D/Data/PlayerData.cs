@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace D
 {
+    [Serializable]
     public class PlayerData
     {
         // current progress
@@ -13,7 +13,7 @@ namespace D
         [SerializeField] private int currentExp = 0;
         [SerializeField] private int currentStatPoints = 0;
         [SerializeField] private int currentFloor = 1;
-        
+
         public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
 
         public int CurrentGold
@@ -21,25 +21,25 @@ namespace D
             get => currentGold;
             set => currentGold = value;
         }
-        
+
         public int CurrentLevel
         {
             get => currentLevel;
             set => currentLevel = value;
         }
-        
+
         public int CurrentExp
         {
             get => currentExp;
             set => currentExp = value;
         }
-        
+
         public int CurrentStatPoints
         {
             get => currentStatPoints;
             set => currentStatPoints = value;
         }
-        
+
         public int CurrentFloor
         {
             get => currentFloor;
@@ -52,14 +52,14 @@ namespace D
                 }
             }
         }
-        
-        public IDictionary<StatType,int> PlayerBonusStats
+
+        public IDictionary<StatType, int> PlayerBonusStats
         {
             get => playerBonusStats;
             set => playerBonusStats.CopyFrom(value);
         }
-        
-        
+
+
         // Highest progress
         [SerializeField] private int highestFloor = 1;
 
@@ -68,11 +68,11 @@ namespace D
             get => highestFloor;
             set => highestFloor = value;
         }
-        
+
         // Other
         [SerializeField] private string uuid;
         public string Uuid => uuid;
-        
+
         public PlayerData()
         {
             uuid = SystemInfo.deviceUniqueIdentifier;
@@ -82,7 +82,7 @@ namespace D
             }
         }
     }
-    
+
     [Serializable]
     public class StatBonusDictionary : SerializableDictionary<StatType, int>
     {

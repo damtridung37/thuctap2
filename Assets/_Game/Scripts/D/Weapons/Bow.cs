@@ -13,7 +13,6 @@ namespace D
 
         public override void Attack(Character character)
         {
-            Debug.Log("Bow Attack");
             this.character = character;
             bowAnim.speed = character.StatBuffs[StatType.AttackSpeed].GetValue();
             bowAnim.Play("Fire");
@@ -21,7 +20,6 @@ namespace D
 
         public void Fire()
         {
-            Debug.Log(firePoint.position);
             var arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
             arrow.gameObject.SetActive(true);
             arrow.Init(character, ammoSpeed);

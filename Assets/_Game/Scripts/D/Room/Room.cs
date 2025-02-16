@@ -11,18 +11,19 @@ namespace D
         [Header("Portal")]
         [SerializeField]
         private Portal portal;
-        
+
         [Header("Chest")]
         [SerializeField] private GameObject Chest;
 
         [Header("Shop")]
         [SerializeField] private GameObject ShopArea;
-        
+
         [Header("SpawnPoints")]
         [SerializeField] private int waveCount;
         [SerializeField] private float delayBetweenWaves;
         [SerializeField] private Transform spawnPoints;
-        
+        private bool isCleared = false;
+
         public enum RoomType
         {
             Entrance,
@@ -32,7 +33,7 @@ namespace D
             Treasure,
             Portal
         }
-        
+
         private void Awake()
         {
             var temp = GetComponentsInChildren<BoxCollider2D>();
@@ -46,28 +47,27 @@ namespace D
                 }
             }
         }
-        
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             GameManager.Instance.currentRoom = this;
             if (other.CompareTag("Player"))
             {
-                Debug.Log($"Player Entered Room: {name}");
-                if(roomType != RoomType.Arena) return;
+                if (roomType != RoomType.Arena || isCleared) return;
 
                 foreach (var transform in spawnPoints.transform)
                 {
                     Debug.Log("Spawning Enemy");
                     var enemy = PrefabManager.Instance.GetRandomEnemy();
-                    enemy.transform.position = ((Transform) transform).position;
+                    enemy.transform.position = ((Transform)transform).position;
                     enemy.InitStats();
                 }
-                
+
                 UnlockRoom();
                 GlobalEvent<bool>.Subscribe("Clear_Enemy", UnlockRoom);
             }
         }
-        
+
         private void UnlockRoom(bool a = false)
         {
             foreach (var collider in roomBorder)
@@ -75,18 +75,22 @@ namespace D
                 collider.isTrigger = a;
             }
         }
-        
+
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                GlobalEvent<bool>.Unsubscribe("Clear_Enemy",UnlockRoom);
-                Debug.Log($"Player Exited Room: {name}");
+                if (roomType == RoomType.Arena && !isCleared)
+                {
+                    isCleared = true;
+                    GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_WAVE, true));
+                }
+                GlobalEvent<bool>.Unsubscribe("Clear_Enemy", UnlockRoom);
             }
         }
-        
+
         private RoomType roomType;
-        
+
         public void Init(RoomType roomType)
         {
             this.roomType = roomType;
@@ -114,5 +118,5 @@ namespace D
             }
         }
     }
-    
+
 }

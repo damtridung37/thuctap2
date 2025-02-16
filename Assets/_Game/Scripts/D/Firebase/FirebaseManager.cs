@@ -8,10 +8,19 @@ namespace D
     {
         private DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;
         private bool firebaseInitialized = false;
+        public bool FirebaseInitialized => firebaseInitialized;
 
         [Header("Firebase Components")]
         [SerializeField] private RemoteConfig remoteConfig;
         [SerializeField] private RealtimeDatabase realtimeDatabase;
+
+        private PlayerData playerData;
+        public PlayerData PlayerData => playerData;
+        public void SavePlayerData(PlayerData data)
+        {
+            playerData = data;
+            realtimeDatabase.SaveData(data);
+        }
 
         private async void Start()
         {
@@ -23,11 +32,13 @@ namespace D
             dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
             if (dependencyStatus == DependencyStatus.Available)
             {
-                firebaseInitialized = true;
                 Debug.Log("Firebase is ready!");
 
                 await remoteConfig.FetchDataAsync();
-                await realtimeDatabase.LoadData();
+                playerData = await realtimeDatabase.LoadData();
+
+                await Task.Delay(1000);
+                firebaseInitialized = true;
             }
             else
             {

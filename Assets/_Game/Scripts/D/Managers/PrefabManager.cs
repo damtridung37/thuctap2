@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace D
 {
-    
+
     public class PrefabManager : Singleton<PrefabManager>
     {
         [Header("Health Drop")]
@@ -15,7 +15,7 @@ namespace D
             return;
             Instantiate(healthPickUp, position, Quaternion.identity);
         }
-        
+
         [Header("Exp Drop")]
         [SerializeField]
         private ExpPickUp expPickUp;
@@ -48,7 +48,7 @@ namespace D
             }
             return expPickUp;
         }
-        
+
         [Header("Death Effect")]
         [SerializeField]
         private GameObject deathEffect;
@@ -56,46 +56,48 @@ namespace D
         {
             Instantiate(deathEffect, position, Quaternion.identity);
         }
-        
+
         [Header("Damage Text")]
         [SerializeField] private DamageText damageTextPrefab;
         private ObjectPool<DamageText> damageTextPool;
-        
+
         public void ShowDamageText(float damage, Vector3 position, bool isCritical = false)
         {
             var damageText = damageTextPool.Pull();
             damageText.transform.position = position;
-            damageText.SetDamageText(damage,isCritical);
+            damageText.SetDamageText(damage, isCritical);
         }
-        
+
         [Header("Enemy Data")]
         [SerializeField] private EnemyData[] enemyData;
         private int enemyDataTotalRate;
         private List<Enemy> activeEnemy = new List<Enemy>();
         Dictionary<EnemyType, ObjectPool<Enemy>> enemyPools = new Dictionary<EnemyType, ObjectPool<Enemy>>();
-        
+
         private Enemy GetEnemyFromPool(EnemyType enemyType)
         {
             if (!enemyPools.ContainsKey(enemyType))
             {
-                enemyPools.Add(enemyType, 
+                enemyPools.Add(enemyType,
                     new ObjectPool<Enemy>(
                         enemyData[(int)enemyType].prefab,
                         null,
                         (e) =>
                         {
                             activeEnemy.Remove(e);
-                            if(activeEnemy.Count == 0)
-                            GlobalEvent<bool>.Trigger("Clear_Enemy", true);
-                        }, 
-                        new GameObject($"Enemy_{enemyType}_Holder").transform, 
+                            if (e.CanEarnGold)
+                                GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_KILL, true));
+                            if (activeEnemy.Count == 0)
+                                GlobalEvent<bool>.Trigger("Clear_Enemy", true);
+                        },
+                        new GameObject($"Enemy_{enemyType}_Holder").transform,
                         10));
             }
             Enemy enemy = enemyPools[enemyType].Pull();
             activeEnemy.Add(enemy);
             return enemy;
         }
-        
+
         public Enemy GetClosestEnemy(Vector3 position)
         {
             if (activeEnemy == null) return null;
@@ -113,7 +115,7 @@ namespace D
             }
             return closestEnemy;
         }
-        
+
         public void ClearEnemy()
         {
             if (activeEnemy == null) return;
@@ -123,17 +125,17 @@ namespace D
             }
             activeEnemy.Clear();
         }
-        
+
         public void SpawnEnemy(EnemyType enemyType, Vector3 position, int quantity = 1)
         {
-            for(int i = 0; i < quantity; i++)
+            for (int i = 0; i < quantity; i++)
             {
                 var enemy = GetEnemyFromPool(enemyType);
                 enemy.transform.position = position;
                 enemy.gameObject.SetActive(true);
             }
         }
-        
+
         public Enemy GetRandomEnemy()
         {
             int randomNumber = UnityEngine.Random.Range(0, enemyDataTotalRate);
@@ -152,7 +154,7 @@ namespace D
 
         private void Awake()
         {
-            foreach(var enemy in enemyData)
+            foreach (var enemy in enemyData)
             {
                 enemyDataTotalRate += enemy.rate;
             }
