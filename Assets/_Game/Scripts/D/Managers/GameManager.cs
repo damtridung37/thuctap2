@@ -86,5 +86,15 @@ namespace D
             SaveManager<PlayerData>.Save(playerData);
             UIManager.Instance.LoadingScreen.Close();
         }
+
+        public Vector3 MapCenter()
+        {
+            return wfcGrid.MapCenter;
+        }
+
+        public Vector2Int GridSize()
+        {
+            return wfcGrid.MapSize;
+        }
     }
 }

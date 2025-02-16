@@ -71,7 +71,7 @@ namespace D
         [Header("Enemy Data")]
         [SerializeField] private EnemyData[] enemyData;
         private int enemyDataTotalRate;
-        private List<Enemy> activeEnemy = new List<Enemy>();
+        public List<Enemy> activeEnemy = new List<Enemy>();
         Dictionary<EnemyType, ObjectPool<Enemy>> enemyPools = new Dictionary<EnemyType, ObjectPool<Enemy>>();
 
         private Enemy GetEnemyFromPool(EnemyType enemyType)
@@ -89,6 +89,7 @@ namespace D
                                 GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_KILL, true));
                             if (activeEnemy.Count == 0)
                                 GlobalEvent<bool>.Trigger("Clear_Enemy", true);
+                            Debug.Log(activeEnemy.Count);
                         },
                         new GameObject($"Enemy_{enemyType}_Holder").transform,
                         10));

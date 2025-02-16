@@ -18,6 +18,9 @@ namespace WFC
         private Room lastRoom;
         private List<Room> rooms = new List<Room>();
 
+        public Vector3 MapCenter => new Vector3((gridSize.x - 1) / 2f, (gridSize.y - 1) / 2f) * roomSize;
+        public Vector2Int MapSize => gridSize * roomSize;
+
         [SerializeField] private float shopAppearChance = 0.2f;
 
         public IEnumerator Init(int size = 3)

@@ -48,12 +48,18 @@ namespace D
             }
         }
 
+        bool isFirstTime = true;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             GameManager.Instance.currentRoom = this;
+
+
             if (other.CompareTag("Player"))
             {
-                if (roomType != RoomType.Arena || isCleared) return;
+                if (roomType != RoomType.Arena) return;
+                if (!isFirstTime || isCleared) return;
+                isFirstTime = false;
 
                 foreach (var transform in spawnPoints.transform)
                 {
@@ -63,6 +69,8 @@ namespace D
                     enemy.InitStats();
                 }
 
+                isCleared = false;
+
                 UnlockRoom();
                 GlobalEvent<bool>.Subscribe("Clear_Enemy", UnlockRoom);
             }
@@ -70,23 +78,20 @@ namespace D
 
         private void UnlockRoom(bool a = false)
         {
-            foreach (var collider in roomBorder)
+            Debug.Log("Room: " + this.name);
+            Debug.Log("Unlocking Room" + a);
+            if (a)
             {
-                collider.isTrigger = a;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                if (roomType == RoomType.Arena && !isCleared)
-                {
-                    isCleared = true;
-                    GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_WAVE, true));
-                }
+                isCleared = true;
+                roomBorder[0].transform.parent.gameObject.SetActive(false);
+                GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_WAVE, true));
                 GlobalEvent<bool>.Unsubscribe("Clear_Enemy", UnlockRoom);
             }
+            else
+                foreach (var collider in roomBorder)
+                {
+                    collider.isTrigger = a;
+                }
         }
 
         private RoomType roomType;
