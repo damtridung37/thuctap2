@@ -15,20 +15,29 @@ namespace D
             PlayerPrefs.Save();
         }
     
-        public static T Load()
+        public static T Load(bool debug = false)
         {
             if (PlayerPrefs.HasKey(SaveKey))
             {
                 string json = PlayerPrefs.GetString(SaveKey);
+                if (debug)
+                {
+                    Debug.Log($"{SaveKey}: {json}");
+                }
                 return JsonUtility.FromJson<T>(json);
             }
-            return new T();
+            T t = new T();
+            Save(t);
+            return t;
         }
     
         public static void Delete()
         {
-            PlayerPrefs.DeleteKey(SaveKey);
-            PlayerPrefs.Save();
+            if (PlayerPrefs.HasKey(SaveKey))
+            {
+                PlayerPrefs.DeleteKey(SaveKey);
+                PlayerPrefs.Save();
+            }
         }
     }
 }

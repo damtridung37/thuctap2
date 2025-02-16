@@ -30,6 +30,12 @@ namespace D
         
         private void DisableFloorText()
         {
+            // string temp = floorText.text;
+            // floorText.text = String.Empty;
+            // LMotion.String.Create128Bytes(temp, "        ", 1f)
+            //     .WithScrambleChars(ScrambleMode.Lowercase)
+            //     .WithOnComplete(()=> floorText.gameObject.SetActive(false))
+            //     .BindToText(floorText);
             floorText.gameObject.SetActive(false);
         }
     }

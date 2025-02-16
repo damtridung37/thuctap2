@@ -12,7 +12,8 @@ namespace D
         
         void Awake()
         {
-            playerData = SaveManager<PlayerData>.Load();
+            //SaveManager<PlayerData>.Delete();
+            playerData = SaveManager<PlayerData>.Load(true);
         }
         void Start()
         {

@@ -1,64 +1,43 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace D
 {
-    [Serializable]
     public class PlayerData
     {
         // current progress
-        private int currentGold = 0;
-        private int currentLevel = 1;
-        private int currentExp = 0;
-        private int currentStatPoints = 0;
-        private int currentFloor = 1;
+        [SerializeField] private int currentGold = 0;
+        [SerializeField] private int currentLevel = 1;
+        [SerializeField] private int currentExp = 0;
+        [SerializeField] private int currentStatPoints = 0;
+        [SerializeField] private int currentFloor = 1;
         
-        private Dictionary<StatType,int> playerStats = new Dictionary<StatType, int>();
+        public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
 
         public int CurrentGold
         {
             get => currentGold;
-            set
-            {
-                currentGold = value;
-            }
+            set => currentGold = value;
         }
         
         public int CurrentLevel
         {
             get => currentLevel;
-            set
-            {
-                currentLevel = value;
-            }
+            set => currentLevel = value;
         }
         
         public int CurrentExp
         {
             get => currentExp;
-            set
-            {
-                currentExp = value;
-            }
+            set => currentExp = value;
         }
         
         public int CurrentStatPoints
         {
             get => currentStatPoints;
-            set
-            {
-                currentStatPoints = value;
-            }
-        }
-        
-        public Dictionary<StatType, int> PlayerStats
-        {
-            get => playerStats;
-            set
-            {
-                playerStats = value;
-            }
+            set => currentStatPoints = value;
         }
         
         public int CurrentFloor
@@ -67,21 +46,45 @@ namespace D
             set
             {
                 currentFloor = value;
-                if(currentFloor > highestFloor)
+                if (currentFloor > highestFloor)
+                {
                     highestFloor = currentFloor;
+                }
             }
         }
         
-        // Highest progress
-        private int highestFloor;
+        public IDictionary<StatType,int> PlayerBonusStats
+        {
+            get => playerBonusStats;
+            set => playerBonusStats.CopyFrom(value);
+        }
         
+        
+        // Highest progress
+        [SerializeField] private int highestFloor = 1;
+
         public int HighestFloor
         {
             get => highestFloor;
-            set
+            set => highestFloor = value;
+        }
+        
+        // Other
+        [SerializeField] private string uuid;
+        public string Uuid => uuid;
+        
+        public PlayerData()
+        {
+            uuid = SystemInfo.deviceUniqueIdentifier;
+            foreach (StatType statType in Enum.GetValues(typeof(StatType)))
             {
-                highestFloor = value;
+                PlayerBonusStats.Add(statType, 0);
             }
         }
+    }
+    
+    [Serializable]
+    public class StatBonusDictionary : SerializableDictionary<StatType, int>
+    {
     }
 }
