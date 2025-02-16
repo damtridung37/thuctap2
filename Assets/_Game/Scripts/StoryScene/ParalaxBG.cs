@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ParalaxBG : MonoBehaviour
 {
-    [SerializeField] private RawImage bgImage;
     [SerializeField] private RawImage farImage;
     [SerializeField] private RawImage midImage;
     [SerializeField] private RawImage closeImage;
@@ -17,11 +16,15 @@ public class ParalaxBG : MonoBehaviour
     Vector2 midPos;
     Vector2 closePos;
 
+    int currentSceneIndex;
+
     private int currentLine = 0;
     bool isWriting = false;
 
     private void Start()
     {
+        currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
+        if (currentSceneIndex ==0) return;
         LMotion.Create(0, 0, 0).RunWithoutBinding();
         WriteTextAnimation();
     }
@@ -35,6 +38,7 @@ public class ParalaxBG : MonoBehaviour
         midPos = new Vector2(mousePos.x * 0.3f, (mousePos.y - .5f) * 0.3f);
         closePos = new Vector2(mousePos.x * 0.4f, (mousePos.y - .5f) * 0.4f);
 
+        if (currentSceneIndex ==0) return;
         if (!isWriting && Input.GetMouseButtonDown(0))
         {
             WriteTextAnimation();

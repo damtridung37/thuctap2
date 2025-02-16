@@ -25,7 +25,7 @@ public class EnemyBullet : MonoBehaviour, IPoolable<EnemyBullet>
 	}
 	
 
-	private void Start()
+	private void OnEnable()
 	{
 		targetPosition = CacheDataManager.Instance.player.transform.position;
 
@@ -33,7 +33,7 @@ public class EnemyBullet : MonoBehaviour, IPoolable<EnemyBullet>
 	private void Update()
 	{
 		if (GameManager.Instance.GameState == GameState.Paused) return;
-		if (Vector3.Distance(transform.position, targetPosition) < 1f)
+		if (Vector3.Distance(transform.position, targetPosition) < .1f)
 		{
 			Instantiate(effect, transform.position, Quaternion.identity);
 			ReturnToPool();

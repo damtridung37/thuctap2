@@ -17,9 +17,9 @@ public class FinalMotivation :Effect
     private void OnPlayerHealthChanged(HealthData healthData)
     {
         float x = healthData.currentHealth / healthData.maxHealth;
-        if (x <= 0.1f)
+        if (x <= 0.3f)
         {
-            GlobalEvent<(StatType, float, bool)>.Trigger("PlayerStatBuff", (StatType.Health, healthData.maxHealth * 0.1f, true));
+            //GlobalEvent<(StatType, float, bool)>.Trigger("PlayerStatBuff", (StatType.Health, healthData.maxHealth * 0.1f, true));
             GlobalEvent<(StatType, float, bool)>.Trigger("PlayerStatBuff", (StatType.Damage, 50, true));
             
            Invoke("DeactivateEffect", 5f);

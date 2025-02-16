@@ -52,6 +52,6 @@ public class Ranged : Enemy
 
 		shotPoint.rotation = rotation;
 
-		EnemyBullet temp = CacheDataManager.Instance.enemyBulletPool.Pull(shotPoint.position,shotPoint.rotation);
+		EnemyBullet temp = CacheDataManager.Instance.enemyBulletPool.Pull(shotPoint.position);
 	}
 }

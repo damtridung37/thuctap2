@@ -124,6 +124,11 @@ public class Player : MonoBehaviour
 	{
 		float postMitigationDamage = damageAmount * ( 100f / (100 + statBuffs[StatType.Armor].GetValue()));
 		currentHealth -= postMitigationDamage;
+
+		if (currentHealth < 0)
+		{
+			currentHealth = 0;
+		}
 		
 		GlobalEvent<HealthData>.Trigger("PlayerHealthChanged",new HealthData
 		{
@@ -135,7 +140,7 @@ public class Player : MonoBehaviour
 		if (currentHealth <= 0)
 		{
 			Destroy(this.gameObject);
-			sceneTransitions.LoadScene("Lose");
+			sceneTransitions.LoadScene("Story");
 		}
 	}
 
