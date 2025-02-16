@@ -252,7 +252,8 @@ MonoBehaviour:
   - But ...
   - why does it feel so real?
   - No ... it's real ... I can't use my powers anymore.
-  - Where is this?
+  - Where is this place?
+  - -- Click any where to continue --
   storyText: {fileID: 994386190}
   loadScene: {fileID: 1491010161}
 --- !u!1 &345295935
