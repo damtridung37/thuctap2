@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace D
@@ -8,6 +7,7 @@ namespace D
     public class Room : MonoBehaviour
     {
         private List<BoxCollider2D> roomBorder;
+        public int doorCount;
         [Header("Portal")]
         [SerializeField]
         private Portal portal;
@@ -16,7 +16,7 @@ namespace D
         [SerializeField] private GameObject Chest;
 
         [Header("Shop")]
-        [SerializeField] private GameObject ShopArea;
+        [SerializeField] private Shop ShopArea;
 
         [Header("SpawnPoints")]
         [SerializeField] private int waveCount;
@@ -101,7 +101,7 @@ namespace D
                     portal.Init();
                     break;
                 case RoomType.Shop:
-                    ShopArea.SetActive(true);
+                    ShopArea.gameObject.SetActive(true);
                     break;
                 case RoomType.Arena:
 

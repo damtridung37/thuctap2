@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a280c1a8c75f0db4da987a7b04084b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorCount: 3
   portal: {fileID: 5222793021555865548}
   Chest: {fileID: 0}
   ShopArea: {fileID: 0}

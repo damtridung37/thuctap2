@@ -9,33 +9,30 @@ namespace D
     public class UIManager : Singleton<UIManager>
     {
         [SerializeField] private LoadingScreen loadingScreen;
+        [SerializeField] private ShopUI shopUI;
+
+        public ShopUI ShopUI => shopUI;
         public LoadingScreen LoadingScreen => loadingScreen;
-        
+
         [SerializeField] private TMP_Text floorText;
-        
+
         void Awake()
         {
             GlobalEvent<int>.Subscribe("On_PlayerFloorChanged", UpdateFloorText);
         }
-        
+
         public void UpdateFloorText(int floor)
         {
             floorText.text = String.Empty;
             floorText.gameObject.SetActive(true);
             LMotion.String.Create128Bytes("", $"Floor {floor}", 1f)
                 .WithScrambleChars(ScrambleMode.Lowercase)
-                .WithOnComplete(()=> Invoke(nameof(DisableFloorText), 1f))
+                .WithOnComplete(() => Invoke(nameof(DisableFloorText), 1f))
                 .BindToText(floorText);
         }
-        
+
         private void DisableFloorText()
         {
-            // string temp = floorText.text;
-            // floorText.text = String.Empty;
-            // LMotion.String.Create128Bytes(temp, "        ", 1f)
-            //     .WithScrambleChars(ScrambleMode.Lowercase)
-            //     .WithOnComplete(()=> floorText.gameObject.SetActive(false))
-            //     .BindToText(floorText);
             floorText.gameObject.SetActive(false);
         }
     }
