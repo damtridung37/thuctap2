@@ -18,7 +18,8 @@ namespace WFC
         private Room lastRoom;
         private List<Room> rooms = new List<Room>();
 
-        [SerializeField] private float shopAppearChance = 0.2f;
+        public Vector3 MapCenter => new Vector3((gridSize.x - 1) / 2f, (gridSize.y - 1) / 2f) * roomSize;
+        public Vector2Int MapSize => gridSize * roomSize;
 
         public IEnumerator Init(int size = 3)
         {
@@ -101,7 +102,7 @@ namespace WFC
             firstRoom.Init(Room.RoomType.Entrance);
             lastRoom.Init(Room.RoomType.Portal);
 
-            bool shopAppeared = (Random.value < shopAppearChance);
+            bool shopAppeared = (Random.value < D.GameManager.Instance.staticConfig.SHOP_APPERANCE_RATE);
 
             for (int i = 1; i < rooms.Count - 1; i++)
             {

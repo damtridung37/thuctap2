@@ -53,12 +53,20 @@ namespace D
 
         public override void InitStats()
         {
-            statDictionary = GameManager.Instance.staticConfig.playerStats;
+            StaticConfig staticConfig = GameManager.Instance.staticConfig;
+            PlayerData playerData = GameManager.Instance.playerData;
+            statDictionary = staticConfig.playerStats;
             base.InitStats();
             isDead = false;
-            currentLevel = 1;
-            currentExp = 0;
+            currentLevel = playerData.CurrentLevel;
+            currentExp = playerData.CurrentExp;
+            currentHealth = playerData.CurrentHealth;
+            if (currentHealth == -1)
+            {
+                currentHealth = statBuffs[StatType.Health].GetValue();
+            }
             Heal(currentHealth);
+            AddExp(0);
         }
 
         private void PC_Input()

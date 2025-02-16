@@ -21,5 +21,7 @@ namespace D
             {StatType.CritDamage, 0},
             {StatType.Armor, 0},
         };
+
+        public float SHOP_APPERANCE_RATE = 0.3f;
     }
 }
