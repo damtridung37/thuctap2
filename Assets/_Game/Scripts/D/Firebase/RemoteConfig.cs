@@ -1,61 +1,102 @@
 using System;
 using System.Threading.Tasks;
-using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using UnityEngine;
 
 namespace D
 {
-    public class RemoteConfig : Singleton<RemoteConfig>
+    public class RemoteConfig : MonoBehaviour
     {
-        //public ConfigData allConfigData;
-            private void Awake()
+        private LastFetchStatus remoteDataState;
+        private bool fetchRemoteDone = false;
+
+        [SerializeField] private float timeOutSetFetchTrue = 2f;
+
+        public LastFetchStatus RemoteDataState { get => remoteDataState; set => remoteDataState = value; }
+        public bool FetchRemoteDone { get => fetchRemoteDone; set => fetchRemoteDone = value; }
+
+        public void DisplayAllKeys()
+        {
+            Debug.Log("Current Keys:");
+            var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
+            foreach (var item in remoteConfig.AllValues)
             {
-                //print("json:" + JsonUtility.ToJson(allConfigData));
-                CheckRemoteConfigValues();
+                Debug.Log($"key: {item.Key}, value: {item.Value.StringValue}");
             }
-        
-            public Task CheckRemoteConfigValues()
+        }
+
+        public void EnableAutoFetch()
+        {
+            Debug.Log("Enabling auto-fetch:");
+            FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
+        }
+
+        public void DisableAutoFetch()
+        {
+            Debug.Log("Disabling auto-fetch:");
+            FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener -= ConfigUpdateListenerEventHandler;
+        }
+
+        private async void ConfigUpdateListenerEventHandler(object sender, ConfigUpdateEventArgs args)
+        {
+            if (args.Error != RemoteConfigError.None)
             {
-                Debug.Log("Fetching data...");
-                Task fetchTask = FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero);
-                return fetchTask.ContinueWithOnMainThread(FetchComplete);
-            }
-            private void FetchComplete(Task fetchTask)
-            {
-                if (!fetchTask.IsCompleted)
-                {
-                    Debug.LogError("Retrieval hasn't finished.");
-                    return;
-                }
-        
-                var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
-                var info = remoteConfig.Info;
-                if (info.LastFetchStatus != LastFetchStatus.Success)
-                {
-                    Debug.LogError($"{nameof(FetchComplete)} was unsuccessful\n{nameof(info.LastFetchStatus)}: {info.LastFetchStatus}");
-                    return;
-                }
-        
-                // Fetch successful. Parameter values must be activated to use.
-                remoteConfig.ActivateAsync()
-                  .ContinueWithOnMainThread(
-                    task => {
-                        Debug.Log($"Remote data loaded and ready for use. Last fetch time {info.FetchTime}.");
-        
-                        // string configData = remoteConfig.GetValue("all_Game_data").StringValue;
-                        // allConfigData = JsonUtility.FromJson<ConfigData>(configData);
-        
-                        print("Total values: "+remoteConfig.AllValues.Count);
-                     
-                       foreach (var item in remoteConfig.AllValues)
-                       {
-                           print("Key :" + item.Key);
-                           print("Value: " + item.Value.StringValue);
-                       }
-        
-                    });
+                Debug.LogError($"Error occurred while listening: {args.Error}");
+                return;
             }
 
+            Debug.Log($"Auto-fetch received a new config. Updated keys: {string.Join(", ", args.UpdatedKeys)}");
+
+            var info = FirebaseRemoteConfig.DefaultInstance.Info;
+            await FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+            Debug.Log($"Remote data loaded and ready (last fetch time {info.FetchTime}).");
+        }
+
+        public async Task FetchDataAsync()
+        {
+            Debug.Log("Fetching data...");
+            Invoke(nameof(SetFetchDone), timeOutSetFetchTrue);
+
+            try
+            {
+                await FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero);
+                await FetchComplete();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Fetch encountered an error: {e.Message}");
+            }
+        }
+
+        private void SetFetchDone()
+        {
+            FetchRemoteDone = true;
+        }
+
+        private async Task FetchComplete()
+        {
+            var info = FirebaseRemoteConfig.DefaultInstance.Info;
+
+            switch (info.LastFetchStatus)
+            {
+                case LastFetchStatus.Success:
+                    await FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+                    Debug.Log($"Remote data loaded and ready (last fetch time {info.FetchTime}).");
+                    DisplayAllKeys();
+                    RemoteDataState = LastFetchStatus.Success;
+                    FetchRemoteDone = true;
+                    break;
+
+                case LastFetchStatus.Failure:
+                    RemoteDataState = LastFetchStatus.Failure;
+                    Debug.LogError($"Fetch failed: {info.LastFetchFailureReason}");
+                    break;
+
+                case LastFetchStatus.Pending:
+                    RemoteDataState = LastFetchStatus.Pending;
+                    Debug.Log("Latest Fetch call still pending.");
+                    break;
+            }
+        }
     }
 }

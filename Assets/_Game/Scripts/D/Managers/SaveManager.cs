@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace D
@@ -7,14 +5,14 @@ namespace D
     public static class SaveManager<T> where T : class, new()
     {
         private static readonly string SaveKey = typeof(T).FullName;
-    
+
         public static void Save(T data)
         {
             string json = JsonUtility.ToJson(data);
             PlayerPrefs.SetString(SaveKey, json);
             PlayerPrefs.Save();
         }
-    
+
         public static T Load(bool debug = false)
         {
             if (PlayerPrefs.HasKey(SaveKey))
@@ -30,7 +28,7 @@ namespace D
             Save(t);
             return t;
         }
-    
+
         public static void Delete()
         {
             if (PlayerPrefs.HasKey(SaveKey))
