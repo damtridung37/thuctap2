@@ -13,6 +13,7 @@ namespace D
         [SerializeField] private int currentExp = 0;
         [SerializeField] private int currentStatPoints = 0;
         [SerializeField] private int currentFloor = 1;
+        [SerializeField] private float currentHealth = -1;
 
         public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
 
@@ -59,6 +60,12 @@ namespace D
             set => playerBonusStats.CopyFrom(value);
         }
 
+        public float CurrentHealth
+        {
+            get => currentHealth;
+            set => currentHealth = value;
+        }
+
 
         // Highest progress
         [SerializeField] private int highestFloor = 1;
@@ -80,6 +87,15 @@ namespace D
             {
                 PlayerBonusStats.Add(statType, 0);
             }
+        }
+
+        public void Reset()
+        {
+            currentGold = 0;
+            currentLevel = 1;
+            currentExp = 0;
+            currentFloor = 1;
+            currentHealth = -1;
         }
     }
 

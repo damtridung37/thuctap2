@@ -14,6 +14,8 @@ namespace D
         [SerializeField] private RemoteConfig remoteConfig;
         [SerializeField] private RealtimeDatabase realtimeDatabase;
 
+        public RealtimeDatabase RealtimeDatabase => realtimeDatabase;
+
         private PlayerData playerData;
         public PlayerData PlayerData => playerData;
         public void SavePlayerData(PlayerData data)

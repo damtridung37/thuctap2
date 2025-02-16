@@ -50,6 +50,11 @@ namespace D
                 {
                     playerData.CurrentStatPoints = statPoint;
                 });
+
+            GlobalEvent<HealthData>.Subscribe("PlayerHealthChanged", (data) =>
+            {
+                playerData.CurrentHealth = data.currentHealth;
+            });
         }
 
         private void OnApplicationQuit()
@@ -75,6 +80,9 @@ namespace D
         IEnumerator LoadFloor(int floor, bool isGameover = false)
         {
             playerData.CurrentFloor = floor;
+            if (isGameover)
+                playerData.Reset();
+            FirebaseManager.Instance.RealtimeDatabase.SaveData(playerData);
             UIManager.Instance.LoadingScreen.Open(isGameover);
             float time = Time.time;
 
@@ -83,7 +91,7 @@ namespace D
                 yield return new WaitForSeconds(2 - (Time.time - time));
 
             GlobalEvent<int>.Trigger("On_PlayerFloorChanged", floor);
-            SaveManager<PlayerData>.Save(playerData);
+
             UIManager.Instance.LoadingScreen.Close();
         }
 
