@@ -1,4 +1,5 @@
 using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ public class ParalaxBG : MonoBehaviour
     private void Start()
     {
         currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex ==0) return;
+        if (currentSceneIndex == 0 ) return;
         LMotion.Create(0, 0, 0).RunWithoutBinding();
         WriteTextAnimation();
     }
@@ -38,7 +39,6 @@ public class ParalaxBG : MonoBehaviour
         midPos = new Vector2(mousePos.x * 0.3f, (mousePos.y - .5f) * 0.3f);
         closePos = new Vector2(mousePos.x * 0.4f, (mousePos.y - .5f) * 0.4f);
 
-        if (currentSceneIndex ==0) return;
         if (!isWriting && Input.GetMouseButtonDown(0))
         {
             WriteTextAnimation();
@@ -58,9 +58,33 @@ public class ParalaxBG : MonoBehaviour
     /// </summary>
     private void WriteTextAnimation()
     {
+        isWriting = true;
+        if(currentSceneIndex == 0)
+        {
+            for (int i = 0; i < storyText.textInfo.characterCount; i++)
+            {
+                LMotion.Create(Color.white, Color.red, 1f)
+                    .WithDelay(i * 0.1f)
+                    .WithEase(Ease.OutQuad)
+                    .BindToTMPCharColor(storyText, i);
+                
+                LMotion.Punch.Create(Vector3.zero, Vector3.up * 30f, 1f)
+                    .WithDelay(i * 0.1f)
+                    .WithEase(Ease.OutQuad)
+                    .WithOnComplete(() => 
+                    {
+                        LMotion.Create(Color.red, Color.white, 1f)
+                            .WithDelay(i * 0.1f)
+                            .WithEase(Ease.OutQuad)
+                            .WithOnComplete(()=>isWriting = false)
+                            .BindToTMPCharColor(storyText, i);
+                    })
+                    .BindToTMPCharPosition(storyText, i);
+            }
+            return;
+        }
         if (currentLine < storyLines.Length)
         {
-            isWriting = true;
             storyText.text = "";
             StartCoroutine(WriteText(storyLines[currentLine]));
         }
