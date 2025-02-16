@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
 	public void ChangWeapon(weapons weaponToEquip)
 	{
 		Destroy(GameObject.FindGameObjectWithTag("Weapon"));
-		Instantiate(weaponToEquip, weaponHolder.position, Quaternion.identity, weaponHolder);
+		Instantiate(weaponToEquip, weaponHolder.position, Quaternion.identity, weaponHolder).transform.localScale = new Vector3(0.5f,0.5f,0.5f);
 	}
 
 	public void Heal(float healAmount)
