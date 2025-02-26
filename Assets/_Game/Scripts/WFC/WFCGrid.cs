@@ -24,9 +24,30 @@ namespace WFC
         public IEnumerator Init(int size = 3)
         {
             ClearGrid();
-            gridSize = new Vector2Int(size, size);
-            yield return StartCoroutine(nameof(InitializeGrid));
-            yield return StartCoroutine(nameof(RunWaveFunctionCollapse));
+            var bossRoom = roomLibrary.GetBossRoom(D.GameManager.Instance.playerData.CurrentFloor);
+            if (bossRoom != null)
+            {
+                // instantiate boss room
+                Room temp = Instantiate(bossRoom.prefab, new Vector3(0, 0, 0), Quaternion.identity);
+                temp.gameObject.SetActive(true);
+                temp.Init(Room.RoomType.Boss);
+                yield return new WaitForSeconds(0.1f);
+
+                if (temp.playerSpawnPoint != null)
+                {
+                    D.Player.Instance.transform.position = temp.playerSpawnPoint.position;
+                }
+                else
+                {
+                    D.Player.Instance.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, -10);
+                }
+            }
+            else
+            {
+                gridSize = new Vector2Int(size, size);
+                yield return StartCoroutine(nameof(InitializeGrid));
+                yield return StartCoroutine(nameof(RunWaveFunctionCollapse));
+            }
         }
 
         private void ClearGrid()

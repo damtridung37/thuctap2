@@ -22,6 +22,8 @@ namespace D
         [SerializeField] private int waveCount;
         [SerializeField] private float delayBetweenWaves;
         [SerializeField] private Transform spawnPoints;
+        public Transform playerSpawnPoint;
+        public Transform bossSpawnPoint;
         private bool isCleared = false;
 
         public enum RoomType
@@ -57,22 +59,38 @@ namespace D
 
             if (other.CompareTag("Player"))
             {
-                if (roomType != RoomType.Arena) return;
-                if (!isFirstTime || isCleared) return;
-                isFirstTime = false;
-
-                foreach (var transform in spawnPoints.transform)
+                if (roomType == RoomType.Arena)
                 {
-                    Debug.Log("Spawning Enemy");
-                    var enemy = PrefabManager.Instance.GetRandomEnemy();
-                    enemy.transform.position = ((Transform)transform).position;
-                    enemy.InitStats();
+                    if (!isFirstTime || isCleared) return;
+                    isFirstTime = false;
+
+                    SpawnEnemy();
+
+                    isCleared = false;
+
+                    UnlockRoom();
+                    GlobalEvent<bool>.Subscribe("Clear_Enemy", UnlockRoom);
                 }
+                else if (roomType == RoomType.Boss)
+                {
+                    if (!isFirstTime || isCleared) return;
+                    isFirstTime = false;
+                    var boss = PrefabManager.Instance.SpawnBoss(bossSpawnPoint.position, D.GameManager.Instance.playerData.CurrentFloor);
+                    Debug.Log("Spawning Boss");
+                    boss.gameObject.SetActive(true);
+                    UnlockRoom();
+                }
+            }
+        }
 
-                isCleared = false;
-
-                UnlockRoom();
-                GlobalEvent<bool>.Subscribe("Clear_Enemy", UnlockRoom);
+        public void SpawnEnemy()
+        {
+            foreach (var transform in spawnPoints.transform)
+            {
+                Debug.Log("Spawning Enemy");
+                var enemy = PrefabManager.Instance.GetRandomEnemy();
+                enemy.transform.position = ((Transform)transform).position;
+                enemy.InitStats();
             }
         }
 

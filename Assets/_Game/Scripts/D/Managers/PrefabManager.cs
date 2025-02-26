@@ -153,6 +153,19 @@ namespace D
             return null;
         }
 
+        [Header("Boss Data")]
+        [SerializeField]
+        private List<EnemyData> bossData;
+
+        private Enemy currentActiveBoss;
+
+        public Enemy SpawnBoss(Vector3 position, int floor)
+        {
+            Enemy temp = Instantiate(bossData[(floor / 10) - 1].prefab, position, Quaternion.identity);
+            currentActiveBoss = temp;
+            return temp;
+        }
+
         private void Awake()
         {
             foreach (var enemy in enemyData)

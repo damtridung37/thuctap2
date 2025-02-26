@@ -29,3 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d40f5f7a9d9c7834786ca1fa769c489e, type: 2}
   - {fileID: 11400000, guid: 986c07e8fd61f434ea7559f35370b50d, type: 2}
   emptyRoom: {fileID: 11400000, guid: 9283c183f6e94484ca0c1117602ceb5b, type: 2}
+  bossRooms:
+  - {fileID: 11400000, guid: d40c8cc566127bf49b5d73c9314739c3, type: 2}
