@@ -22,9 +22,20 @@ namespace D
             musicSource.Play();
         }
 
+        public void PlayCustomMusic(AudioClip clip)
+        {
+            musicSource.clip = clip;
+            musicSource.Play();
+        }
+
         public void PlaySfx(SfxType type)
         {
             sfxSource.PlayOneShot(sfxDict[(int)type]);
+        }
+
+        public void PlayCustomSfx(AudioClip clip)
+        {
+            sfxSource.PlayOneShot(clip);
         }
 
         public void ToggleMusic()

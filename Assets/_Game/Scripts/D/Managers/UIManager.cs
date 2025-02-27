@@ -10,6 +10,7 @@ namespace D
     {
         [SerializeField] private LoadingScreen loadingScreen;
         [SerializeField] private ShopUI shopUI;
+        [SerializeField] private TMP_Text goldText;
 
         public ShopUI ShopUI => shopUI;
         public LoadingScreen LoadingScreen => loadingScreen;
@@ -29,6 +30,11 @@ namespace D
                 .WithScrambleChars(ScrambleMode.Lowercase)
                 .WithOnComplete(() => Invoke(nameof(DisableFloorText), 1f))
                 .BindToText(floorText);
+        }
+
+        public void UpdateGoldText(int gold)
+        {
+            goldText.text = gold.ToString();
         }
 
         private void DisableFloorText()

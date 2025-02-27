@@ -23,5 +23,9 @@ namespace D
         };
 
         public float SHOP_APPERANCE_RATE = 0.3f;
+
+        public int STAT_POINTS_PER_LEVEL = 1;
+
+        public int STAT_POINTS_PER_FLOOR = 10;
     }
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace D
@@ -15,7 +12,7 @@ namespace D
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(!isEntrance && other.TryGetComponent(out Character character))
+            if (!isEntrance && other.TryGetComponent(out Character character))
             {
                 GameManager.Instance.GetNextMap();
             }

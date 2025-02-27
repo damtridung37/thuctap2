@@ -16,14 +16,33 @@ namespace D
         [SerializeField] private Transform[] firePoints;
         [SerializeField] private AgisBullet bulletPrefab;
 
+        [Header("Audio")]
+        [SerializeField] private AudioClip[] sfx;
+
         private ObjectPool<AgisBullet> bulletPool;
         private int hitPlayerCount = 0;
 
         protected override void Awake()
         {
-            summonTime = timeBetweenSummons;
+            summonTime = 0;
             bulletPool = new ObjectPool<AgisBullet>(bulletPrefab, new GameObject("AgisBullet").transform, 10);
+            GlobalEvent<float>.Subscribe("On_EnemyDown", OnEnemyDown);
             base.Awake();
+        }
+
+        private void OnEnemyDown(float enemyMaxHp)
+        {
+            this.currentHealth -= enemyMaxHp;
+            if (this.currentHealth <= 0)
+            {
+                this.currentHealth = 0;
+                OnDead();
+            }
+        }
+
+        private void OnDead()
+        {
+            GlobalEvent<float>.Unsubscribe("On_EnemyDown", OnEnemyDown);
         }
 
         protected override void FixedUpdate()
@@ -83,6 +102,8 @@ namespace D
 
         private void Summon()
         {
+            AudioClip clip = sfx[UnityEngine.Random.Range(0, sfx.Length)];
+            SoundManager.Instance.PlayCustomSfx(clip);
             D.GameManager.Instance.currentRoom.SpawnEnemy();
         }
     }

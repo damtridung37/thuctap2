@@ -44,11 +44,12 @@ namespace D
                 {
                     var (gold, isAdd) = data;
                     playerData.CurrentGold = isAdd ? playerData.CurrentGold + gold : playerData.CurrentGold - gold;
+                    UIManager.Instance.UpdateGoldText(playerData.CurrentGold);
                 });
-            GlobalEvent<int>.Subscribe("On_PlayerStatPointChanged",
+            GlobalEvent<(int, bool)>.Subscribe("On_PlayerStatPointChanged",
                 (statPoint) =>
                 {
-                    playerData.CurrentStatPoints = statPoint;
+                    playerData.CurrentStatPoints = statPoint.Item2 ? playerData.CurrentStatPoints + statPoint.Item1 : playerData.CurrentStatPoints - statPoint.Item1;
                 });
 
             GlobalEvent<HealthData>.Subscribe("PlayerHealthChanged", (data) =>
@@ -69,11 +70,14 @@ namespace D
 
         public void GetMap(int floor = 1, bool isGameover = false)
         {
+            Player.Instance.ColliderEnable(false);
             StartCoroutine(LoadFloor(floor, isGameover));
         }
 
         public void GetNextMap()
         {
+            Player.Instance.InitStats();
+            GlobalEvent<(int, bool)>.Trigger("On_PlayerStatPointChanged", (GameManager.Instance.staticConfig.STAT_POINTS_PER_FLOOR, true));
             GetMap(playerData.CurrentFloor + 1);
         }
 
@@ -93,6 +97,8 @@ namespace D
             GlobalEvent<int>.Trigger("On_PlayerFloorChanged", floor);
 
             UIManager.Instance.LoadingScreen.Close();
+
+            Player.Instance.ColliderEnable(true);
         }
 
         public Vector3 MapCenter()

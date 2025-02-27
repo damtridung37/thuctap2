@@ -15,7 +15,7 @@ namespace D
         [SerializeField] private int currentFloor = 1;
         [SerializeField] private float currentHealth = -1;
 
-        public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
+        public StatDictionary playerBonusStats = new StatDictionary();
 
         public int CurrentGold
         {
@@ -54,7 +54,7 @@ namespace D
             }
         }
 
-        public IDictionary<StatType, int> PlayerBonusStats
+        public IDictionary<StatType, float> PlayerBonusStats
         {
             get => playerBonusStats;
             set => playerBonusStats.CopyFrom(value);

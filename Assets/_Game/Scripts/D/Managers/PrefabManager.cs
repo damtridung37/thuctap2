@@ -85,6 +85,7 @@ namespace D
                         (e) =>
                         {
                             activeEnemy.Remove(e);
+                            GlobalEvent<float>.Trigger("On_EnemyDown", e.StatBuffs[StatType.Health].GetValue());
                             if (e.CanEarnGold)
                                 GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_KILL, true));
                             if (activeEnemy.Count == 0)

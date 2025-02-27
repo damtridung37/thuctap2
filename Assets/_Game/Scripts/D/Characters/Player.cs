@@ -1,6 +1,5 @@
-using System;
-using System.Collections.Generic;
 using LitMotion;
+using System.Linq;
 using UnityEngine;
 
 namespace D
@@ -17,6 +16,8 @@ namespace D
         private bool isDead;
 
         public bool IsDead { get => isDead; set => isDead = value; }
+
+        private BoxCollider2D boxCollider;
 
         //Constants
         private const string IDLE = "Idle";
@@ -38,11 +39,17 @@ namespace D
 
         public static Player Instance { get; private set; }
 
+        public void ColliderEnable(bool enable)
+        {
+            boxCollider.enabled = enable;
+        }
+
         protected override void Awake()
         {
             weapon = GetComponentInChildren<Bow>();
             if (Instance == null)
                 Instance = this;
+            boxCollider = GetComponent<BoxCollider2D>();
             base.Awake();
         }
 
@@ -55,17 +62,28 @@ namespace D
         {
             StaticConfig staticConfig = GameManager.Instance.staticConfig;
             PlayerData playerData = GameManager.Instance.playerData;
-            statDictionary = staticConfig.playerStats;
+            statDictionary = new StatDictionary();
+            foreach (var pair in staticConfig.playerStats)
+            {
+                statDictionary.Add(pair.Key, pair.Value);
+            }
+            foreach (var stat in playerData.PlayerBonusStats)
+            {
+                if (statDictionary.ContainsKey(stat.Key))
+                    statDictionary[stat.Key] += stat.Value;
+            }
             base.InitStats();
             isDead = false;
             currentLevel = playerData.CurrentLevel;
             currentExp = playerData.CurrentExp;
             currentHealth = playerData.CurrentHealth;
-            if (currentHealth == -1)
+            CalculateRequiredExp();
+            if (currentHealth <= 0)
             {
                 currentHealth = statBuffs[StatType.Health].GetValue();
+                Heal(currentHealth);
             }
-            Heal(currentHealth);
+            Heal(0);
             AddExp(0);
         }
 
@@ -242,6 +260,7 @@ namespace D
             {
                 currentExp -= requiredExp;
                 CalculateRequiredExp();
+                GlobalEvent<(int, bool)>.Trigger("On_PlayerStatPointChanged", (GameManager.Instance.staticConfig.STAT_POINTS_PER_LEVEL, true));
                 currentLevel++;
             }
 
