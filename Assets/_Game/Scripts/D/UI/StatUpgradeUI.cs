@@ -66,25 +66,8 @@ namespace D
         {
             if (_playerData.CurrentStatPoints <= 0)
             {
-                for (int i = 0; i < statPointText.textInfo.characterCount; i++)
-                {
-                    LMotion.Create(Color.white, Color.red, 1f)
-                        .WithDelay(i * 0.1f)
-                        .WithEase(Ease.OutQuad)
-                        .BindToTMPCharColor(statPointText, i);
-
-                    LMotion.Punch.Create(Vector3.zero, Vector3.up * 30f, 1f)
-                        .WithDelay(i * 0.1f)
-                        .WithEase(Ease.OutQuad)
-                        .WithOnComplete(() =>
-                        {
-                            LMotion.Create(Color.red, Color.white, 1f)
-                                .WithDelay(i * 0.1f)
-                                .WithEase(Ease.OutQuad)
-                                .BindToTMPCharColor(statPointText, i);
-                        })
-                        .BindToTMPCharPosition(statPointText, i);
-                }
+                statPointText.color = Color.red;
+                Invoke(nameof(ChangeBackToWhite), .1f);
                 return;
             }
             _playerData.CurrentStatPoints--;
@@ -109,6 +92,11 @@ namespace D
                     critUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[statType].ToString();
                     break;
             }
+        }
+
+        private void ChangeBackToWhite()
+        {
+            statPointText.color = Color.white;
         }
     }
 }

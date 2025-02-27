@@ -83,7 +83,7 @@ namespace D
             }
             foreach (var stat in playerData.PlayerBonusStats)
             {
-                if (statDictionary.ContainsKey(stat.Key))
+                if (statDictionary.ContainsKey(stat.Key) && staticConfig.scale.ContainsKey(stat.Key))
                     statDictionary[stat.Key] += stat.Value * staticConfig.scale[stat.Key];
             }
             base.InitStats();
