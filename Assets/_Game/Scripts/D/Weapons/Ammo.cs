@@ -36,24 +36,25 @@ namespace D
                 Destroy(gameObject);
             }
         }
-        
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Character character))
             {
                 if (character != owner)
                 {
-                    float damage = character.StatBuffs[StatType.Damage].GetValue();
-                    float critChance = character.StatBuffs[StatType.CritChance].GetValue();
-                    float critDamage = character.StatBuffs[StatType.CritDamage].GetValue();
+                    float damage = owner.StatBuffs[StatType.Damage].GetValue();
+                    float critChance = owner.StatBuffs[StatType.CritChance].GetValue();
+                    float critDamage = owner.StatBuffs[StatType.CritDamage].GetValue();
+                    Debug.Log("Damage: " + damage + " Crit Chance: " + critChance + " Crit Damage: " + critDamage);
                     bool isCrit = false;
                     float randomNumber = Random.Range(0, 101);
-                    if (randomNumber <= critChance)
+                    if (randomNumber < critChance)
                     {
-                        damage *= 1 + critDamage/100f;
+                        damage *= 1 + critDamage / 100f;
                         isCrit = true;
                     }
-            
+
                     character.TakeDamage(damage);
                     PrefabManager.Instance.ShowDamageText(damage, character.transform.position, isCrit);
                     Destroy(gameObject);

@@ -27,5 +27,19 @@ namespace D
         public int STAT_POINTS_PER_LEVEL = 1;
 
         public int STAT_POINTS_PER_FLOOR = 10;
+
+        public StatBonusScaleDictionary scale = new StatBonusScaleDictionary()
+        {
+            {StatType.Health, 1},
+            {StatType.Damage, 1},
+            {StatType.CritChance, 0.1f},
+            {StatType.CritDamage, 1},
+            {StatType.Armor, 1},
+        };
+    }
+
+    [Serializable]
+    public class StatBonusScaleDictionary : SerializableDictionary<StatType, float>
+    {
     }
 }

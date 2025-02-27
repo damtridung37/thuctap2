@@ -76,7 +76,7 @@ namespace D
 
         public void GetNextMap()
         {
-            Player.Instance.InitStats();
+            //Player.Instance.InitStats();
             GlobalEvent<(int, bool)>.Trigger("On_PlayerStatPointChanged", (GameManager.Instance.staticConfig.STAT_POINTS_PER_FLOOR, true));
             GetMap(playerData.CurrentFloor + 1);
         }
@@ -97,6 +97,8 @@ namespace D
             GlobalEvent<int>.Trigger("On_PlayerFloorChanged", floor);
 
             UIManager.Instance.LoadingScreen.Close();
+
+            UIManager.Instance.StatUpgradeUI.gameObject.SetActive(true);
 
             Player.Instance.ColliderEnable(true);
         }

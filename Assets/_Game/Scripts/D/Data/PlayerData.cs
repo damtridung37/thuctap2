@@ -15,7 +15,7 @@ namespace D
         [SerializeField] private int currentFloor = 1;
         [SerializeField] private float currentHealth = -1;
 
-        public StatDictionary playerBonusStats = new StatDictionary();
+        public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
 
         public int CurrentGold
         {
@@ -54,7 +54,7 @@ namespace D
             }
         }
 
-        public IDictionary<StatType, float> PlayerBonusStats
+        public IDictionary<StatType, int> PlayerBonusStats
         {
             get => playerBonusStats;
             set => playerBonusStats.CopyFrom(value);
@@ -83,10 +83,7 @@ namespace D
         public PlayerData()
         {
             uuid = SystemInfo.deviceUniqueIdentifier;
-            foreach (StatType statType in Enum.GetValues(typeof(StatType)))
-            {
-                PlayerBonusStats.Add(statType, 0);
-            }
+            Reset();
         }
 
         public void Reset()
@@ -96,6 +93,15 @@ namespace D
             currentExp = 0;
             currentFloor = 1;
             currentHealth = -1;
+            currentStatPoints = 0;
+            playerBonusStats = new StatBonusDictionary()
+            {
+            {StatType.Health, 0},
+            {StatType.Damage, 0},
+            {StatType.CritChance, 0},
+            {StatType.CritDamage, 0},
+            {StatType.Armor, 0},
+            };
         }
     }
 

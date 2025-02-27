@@ -1362,6 +1362,7 @@ GameObject:
   - component: {fileID: 228525779}
   - component: {fileID: 228525781}
   - component: {fileID: 228525780}
+  - component: {fileID: 228525782}
   m_Layer: 5
   m_Name: UpgradeUI
   m_TagString: Untagged
@@ -1429,6 +1430,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228525778}
   m_CullTransparentMesh: 1
+--- !u!114 &228525782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228525778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d9c796cce034b4ab4099db79678512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backBtn: {fileID: 1551016992}
+  damageUpgradeBtn: {fileID: 874033335}
+  healthUpgradeBtn: {fileID: 842327372}
+  armorUpgradeBtn: {fileID: 1803426918}
+  hitUpgradeBtn: {fileID: 965317981}
+  critUpgradeBtn: {fileID: 274126950}
+  damageUpgradeText: {fileID: 485502470}
+  healthUpgradeText: {fileID: 762506097}
+  armorUpgradeText: {fileID: 75837166}
+  hitUpgradeText: {fileID: 21626970}
+  critUpgradeText: {fileID: 2029402594}
 --- !u!1 &245745932
 GameObject:
   m_ObjectHideFlags: 0
@@ -5992,6 +6016,14 @@ MonoBehaviour:
     SHOP_APPERANCE_RATE: 0.3
     STAT_POINTS_PER_LEVEL: 1
     STAT_POINTS_PER_FLOOR: 10
+    scale:
+      m_keys: 0200000004000000060000000700000003000000
+      m_values:
+      - 1
+      - 1
+      - 0.1
+      - 1
+      - 1
 --- !u!4 &1108114350
 Transform:
   m_ObjectHideFlags: 0
@@ -6254,6 +6286,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 816108819}
   shopUI: {fileID: 930167038}
   goldText: {fileID: 1086148312}
+  statUpgradeUI: {fileID: 228525782}
   floorText: {fileID: 502732675}
 --- !u!4 &1196130399
 Transform:

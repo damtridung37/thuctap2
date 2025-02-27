@@ -60,6 +60,20 @@ namespace D
 
         public override void InitStats()
         {
+            ReCalculateStats();
+            isDead = false;
+            CalculateRequiredExp();
+            if (currentHealth <= 0)
+            {
+                currentHealth = statBuffs[StatType.Health].GetValue();
+                Heal(currentHealth);
+            }
+            Heal(0);
+            AddExp(0);
+        }
+
+        public void ReCalculateStats()
+        {
             StaticConfig staticConfig = GameManager.Instance.staticConfig;
             PlayerData playerData = GameManager.Instance.playerData;
             statDictionary = new StatDictionary();
@@ -70,21 +84,13 @@ namespace D
             foreach (var stat in playerData.PlayerBonusStats)
             {
                 if (statDictionary.ContainsKey(stat.Key))
-                    statDictionary[stat.Key] += stat.Value;
+                    statDictionary[stat.Key] += stat.Value * staticConfig.scale[stat.Key];
             }
             base.InitStats();
-            isDead = false;
             currentLevel = playerData.CurrentLevel;
             currentExp = playerData.CurrentExp;
             currentHealth = playerData.CurrentHealth;
-            CalculateRequiredExp();
-            if (currentHealth <= 0)
-            {
-                currentHealth = statBuffs[StatType.Health].GetValue();
-                Heal(currentHealth);
-            }
             Heal(0);
-            AddExp(0);
         }
 
         private void PC_Input()

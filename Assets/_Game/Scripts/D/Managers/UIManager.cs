@@ -11,6 +11,9 @@ namespace D
         [SerializeField] private LoadingScreen loadingScreen;
         [SerializeField] private ShopUI shopUI;
         [SerializeField] private TMP_Text goldText;
+        [SerializeField] private StatUpgradeUI statUpgradeUI;
+
+        public StatUpgradeUI StatUpgradeUI => statUpgradeUI;
 
         public ShopUI ShopUI => shopUI;
         public LoadingScreen LoadingScreen => loadingScreen;
