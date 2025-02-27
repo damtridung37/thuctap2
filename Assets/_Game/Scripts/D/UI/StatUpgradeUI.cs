@@ -1,3 +1,5 @@
+using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,18 +22,33 @@ namespace D
         [SerializeField] private TMP_Text armorUpgradeText;
         [SerializeField] private TMP_Text hitUpgradeText;
         [SerializeField] private TMP_Text critUpgradeText;
+        [SerializeField] private TMP_Text statPointText;
 
         private PlayerData _playerData;
+
+        private void OnEnable()
+        {
+            if (_playerData != null)
+            {
+                DisplayText();
+            }
+        }
 
         private void Start()
         {
             _playerData = GameManager.Instance.playerData;
+            DisplayText();
+            Init();
+        }
+
+        private void DisplayText()
+        {
             damageUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[StatType.Damage].ToString();
             healthUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[StatType.Health].ToString();
             armorUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[StatType.Armor].ToString();
             hitUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[StatType.CritChance].ToString();
             critUpgradeText.text = "Point: " + _playerData.PlayerBonusStats[StatType.CritDamage].ToString();
-            Init();
+            statPointText.text = "Stat Points Remaining: " + _playerData.CurrentStatPoints.ToString();
         }
 
 
@@ -47,10 +64,33 @@ namespace D
 
         private void OnClickUpgrade(StatType statType)
         {
-            if (_playerData.CurrentStatPoints <= 0) return;
+            if (_playerData.CurrentStatPoints <= 0)
+            {
+                for (int i = 0; i < statPointText.textInfo.characterCount; i++)
+                {
+                    LMotion.Create(Color.white, Color.red, 1f)
+                        .WithDelay(i * 0.1f)
+                        .WithEase(Ease.OutQuad)
+                        .BindToTMPCharColor(statPointText, i);
+
+                    LMotion.Punch.Create(Vector3.zero, Vector3.up * 30f, 1f)
+                        .WithDelay(i * 0.1f)
+                        .WithEase(Ease.OutQuad)
+                        .WithOnComplete(() =>
+                        {
+                            LMotion.Create(Color.red, Color.white, 1f)
+                                .WithDelay(i * 0.1f)
+                                .WithEase(Ease.OutQuad)
+                                .BindToTMPCharColor(statPointText, i);
+                        })
+                        .BindToTMPCharPosition(statPointText, i);
+                }
+                return;
+            }
             _playerData.CurrentStatPoints--;
             _playerData.PlayerBonusStats[statType]++;
             Player.Instance.ReCalculateStats();
+            statPointText.text = "Stat Points Remaining: " + _playerData.CurrentStatPoints.ToString();
             switch (statType)
             {
                 case StatType.Damage:

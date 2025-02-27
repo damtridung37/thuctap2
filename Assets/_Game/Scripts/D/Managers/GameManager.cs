@@ -98,6 +98,8 @@ namespace D
 
             UIManager.Instance.LoadingScreen.Close();
 
+            yield return new WaitForSeconds(2f);
+
             UIManager.Instance.StatUpgradeUI.gameObject.SetActive(true);
 
             Player.Instance.ColliderEnable(true);

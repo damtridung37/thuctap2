@@ -102,8 +102,8 @@ namespace D
 
         private void Summon()
         {
-            AudioClip clip = sfx[UnityEngine.Random.Range(0, sfx.Length)];
-            SoundManager.Instance.PlayCustomSfx(clip);
+            /* AudioClip clip = sfx[UnityEngine.Random.Range(0, sfx.Length)];
+             SoundManager.Instance.PlayCustomSfx(clip);*/
             D.GameManager.Instance.currentRoom.SpawnEnemy();
         }
     }
