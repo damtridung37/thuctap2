@@ -245,22 +245,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statDictionary:
-    m_keys: 05000000
+    m_keys: 0500000002000000
     m_values:
     - 0.2
+    - 1000
   enemyType: 4
   healthPickUpChance: 0
   stopDistance: 0
   CanEarnGold: 1
-  timeBetweenSummons: 0
+  timeBetweenSummons: 10
   quantityPerSummon: 1
-  summonPoints: []
   firePoints:
   - {fileID: 10542799879668439}
   - {fileID: 3775102873767031534}
   - {fileID: 398551792844068130}
   - {fileID: 7140381220761619046}
   bulletPrefab: {fileID: 6335060566107205543, guid: 7cd8250a9560c2c4180f8053c63c42c2, type: 3}
+  sfx: []
 --- !u!1 &9106693418484945648
 GameObject:
   m_ObjectHideFlags: 0

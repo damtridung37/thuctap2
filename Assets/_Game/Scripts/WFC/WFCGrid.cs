@@ -23,6 +23,7 @@ namespace WFC
 
         public IEnumerator Init(int size = 3)
         {
+            yield return new WaitForSeconds(0.5f);
             ClearGrid();
             var bossRoom = roomLibrary.GetBossRoom(D.GameManager.Instance.playerData.CurrentFloor);
             if (bossRoom != null)

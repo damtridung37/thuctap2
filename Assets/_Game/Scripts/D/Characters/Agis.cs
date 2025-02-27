@@ -30,6 +30,29 @@ namespace D
             base.Awake();
         }
 
+        public override void InitStats()
+        {
+            base.InitStats();
+            UIManager.Instance.InitBossUI("Agis", new HealthData
+            {
+                currentHealth = currentHealth,
+                maxHealth = statBuffs[StatType.Health].GetValue(),
+                isHealing = false
+            });
+            GlobalEvent<bool>.Subscribe("OnPlayerDead", OnPlayerDead);
+        }
+
+        private void OnPlayerDead(bool isDead)
+        {
+            if (isDead)
+            {
+                GlobalEvent<float>.Unsubscribe("On_EnemyDown", OnEnemyDown);
+                GlobalEvent<bool>.Unsubscribe("OnPlayerDead", OnPlayerDead);
+                UIManager.Instance.DisableBossUI();
+                Destroy(this.gameObject);
+            }
+        }
+
         private void OnEnemyDown(float enemyMaxHp)
         {
             this.currentHealth -= enemyMaxHp;
@@ -38,6 +61,12 @@ namespace D
                 this.currentHealth = 0;
                 OnDead();
             }
+            GlobalEvent<HealthData>.Trigger("BossHealthChanged", new HealthData
+            {
+                currentHealth = currentHealth,
+                maxHealth = statBuffs[StatType.Health].GetValue(),
+                isHealing = false
+            });
         }
 
         private void OnDead()
