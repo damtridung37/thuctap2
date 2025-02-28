@@ -96,14 +96,15 @@ namespace D
 
         private void UnlockRoom(bool a = false)
         {
-            Debug.Log("Room: " + this.name);
-            Debug.Log("Unlocking Room" + a);
+            /*Debug.Log("Room: " + this.name);
+            Debug.Log("Unlocking Room" + a);*/
             if (a)
             {
-                isCleared = true;
-                roomBorder[0].transform.parent.gameObject.SetActive(false);
                 GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_WAVE, true));
                 GlobalEvent<bool>.Unsubscribe("Clear_Enemy", UnlockRoom);
+                isCleared = true;
+                roomBorder[0].transform.parent.gameObject.SetActive(false);
+                PrefabManager.Instance.ClearEnemy();
             }
             else
                 foreach (var collider in roomBorder)
