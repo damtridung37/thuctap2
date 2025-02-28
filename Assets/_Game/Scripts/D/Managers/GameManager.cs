@@ -91,8 +91,8 @@ namespace D
             float time = Time.time;
 
             yield return wfcGrid.StartCoroutine(nameof(wfcGrid.Init), 3);
-            if (Time.time - time < 2)
-                yield return new WaitForSeconds(2 - (Time.time - time));
+            if (Time.time - time < 3)
+                yield return new WaitForSeconds(3 - (Time.time - time));
 
             GlobalEvent<int>.Trigger("On_PlayerFloorChanged", floor);
 

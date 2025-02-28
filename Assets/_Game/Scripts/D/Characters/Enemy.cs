@@ -35,7 +35,9 @@ namespace D
 
         public override void TakeDamage(float damageAmount)
         {
-            currentHealth -= damageAmount;
+            //currentHealth -= damageAmount;
+            float postMitigationDamage = damageAmount * (100f / (100 + statBuffs[StatType.Armor].GetValue()));
+            currentHealth -= postMitigationDamage;
             if (currentHealth <= 0)
             {
                 int randomNumber = Random.Range(0, 101);

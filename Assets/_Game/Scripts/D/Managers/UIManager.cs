@@ -25,9 +25,14 @@ namespace D
 
         [SerializeField] private TMP_Text floorText;
 
-        void Awake()
+        void OnEnable()
         {
             GlobalEvent<int>.Subscribe("On_PlayerFloorChanged", UpdateFloorText);
+        }
+
+        void OnDisable()
+        {
+            GlobalEvent<int>.Unsubscribe("On_PlayerFloorChanged", UpdateFloorText);
         }
 
         public void UpdateFloorText(int floor)

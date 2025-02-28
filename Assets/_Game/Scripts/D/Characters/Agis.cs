@@ -74,6 +74,8 @@ namespace D
         {
             GlobalEvent<bool>.Trigger("OnBossDead", true);
             GlobalEvent<float>.Unsubscribe("On_EnemyDown", OnEnemyDown);
+            UIManager.Instance.DisableBossUI();
+            Destroy(this.gameObject);
         }
 
         protected override void FixedUpdate()

@@ -145,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.33333334, y: 0.21666667}
+    oldSize: {x: 0.6666667, y: 0.43333334}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -194,14 +194,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statDictionary:
-    m_keys: 010000000200000004000000060000000700000005000000
+    m_keys: 01000000020000000400000006000000070000000500000003000000
     m_values:
     - 2
     - 100
-    - 50
+    - 25
     - 50
     - 50
     - 0.5
+    - 0
   enemyType: 0
   healthPickUpChance: 5
   stopDistance: 0.5
+  CanEarnGold: 1

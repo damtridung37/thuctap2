@@ -42,6 +42,7 @@ namespace WFC
                 {
                     D.Player.Instance.transform.position = new Vector3(temp.transform.position.x, temp.transform.position.y, -10);
                 }
+                rooms.Add(temp);
             }
             else
             {

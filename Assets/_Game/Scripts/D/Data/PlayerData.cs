@@ -109,6 +109,7 @@ namespace D
             {StatType.CritDamage, 0},
             {StatType.Armor, 0},
             };
+            currentWeapon = "Bow";
         }
     }
 

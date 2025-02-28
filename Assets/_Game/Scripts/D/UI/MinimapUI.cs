@@ -29,6 +29,8 @@ namespace D
             isOpen = !isOpen;
             if (isOpen)
             {
+                if (GameManager.Instance.playerData.CurrentFloor % 10 == 0)
+                return;
                 Open();
             }
             else
