@@ -7,8 +7,9 @@ public class SettingUI : MonoBehaviour
     public Sprite soundOff;
     public UnityEngine.UI.Image soundImage;
     private bool isSoundPlaying = true;
-    private void Awake() {
-        if(PlayerPrefs.HasKey("Sound"))
+    private void Awake()
+    {
+        if (PlayerPrefs.HasKey("Sound"))
         {
             isSoundPlaying = PlayerPrefs.GetInt("Sound") == 1;
         }

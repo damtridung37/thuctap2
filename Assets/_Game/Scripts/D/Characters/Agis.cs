@@ -72,6 +72,7 @@ namespace D
 
         private void OnDead()
         {
+            GlobalEvent<bool>.Trigger("OnBossDead", true);
             GlobalEvent<float>.Unsubscribe("On_EnemyDown", OnEnemyDown);
         }
 

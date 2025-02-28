@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 namespace D
 {
@@ -7,10 +6,27 @@ namespace D
         [Header("Music")]
         [SerializeField] private AudioSource musicSource;
         public AudioClip[] musicDict;
+        public int defaultMusic = -1;
 
         [Header("SFX")]
         [SerializeField] private AudioSource sfxSource;
         public AudioClip[] sfxDict;
+
+        private void Start()
+        {
+            float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1);
+            float sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 1);
+            bool isMusicMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
+            bool isSfxMuted = PlayerPrefs.GetInt("SfxMuted", 0) == 1;
+            D.SoundManager.Instance.ToggleMusic(isMusicMuted);
+            D.SoundManager.Instance.ToggleSfx(isSfxMuted);
+            D.SoundManager.Instance.SetMusicVolume(musicVolume);
+            D.SoundManager.Instance.SetSfxVolume(sfxVolume);
+            if (defaultMusic != -1)
+            {
+                PlayMusic((MusicType)defaultMusic);
+            }
+        }
 
         public void PlayMusic(MusicType type)
         {
@@ -57,9 +73,8 @@ namespace D
 
     public enum MusicType
     {
-        Main,
-        Battle,
-        Shop
+        Menu,
+        Story
     }
 
     public enum SfxType
