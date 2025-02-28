@@ -14,6 +14,7 @@ namespace D
         [SerializeField] private int currentStatPoints = 0;
         [SerializeField] private int currentFloor = 1;
         [SerializeField] private float currentHealth = -1;
+        [SerializeField] private string currentWeapon = "Bow";
 
         public StatBonusDictionary playerBonusStats = new StatBonusDictionary();
 
@@ -79,6 +80,12 @@ namespace D
         // Other
         [SerializeField] private string uuid;
         public string Uuid => uuid;
+
+        public string CurrentWeapon
+        {
+            get => currentWeapon;
+            set => currentWeapon = value;
+        }
 
         public PlayerData()
         {

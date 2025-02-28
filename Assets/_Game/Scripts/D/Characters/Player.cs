@@ -1,5 +1,4 @@
 using LitMotion;
-using System.Linq;
 using UnityEngine;
 
 namespace D
@@ -39,6 +38,8 @@ namespace D
 
         public static Player Instance { get; private set; }
 
+        [SerializeField] private Transform weaponHolder;
+
         public void ColliderEnable(bool enable)
         {
             boxCollider.enabled = enable;
@@ -46,7 +47,7 @@ namespace D
 
         protected override void Awake()
         {
-            weapon = GetComponentInChildren<Bow>();
+            //weapon = weaponHolder.GetComponentInChildren<Weapon>(true);
             if (Instance == null)
                 Instance = this;
             boxCollider = GetComponent<BoxCollider2D>();
@@ -76,6 +77,7 @@ namespace D
         {
             StaticConfig staticConfig = GameManager.Instance.staticConfig;
             PlayerData playerData = GameManager.Instance.playerData;
+            ChangeWeapon(playerData.CurrentWeapon);
             statDictionary = new StatDictionary();
             foreach (var pair in staticConfig.playerStats)
             {
@@ -91,6 +93,29 @@ namespace D
             currentExp = playerData.CurrentExp;
             currentHealth = playerData.CurrentHealth;
             Heal(0);
+        }
+
+        public void ChangeWeapon<T>() where T : Weapon
+        {
+            weapon?.gameObject.SetActive(false);
+            weapon = weaponHolder.GetComponentInChildren<T>(true);
+        }
+
+        public void ChangeWeapon(string weaponType)
+        {
+            weapon?.gameObject.SetActive(false);
+            Weapon[] temp = weaponHolder.GetComponentsInChildren<Weapon>(true);
+
+            foreach (var weapon in temp)
+            {
+                if (weapon.GetType().Name == weaponType)
+                {
+                    this.weapon = weapon;
+                    break;
+                }
+            }
+
+            GameManager.Instance.playerData.CurrentWeapon = weaponType;
         }
 
         private void PC_Input()

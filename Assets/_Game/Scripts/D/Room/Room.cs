@@ -112,6 +112,16 @@ namespace D
                 }
         }
 
+        private void OnBossDead(bool isDead)
+        {
+            if (isDead)
+            {
+                UnlockRoom(true);
+                portal.gameObject.SetActive(true);
+                GlobalEvent<bool>.Unsubscribe("OnBossDead", OnBossDead);
+            }
+        }
+
         private RoomType roomType;
 
         public void Init(RoomType roomType)
@@ -130,6 +140,8 @@ namespace D
 
                     break;
                 case RoomType.Boss:
+                    GlobalEvent<bool>.Subscribe("OnBossDead", OnBossDead);
+                    portal.Init(false);
                     break;
                 case RoomType.Treasure:
                     Chest.SetActive(true);

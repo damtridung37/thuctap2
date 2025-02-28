@@ -25,7 +25,7 @@ public class ParalaxBG : MonoBehaviour
     private void Start()
     {
         currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex == 0 ) return;
+        if (currentSceneIndex == 0) return;
         LMotion.Create(0, 0, 0).RunWithoutBinding();
         WriteTextAnimation();
     }
@@ -59,7 +59,7 @@ public class ParalaxBG : MonoBehaviour
     private void WriteTextAnimation()
     {
         isWriting = true;
-        if(currentSceneIndex == 0)
+        /*if(currentSceneIndex == 0)
         {
             for (int i = 0; i < storyText.textInfo.characterCount; i++)
             {
@@ -82,7 +82,7 @@ public class ParalaxBG : MonoBehaviour
                     .BindToTMPCharPosition(storyText, i);
             }
             return;
-        }
+        }*/
         if (currentLine < storyLines.Length)
         {
             storyText.text = "";
@@ -92,7 +92,8 @@ public class ParalaxBG : MonoBehaviour
         {
             storyText.text = "";
             // End of the story
-            LMotion.Create(0f, 1f, 2f)
+            if (loadScene != null)
+                LMotion.Create(0f, 1f, 2f)
                 .WithOnComplete(() => UnityEngine.SceneManagement.SceneManager.LoadScene(5))
                 .Bind(loadScene, (x, s) => s.alpha = x);
         }

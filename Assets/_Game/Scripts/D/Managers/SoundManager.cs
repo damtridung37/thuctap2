@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 namespace D
 {
@@ -7,14 +6,27 @@ namespace D
         [Header("Music")]
         [SerializeField] private AudioSource musicSource;
         public AudioClip[] musicDict;
+        public int defaultMusic = -1;
 
         [Header("SFX")]
         [SerializeField] private AudioSource sfxSource;
         public AudioClip[] sfxDict;
 
-        bool isMusicMuted = false;
-        bool isSfxMuted = false;
-        bool isMuted = false;
+        private void Start()
+        {
+            float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1);
+            float sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 1);
+            bool isMusicMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
+            bool isSfxMuted = PlayerPrefs.GetInt("SfxMuted", 0) == 1;
+            D.SoundManager.Instance.ToggleMusic(isMusicMuted);
+            D.SoundManager.Instance.ToggleSfx(isSfxMuted);
+            D.SoundManager.Instance.SetMusicVolume(musicVolume);
+            D.SoundManager.Instance.SetSfxVolume(sfxVolume);
+            if (defaultMusic != -1)
+            {
+                PlayMusic((MusicType)defaultMusic);
+            }
+        }
 
         public void PlayMusic(MusicType type)
         {
@@ -38,46 +50,38 @@ namespace D
             sfxSource.PlayOneShot(clip);
         }
 
-        public void ToggleMusic()
+        public void ToggleMusic(bool isMute)
         {
-            isMusicMuted = !isMusicMuted;
-            musicSource.mute = isMusicMuted;
+            musicSource.mute = isMute;
         }
 
-        public void ToggleSfx()
+        public void ToggleSfx(bool isMute)
         {
-            isSfxMuted = !isSfxMuted;
-            sfxSource.mute = isSfxMuted;
+            sfxSource.mute = isMute;
         }
 
-        public void ToggleMute()
+        public void SetMusicVolume(float volume)
         {
-            isMuted = !isMuted;
-            musicSource.mute = isMuted;
-            sfxSource.mute = isMuted;
+            musicSource.volume = volume;
+        }
+
+        public void SetSfxVolume(float volume)
+        {
+            sfxSource.volume = volume;
         }
     }
 
     public enum MusicType
     {
-        Main,
-        Battle,
-        Shop
+        Menu,
+        Story
     }
 
     public enum SfxType
     {
-        Agis_Shot
-    }
-
-    [Serializable]
-    public class SfxDict : SerializableDictionary<SfxType, AudioClip>
-    {
-
-    }
-
-    [Serializable]
-    public class MusicDict : SerializableDictionary<MusicType, AudioClip>
-    {
+        Agis_Shot,
+        Death1,
+        Death2,
+        Death3,
     }
 }
