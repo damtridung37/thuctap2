@@ -103,10 +103,9 @@ namespace D
                 GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (GameManager.Instance.staticConfig.GOLD_PER_WAVE, true));
                 GlobalEvent<bool>.Unsubscribe("Clear_Enemy", UnlockRoom);
                 isCleared = true;
-                roomBorder[0].transform.parent.gameObject.SetActive(false);
+                //roomBorder[0].transform.parent.gameObject.SetActive(false);
                 PrefabManager.Instance.ClearEnemy();
             }
-            else
                 foreach (var collider in roomBorder)
                 {
                     collider.isTrigger = a;
