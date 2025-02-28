@@ -253,7 +253,7 @@ MonoBehaviour:
   healthPickUpChance: 0
   stopDistance: 0
   CanEarnGold: 1
-  timeBetweenSummons: 10
+  timeBetweenSummons: 15
   quantityPerSummon: 1
   firePoints:
   - {fileID: 10542799879668439}
@@ -261,7 +261,20 @@ MonoBehaviour:
   - {fileID: 398551792844068130}
   - {fileID: 7140381220761619046}
   bulletPrefab: {fileID: 6335060566107205543, guid: 7cd8250a9560c2c4180f8053c63c42c2, type: 3}
-  sfx: []
+  sfx:
+  - {fileID: 8300000, guid: 77dbdbf69e8e0ca48a66608ff7df4667, type: 3}
+  - {fileID: 8300000, guid: 4975c4b96be402c499f34d5b1b415b7a, type: 3}
+  - {fileID: 8300000, guid: f4247b34bc6cbbd4fa68621a56143b6e, type: 3}
+  - {fileID: 8300000, guid: bd0a729ab9153c446aeb5c31df999cb5, type: 3}
+  - {fileID: 8300000, guid: 76a6f9e812743184da92b4cd243a3c55, type: 3}
+  - {fileID: 8300000, guid: aed42460a29674e4d972b9494e4db2ed, type: 3}
+  - {fileID: 8300000, guid: 302b2d90ef21c3e41bc44b8b590b039a, type: 3}
+  - {fileID: 8300000, guid: 02b4692f6f76b42408bca80f03c2b603, type: 3}
+  sfxHit:
+  - {fileID: 8300000, guid: c3e06c58afcf1b74bab6825946cb7ccf, type: 3}
+  - {fileID: 8300000, guid: 6a2f4244c78839d4fb994d93668c30be, type: 3}
+  - {fileID: 8300000, guid: ebfedb1405339244db639659b11e1dc9, type: 3}
+  - {fileID: 8300000, guid: 456b8c000e3ea1b4999fb0b1133b84c3, type: 3}
 --- !u!1 &9106693418484945648
 GameObject:
   m_ObjectHideFlags: 0

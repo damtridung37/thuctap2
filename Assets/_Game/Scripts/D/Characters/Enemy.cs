@@ -46,8 +46,14 @@ namespace D
 
                 ExpPickUp temp = PrefabManager.Instance.SpawnExpPickUp(transform.position);
                 temp.boxCollider.enabled = true;
-                PrefabManager.Instance.SpawnDeathEffect(transform.position);
-
+                SfxType sfxType = Random.Range(1, 4) switch
+                {
+                    1 => SfxType.Death1,
+                    2 => SfxType.Death2,
+                    3 => SfxType.Death3,
+                    _ => SfxType.Death1
+                };
+                SoundManager.Instance.PlaySfx(sfxType);
                 ReturnToPool();
             }
         }

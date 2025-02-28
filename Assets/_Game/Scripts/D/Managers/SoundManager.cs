@@ -12,10 +12,6 @@ namespace D
         [SerializeField] private AudioSource sfxSource;
         public AudioClip[] sfxDict;
 
-        bool isMusicMuted = false;
-        bool isSfxMuted = false;
-        bool isMuted = false;
-
         public void PlayMusic(MusicType type)
         {
             musicSource.clip = musicDict[(int)type];
@@ -38,23 +34,24 @@ namespace D
             sfxSource.PlayOneShot(clip);
         }
 
-        public void ToggleMusic()
+        public void ToggleMusic(bool isMute)
         {
-            isMusicMuted = !isMusicMuted;
-            musicSource.mute = isMusicMuted;
+            musicSource.mute = isMute;
         }
 
-        public void ToggleSfx()
+        public void ToggleSfx(bool isMute)
         {
-            isSfxMuted = !isSfxMuted;
-            sfxSource.mute = isSfxMuted;
+            sfxSource.mute = isMute;
         }
 
-        public void ToggleMute()
+        public void SetMusicVolume(float volume)
         {
-            isMuted = !isMuted;
-            musicSource.mute = isMuted;
-            sfxSource.mute = isMuted;
+            musicSource.volume = volume;
+        }
+
+        public void SetSfxVolume(float volume)
+        {
+            sfxSource.volume = volume;
         }
     }
 
@@ -67,17 +64,9 @@ namespace D
 
     public enum SfxType
     {
-        Agis_Shot
-    }
-
-    [Serializable]
-    public class SfxDict : SerializableDictionary<SfxType, AudioClip>
-    {
-
-    }
-
-    [Serializable]
-    public class MusicDict : SerializableDictionary<MusicType, AudioClip>
-    {
+        Agis_Shot,
+        Death1,
+        Death2,
+        Death3,
     }
 }

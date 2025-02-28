@@ -18,13 +18,14 @@ namespace D
 
         [Header("Audio")]
         [SerializeField] private AudioClip[] sfx;
+        [SerializeField] private AudioClip[] sfxHit;
 
         private ObjectPool<AgisBullet> bulletPool;
         private int hitPlayerCount = 0;
 
         protected override void Awake()
         {
-            summonTime = 0;
+            summonTime = timeBetweenSummons;
             bulletPool = new ObjectPool<AgisBullet>(bulletPrefab, new GameObject("AgisBullet").transform, 10);
             GlobalEvent<float>.Subscribe("On_EnemyDown", OnEnemyDown);
             base.Awake();
@@ -122,6 +123,10 @@ namespace D
         {
             hitPlayerCount++;
             Debug.Log(hitPlayerCount);
+            if (hitPlayerCount < 5 && hitPlayerCount > 0)
+            {
+                SoundManager.Instance.PlayCustomSfx(sfxHit[hitPlayerCount - 1]);
+            }
             if (hitPlayerCount == 4)
             {
                 player.TakeDamage(9999);
@@ -131,8 +136,8 @@ namespace D
 
         private void Summon()
         {
-            /* AudioClip clip = sfx[UnityEngine.Random.Range(0, sfx.Length)];
-             SoundManager.Instance.PlayCustomSfx(clip);*/
+            AudioClip clip = sfx[UnityEngine.Random.Range(0, sfx.Length)];
+            SoundManager.Instance.PlayCustomSfx(clip);
             D.GameManager.Instance.currentRoom.SpawnEnemy();
         }
     }
