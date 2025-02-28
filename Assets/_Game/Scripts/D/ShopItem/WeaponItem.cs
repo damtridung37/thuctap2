@@ -4,9 +4,7 @@ namespace D
     [Serializable]
     public class WeaponItem : ShopItem
     {
-        public int damage;
-        public int attackSpeed;
-        public int range;
+        public string weaponName;
         public override void Activate(System.Action<bool> callback)
         {
             if (GameManager.Instance.playerData.CurrentGold < price)
@@ -15,7 +13,7 @@ namespace D
                 return;
             }
             GlobalEvent<(int, bool)>.Trigger("On_PlayerGoldChanged", (price, false));
-            //Player.Instance.EquipWeapon(this);
+            Player.Instance.ChangeWeapon(weaponName);
             callback(true);
         }
     }
