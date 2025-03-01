@@ -59,30 +59,10 @@ public class ParalaxBG : MonoBehaviour
     private void WriteTextAnimation()
     {
         isWriting = true;
-        /*if(currentSceneIndex == 0)
+        if (currentSceneIndex == 0)
         {
-            for (int i = 0; i < storyText.textInfo.characterCount; i++)
-            {
-                LMotion.Create(Color.white, Color.red, 1f)
-                    .WithDelay(i * 0.1f)
-                    .WithEase(Ease.OutQuad)
-                    .BindToTMPCharColor(storyText, i);
-                
-                LMotion.Punch.Create(Vector3.zero, Vector3.up * 30f, 1f)
-                    .WithDelay(i * 0.1f)
-                    .WithEase(Ease.OutQuad)
-                    .WithOnComplete(() => 
-                    {
-                        LMotion.Create(Color.red, Color.white, 1f)
-                            .WithDelay(i * 0.1f)
-                            .WithEase(Ease.OutQuad)
-                            .WithOnComplete(()=>isWriting = false)
-                            .BindToTMPCharColor(storyText, i);
-                    })
-                    .BindToTMPCharPosition(storyText, i);
-            }
             return;
-        }*/
+        }
         if (currentLine < storyLines.Length)
         {
             storyText.text = "";

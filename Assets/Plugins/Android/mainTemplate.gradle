@@ -14,6 +14,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-config-unity:12.6.0' // Assets/Firebase/Editor/RemoteConfigDependencies.xml:20
     implementation 'com.google.firebase:firebase-database:21.0.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:13
     implementation 'com.google.firebase:firebase-database-unity:12.6.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:22
+    implementation 'androidx.multidex:multidex:2.0.1'
 // Android Resolver Dependencies End
 **DEPS**}
 
@@ -46,6 +47,7 @@ android {
         ndk {
             abiFilters **ABIFILTERS**
         }
+	multiDexEnabled true
         versionCode **VERSIONCODE**
         versionName '**VERSIONNAME**'
         consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**

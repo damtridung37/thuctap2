@@ -1,3 +1,4 @@
+using D;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,11 @@ using UnityEngine;
 public class Destroyer : MonoBehaviour
 {
     public float lifeTime;
+    public AudioClip sfx;
 
-	private void Start()
-	{
-		Destroy(gameObject, lifeTime);
-	}
+    private void Start()
+    {
+        SoundManager.Instance.PlayCustomSfx(sfx);
+        Destroy(gameObject, lifeTime);
+    }
 }
