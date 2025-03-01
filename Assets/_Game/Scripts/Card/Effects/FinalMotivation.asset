@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d65a9f32f0864459bd18442d0bcc09, type: 3}
+  m_Name: FinalMotivation
+  m_EditorClassIdentifier: 
+  data:
+    type: 1
+    title: FinalMotivation
+    description: "L\u1EA7n \u0111\u1EA7u ti\xEAn d\u01B0\u1EDBi 10% m\xE1u t\u1ED1i
+      \u0111a, l\u1EADp t\u1EE9c t\u0103ng 10% . T\u0103ng s\u1EE9c m\u1EA1nh c\xF4ng
+      k\xEDch l\xEAn 50 trong 5s"
+    icon: {fileID: 21300000, guid: e65f7d569dd64ad4cae44cedffb08885, type: 3}

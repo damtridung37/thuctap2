@@ -30,7 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.9144778, y: -2.842155, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,7 +101,8 @@ MonoBehaviour:
   speed: 10
   lifeTime: 0.5
   explosion: {fileID: 7833999796587644338, guid: 2218bd87e4fa99c41968d1c9e5fa1b63, type: 3}
-  damage: 1
+  soundObject: {fileID: 5962912027627603730, guid: 24df97b75b87edb468e9308d1ed46e72, type: 3}
+  scaleDamage: 0.5
 --- !u!61 &1795397932864836268
 BoxCollider2D:
   m_ObjectHideFlags: 0

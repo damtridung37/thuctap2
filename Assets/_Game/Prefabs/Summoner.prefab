@@ -11,9 +11,12 @@ GameObject:
   - component: {fileID: 1793690765222510126}
   - component: {fileID: 227645139502309022}
   - component: {fileID: 7061556795473444706}
-  m_Layer: 0
+  - component: {fileID: 970229693828970796}
+  - component: {fileID: 2328160241115860465}
+  - component: {fileID: -8347585146016416583}
+  m_Layer: 7
   m_Name: Summoner
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,3 +109,111 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &970229693828970796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072785359215105211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5eb41677b1902b4b83d3612e28d419e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 1
+  maxHealth: 75
+  player: {fileID: 0}
+  speed: 2
+  damage: 110
+  pickUpChance: 10
+  pickups:
+  - {fileID: 8043004606164792877, guid: dbddd7e348506df488b8166060ca2ca7, type: 3}
+  - {fileID: 3819274869457495099, guid: 98f4cc00560fc944ebae1a8cb9d247d8, type: 3}
+  - {fileID: 6437498617403658470, guid: 0e09d020afcd88c40bf42bdd3c84d51f, type: 3}
+  - {fileID: 6178562435283158529, guid: c84399e00bbc8b4439efd1cb5aeb7411, type: 3}
+  - {fileID: 8854671570613229957, guid: 462457753b68e254fa9eee1bf9176b68, type: 3}
+  timeBetweenAttacks: 5
+  healthPickUpChance: 30
+  healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
+  deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
+  minX: -7.66
+  maxX: 7.42
+  minY: -3.55
+  maxY: 3.55
+  timeBetweenSummons: 3
+  enemyToSummon: {fileID: 4035781114764252124, guid: 0353337751c6a45449e8bf09136ec383, type: 3}
+  meleeAttackSpeed: 5
+  stopDistance: 0.5
+--- !u!61 &2328160241115860465
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072785359215105211}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.31666666, y: 0.5}
+    newSize: {x: 0.17, y: 0.29}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.475, y: 0.75}
+  m_EdgeRadius: 0
+--- !u!50 &-8347585146016416583
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072785359215105211}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

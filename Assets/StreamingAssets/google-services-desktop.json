@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1087651373036",
+    "firebase_url": "https://doan-7e61b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "doan-7e61b",
+    "storage_bucket": "doan-7e61b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087651373036:android:5cf138a62fafb2cd83eac9",
+        "android_client_info": {
+          "package_name": "com.dung.thelastwizard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5wd_WGHVErWzEY_IvE3nhHFDcDxKV8XU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

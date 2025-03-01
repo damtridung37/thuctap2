@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6878751d7f3aa4b9fe3debf6261b50, type: 3}
+  m_Name: Shop
+  m_EditorClassIdentifier: 
+  shopItems:
+  - rid: 4907260410225754112
+  - rid: 4907260410225754113
+  - rid: 4907260410225754114
+  - rid: 4907260410225754115
+  - rid: 4907260410225754116
+  - rid: 4907260676135190528
+  - rid: 4907260676135190529
+  - rid: 4907260676135190530
+  - rid: 4907260676135190531
+  - rid: 4907260676135190532
+  references:
+    version: 2
+    RefIds:
+    - rid: 4907260410225754112
+      type: {class: HealPotionItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Heal Potion
+        description: Heal 5% HP
+        icon: {fileID: -585642426, guid: fe94fc7a427716244a4d96aabd0bbc3c, type: 3}
+        price: 10
+        rarity: 50
+    - rid: 4907260410225754113
+      type: {class: HealPotionItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Heal Potion
+        description: Heal 15% HP
+        icon: {fileID: 730425551, guid: 42fae3e6c3b56c24089acdea9e895604, type: 3}
+        price: 20
+        rarity: 30
+    - rid: 4907260410225754114
+      type: {class: HealPotionItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Heal Potion
+        description: Heal 30% HP
+        icon: {fileID: 137938839, guid: 3b8431a8fcebe604e9298e081460cc44, type: 3}
+        price: 30
+        rarity: 15
+    - rid: 4907260410225754115
+      type: {class: HealPotionItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Heal Potion
+        description: Heal 50% HP
+        icon: {fileID: -1003467322, guid: 6f1e7d6f4e4e4c84097f0a45941a3d15, type: 3}
+        price: 40
+        rarity: 4
+    - rid: 4907260410225754116
+      type: {class: HealPotionItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Heal Potion
+        description: Heal 75% HP
+        icon: {fileID: 1961754839, guid: 33b020fe43d9c3c45a04528ec0a7ac45, type: 3}
+        price: 50
+        rarity: 1
+    - rid: 4907260676135190528
+      type: {class: WeaponItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Staff 1
+        description: Better than bow
+        icon: {fileID: 21300000, guid: 09c2f04c9bf39304f86ff5ccdf816248, type: 3}
+        price: 25
+        rarity: 15
+        weaponName: Staff1
+    - rid: 4907260676135190529
+      type: {class: WeaponItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Staff 2
+        description: Reduces outcoming damage but fire 5 bullets in fan shape
+        icon: {fileID: 21300000, guid: 8f1e87b0382742540befadbf9e89a867, type: 3}
+        price: 25
+        rarity: 15
+        weaponName: Staff2
+    - rid: 4907260676135190530
+      type: {class: WeaponItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Staff 3
+        description: Bullet go faster and deal more damage
+        icon: {fileID: 21300000, guid: fce2353aa5dab5a499610d12c804445c, type: 3}
+        price: 30
+        rarity: 15
+        weaponName: Staff3
+    - rid: 4907260676135190531
+      type: {class: WeaponItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Staff 4
+        description: Reduces outcoming damage but higher fire rate
+        icon: {fileID: 21300000, guid: 87f5d3de8cbfc754493bb89652a4cc4a, type: 3}
+        price: 50
+        rarity: 4
+        weaponName: Staff4
+    - rid: 4907260676135190532
+      type: {class: WeaponItem, ns: D, asm: Assembly-CSharp}
+      data:
+        name: Staff 5
+        description: Reduces bullet speed but higher fire rate in random direction
+        icon: {fileID: 21300000, guid: 6a1f509c31b8b2943add57cbc64ae7b0, type: 3}
+        price: 50
+        rarity: 4
+        weaponName: Staff5

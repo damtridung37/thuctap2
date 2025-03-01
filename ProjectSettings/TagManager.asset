@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Weapon
+  - PatrolPoints
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -14,15 +17,15 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Stopper
+  - Boss
+  - Exp
+  - Exp_C
+  - Room
+  - Wall
+  - Portal
+  - Shop
+  - Bullet
   - 
   - 
   - 
@@ -41,4 +44,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 291291993
+    locked: 0
+  - name: Wall
+    uniqueID: 2515909721
+    locked: 0
+  - name: Drop
+    uniqueID: 3374340965
+    locked: 0
+  - name: Character
+    uniqueID: 1041690351
+    locked: 0
+  - name: Border
+    uniqueID: 1002413351
+    locked: 0
+  - name: Weapon
+    uniqueID: 2726416687
+    locked: 0
+  - name: UI
+    uniqueID: 2565005947
     locked: 0

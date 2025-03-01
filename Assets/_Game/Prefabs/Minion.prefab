@@ -121,13 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e28715526ad064d8bb544c015e524e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  enemyType: 0
+  maxHealth: 25
   player: {fileID: 0}
   speed: 1.5
-  damage: 1
+  damage: 70
+  pickUpChance: 0
+  pickups: []
   timeBetweenAttacks: 3
+  healthPickUpChance: 20
+  healthPickUp: {fileID: 1692538947213498215, guid: b582b9ac86b2eb24a98ac8ee6b36b243, type: 3}
+  deathEffect: {fileID: 6959143205876304949, guid: 7013d0af5dbdcfa41afdae68366174fb, type: 3}
   stopDistance: 0.5
-  attackSpeed: 2
+  meleeAttackSpeed: 3
 --- !u!50 &929123017504411017
 Rigidbody2D:
   serializedVersion: 4
@@ -191,7 +197,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.21839081, y: 0.3448276}
+    oldSize: {x: 0.21111111, y: 0.33333334}
     newSize: {x: 0.3275862, y: 0.51724136}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
